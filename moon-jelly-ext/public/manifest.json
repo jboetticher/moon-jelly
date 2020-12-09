@@ -16,5 +16,11 @@
     "512": "jellyfish-512.png"
   },
   "permissions": [
-  ]
+    "tabs",
+    "notifications",
+    "http://*/",
+    "https://*/"
+  ],
+  "content_security_policy": 
+    "default-src 'self' 'sha256-QzZTtT8K6V9bHDB7asT8zNk/qagDwQOSb8wrb63iw8A='; script-src 'self' 'sha256-QzZTtT8K6V9bHDB7asT8zNk/qagDwQOSb8wrb63iw8A='; font-src 'self' data: 'sha256-QzZTtT8K6V9bHDB7asT8zNk/qagDwQOSb8wrb63iw8A='"
 }
