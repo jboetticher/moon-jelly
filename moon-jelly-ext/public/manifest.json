@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Moon Jelly Extension",
-  "description": "This extension is really good",
+  "description": "An expansion on the jellyfish cross-browser extension to help with publishing and accessing the ocean protocol.",
   "version": "0.0.1",
 
   "browser_action": {
@@ -10,9 +10,10 @@
     "default_title": "Open the popup"
   },
   "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png"
+    "16": "jellyfish-48.png",
+    "48": "jellyfish-48.png",
+    "128": "jellyfish-128.png",
+    "512": "jellyfish-512.png"
   },
   "permissions": [
   ]
