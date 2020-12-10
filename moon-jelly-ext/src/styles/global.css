@@ -1,7 +1,7 @@
 /* stylelint-disable selector-no-qualifying-type, declaration-no-important, selector-no-vendor-prefix */
 
-@import 'variables';
-@import '../../node_modules/@oceanprotocol/typographies/sass/ocean-typo.scss';
+@import 'variables.css';
+/*@import '../../node_modules/@oceanprotocol/typographies/sass/ocean-typo.scss';*/
 
 
 *,

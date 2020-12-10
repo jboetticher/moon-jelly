@@ -1,14 +1,17 @@
 import logo from './assets/settings.svg';
 import './App.css';
 import React, { Component } from 'react'
-import { ReactComponent as Jellyfish } from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
+
+// doesn't work for some reason
+//import jelli from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
+//import { ReactComponent as Jellyfish } from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
 
 //import Navbar from './components/Navbar'
 //import PublishForm from './components/PublishForm'
 //import Search from './components/Search'
 //import DataWallet from './components/DataWallet'
 //import Header from './components/Header'
-//import Label from './components/Form/Label'
+import Label from './components/Label'
 //import Footer from './components/Footer'
 //import Button from './components/Button'
 
@@ -106,7 +109,8 @@ const JellyFishLogo = (props) => {
     return (
         <div className={styles.defaultLabel}>
             <div className={styles.jellyfish}>
-                <Jellyfish />
+                {/*<Jellyfish />*/}
+                holy cow man
             </div>
             <br />
             <Label className={styles.defaultLabel}>
