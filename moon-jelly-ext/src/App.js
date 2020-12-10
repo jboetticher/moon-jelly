@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 // doesn't work for some reason
 //import jelli from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
 //import { ReactComponent as Jellyfish } from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
+import Jellyfish from './assets/ocean-jelly-placeholder.svg'
 
 //import Navbar from './components/Navbar'
 //import PublishForm from './components/PublishForm'
@@ -110,7 +111,7 @@ const JellyFishLogo = (props) => {
         <div className={styles.defaultLabel}>
             <div className={styles.jellyfish}>
                 {/*<Jellyfish />*/}
-                holy cow man
+                <img src={Jellyfish} />
             </div>
             <br />
             <Label className={styles.defaultLabel}>
