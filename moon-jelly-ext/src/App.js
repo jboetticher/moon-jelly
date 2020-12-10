@@ -1,10 +1,9 @@
 import logo from './assets/settings.svg';
 import './App.css';
 import React, { Component } from 'react'
-//import { ReactComponent as Jellyfish } from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
-//import Navbar from './components/Navbar'
+import { ReactComponent as Jellyfish } from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
 
-//import './styles/global.scss'
+//import Navbar from './components/Navbar'
 //import PublishForm from './components/PublishForm'
 //import Search from './components/Search'
 //import DataWallet from './components/DataWallet'
@@ -12,7 +11,9 @@ import React, { Component } from 'react'
 //import Label from './components/Form/Label'
 //import Footer from './components/Footer'
 //import Button from './components/Button'
-//import styles from './App.module.scss'
+
+import './styles/global.css'
+import styles from './styles/App.module.css'
 
 class App extends Component {
     constructor(props) {
@@ -90,6 +91,7 @@ class App extends Component {
                     </div>
                     <div className={"content"}>
                         {/*this.chooseDisplay(this.state.nextToDisplay)*/}
+                        <JellyFishLogo />
                     </div>
                 </div>
 
@@ -99,7 +101,7 @@ class App extends Component {
     }
 }
 
-/*
+
 const JellyFishLogo = (props) => {
     return (
         <div className={styles.defaultLabel}>
@@ -108,12 +110,12 @@ const JellyFishLogo = (props) => {
             </div>
             <br />
             <Label className={styles.defaultLabel}>
-                Welcome to Jellyfish!!
+                Welcome to MoonJelly.
             </Label>
         </div>
     )
 }
-*/
+
 
 export default App
 

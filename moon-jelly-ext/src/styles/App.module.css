@@ -1,0 +1,47 @@
+@import './styles/variables';
+
+.app {
+    /* for sticky footer no matter the height of viewport */
+    display: flex;
+    /*min-height: calc(100vh - #{var(--page-frame});*/
+    flex-direction: column;
+    animation: fadeIn 0.2s ease-out;
+}
+.navbar {
+    flex: 1;
+}
+.content {
+    margin-top: 160px;
+    padding: 0 (var(--spacer) / 1.5);
+    flex: 1;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    max-width: 32rem;
+    margin: auto;
+    flex: 1;
+    padding: 0;
+}
+
+.defaultLabel {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+.jellyfish {
+    padding-top: var(--spacer) * 2;
+    width: var(--appWidth) / 1.5;
+    height: var(--appHeight) / 1.2;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
