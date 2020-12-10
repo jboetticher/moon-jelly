@@ -1,23 +1,20 @@
-import logo from './assets/settings.svg';
-import './App.css';
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-// doesn't work for some reason
 //import jelli from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
 //import { ReactComponent as Jellyfish } from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
-import Jellyfish from './assets/ocean-jelly-placeholder.svg'
+import Jellyfish from './assets/ocean-jelly-placeholder.svg';
 
 //import Navbar from './components/Navbar'
 //import PublishForm from './components/PublishForm'
 //import Search from './components/Search'
 //import DataWallet from './components/DataWallet'
-//import Header from './components/Header'
-import Label from './components/Label'
+import Header from './components/Header';
+import Label from './components/Label';
 //import Footer from './components/Footer'
 //import Button from './components/Button'
 
-import './styles/global.css'
-import styles from './styles/App.module.css'
+import './styles/global.css';
+import './styles/App.css';
 
 class App extends Component {
     constructor(props) {
@@ -44,6 +41,8 @@ class App extends Component {
                 return <JellyFishLogo />
         }
     }
+
+    */
 
     setNextDisplay(nextDisplay) {
         switch (nextDisplay) {
@@ -75,8 +74,6 @@ class App extends Component {
         }
     }
 
-    */
-
     onComponentDidMount() {
         console.log("brugermy");
     }
@@ -84,10 +81,7 @@ class App extends Component {
     render() {
         return (
             <div className={"app"}>
-                <div>cash money crypto</div>
-                {
-                    //<Header nextDisplay={this.setNextDisplay.bind(this)} />
-                }
+                <Header nextDisplay={this.setNextDisplay.bind(this)} />
 
                 <div className={"container"}>
                     <div className={"navbar"}>
@@ -108,13 +102,13 @@ class App extends Component {
 
 const JellyFishLogo = (props) => {
     return (
-        <div className={styles.defaultLabel}>
-            <div className={styles.jellyfish}>
+        <div className={"defaultLabel"}>
+            <div className={"jellyfish"}>
                 {/*<Jellyfish />*/}
                 <img src={Jellyfish} />
             </div>
             <br />
-            <Label className={styles.defaultLabel}>
+            <Label className={"defaultLabel"}>
                 Welcome to MoonJelly.
             </Label>
         </div>

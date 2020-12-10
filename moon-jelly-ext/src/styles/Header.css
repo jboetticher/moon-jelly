@@ -1,0 +1,99 @@
+@import '../styles/variables';
+
+.appHeader {
+    padding: var(--spacer) var(--spacer) / 1.5;
+    color: var(--brand-white);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--brand-black)
+        url('../../node_modules/@oceanprotocol/art/creatures/jellyfish/jellyfish-grid.svg')
+        no-repeat center -6rem;
+    background-size: cover;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: var(--appWidth);
+    z-index: 3;
+}
+
+.appHeader > svg {
+    width: 50px;
+    height: 50px;
+    margin-top: -(var(--spacer) / 4);
+
+    /*
+    @media (min-width: var(--break-point--medium) {
+        width: 60px;
+        height: 60px;
+    }
+    */
+}
+
+.topLinks {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: right;
+    flex: 1;
+    text-align: right;
+    white-space: nowrap;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: -0.3rem;
+    margin-right: -(var(--spacer) / 1.5);
+    padding-right: var(--spacer);
+
+    /*
+    @media (min-width: var(--break-point--medium) {
+        padding-right: 0;
+        margin-right: var(--spacer / 2;
+    }
+    &::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+        transition: opacity 0.2s ease-out;
+    }
+    */
+}
+
+.topLinks > li {
+    display: inline-block;
+    margin-left: var(--spacer);
+
+    /*
+    @media (min-width: var(--break-point--medium) {
+        margin-left: var(--spacer * 2;
+    }
+    
+    &:first-child {
+        margin-left: 0;
+    }
+    */
+}
+
+.topLinks > a {
+    display: block;
+    text-decoration: none;
+    color: rgba(var(--brand-white), 0.7);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    font-size: var(--font-size-small);
+
+    /*
+    @media (min-width: var(--break-point--medium)) {
+        font-size: var(--font-size-base);
+    }
+    */
+}
+
+.topLinks > a :hover, focus, active {
+    color: var(--brand-white);
+    transform: none;
+}
+
+.topLinks ::-webkit-scrollbar::-moz-scrollbar {
+    display: none;
+}
