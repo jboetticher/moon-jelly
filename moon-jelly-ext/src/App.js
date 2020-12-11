@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 
 // Functionality
+import { ConfigHelper } from '@oceanprotocol/lib';
+import WalletConnectProvider from "@walletconnect/web3-provider";
 import * as PanelManager from './functionality/PanelManager.js';
 
 // Assets
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
 
 // Components
+import { OceanProvider } from '@oceanprotocol/react';
 import Navbar from './components/Navbar';
 import Panel from './components/Panel';
 //import PublishForm from './components/PublishForm'
@@ -19,13 +22,44 @@ import Label from './components/Label';
 import './styles/global.css';
 import './styles/App.css';
 
+
+
+let [network, infuraId] = ['mainnet', "92722306e5f042e6af0e80e253125972"];
+
+// Creates the wallet connect provider (necessary for ocean)
+const providerOptions = {
+  walletconnect: {
+    package: WalletConnectProvider,
+    options: {
+      infuraId: infuraId
+    }
+  }
+};
+
+// Creates the options
+const web3ModalOpts = {
+    network: network, // which network to use
+    cacheProvider: true, // optional
+    providerOptions // required
+}
+
+// the default configuration, can be dynamic later.
+const oceanDefaultConfig = new ConfigHelper().getConfig(
+    network, // which network to use
+    infuraId // infura id
+)
+
+const config = {
+    ...oceanDefaultConfig,
+    metadataCacheUri: 'https://your-metadata-cache.com',
+    providerUri: 'https://your-provider.com'
+}
+
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = { nextToDisplay: '' }
     }
-
-    // on startup add the core default panels like mint & search
 
     /**
      * 
@@ -39,19 +73,14 @@ class App extends Component {
         else {
             switch (nextToDisplay) {
                 case 'mint':
-                    console.log("Will display mint now");
                     return <Panel>mint</Panel>;
                 case 'analyze':
-                    console.log("Will display analyze now");
                     return <Panel>analyze</Panel>;
                 case 'wallet':
-                    console.log("Will display wallet now");
                     return <DataWallet />;
                 case 'home':
-                    console.log("Will display home now");
                     return <JellyFishLogo />
                 default:
-                    console.log("Will display home now");
                     return <JellyFishLogo />
             }
         }
@@ -67,21 +96,22 @@ class App extends Component {
 
     render() {
         return (
-            <div className={"app"}>
-                <Header nextDisplay={this.setNextPanel.bind(this)} />
+            <OceanProvider>
+                <div className={"app"}>
+                    <Header nextDisplay={this.setNextPanel.bind(this)} />
 
-                <div className={"container"}>
-                    <div className={"navbar"}>
-                        <Navbar selected={this.state.nextToDisplay} setNextPanel={this.setNextPanel.bind(this)} />
-                        {/*<Navbar  nextDisplay={this.setNextDisplay.bind(this)} />*/}
+                    <div className={"container"}>
+                        <div className={"navbar"}>
+                            <Navbar selected={this.state.nextToDisplay} setNextPanel={this.setNextPanel.bind(this)} />
+                            {/*<Navbar  nextDisplay={this.setNextDisplay.bind(this)} />*/}
+                        </div>
+                        <div className={"content"}>
+                            {this.chooseDisplay(this.state.nextToDisplay)}
+                        </div>
                     </div>
-                    <div className={"content"}>
-                        {this.chooseDisplay(this.state.nextToDisplay)}
-                    </div>
+                    {/*<Footer />*/}
                 </div>
-
-                {/*<Footer />*/}
-            </div>
+            </OceanProvider>
         )
     }
 }
