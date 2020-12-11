@@ -21,6 +21,5 @@
     "http://*/",
     "https://*/"
   ],
-  "content_security_policy": 
-    "default-src 'self' 'sha256-Wj33Iz/8B2AzGXNt16seud/6PwCs7Z43B3D7Bo9hd4c='; script-src 'self' 'sha256-Wj33Iz/8B2AzGXNt16seud/6PwCs7Z43B3D7Bo9hd4c='; font-src 'self' data: 'sha256-Wj33Iz/8B2AzGXNt16seud/6PwCs7Z43B3D7Bo9hd4c='"
+  "content_security_policy": "default-src 'self'; script-src 'self' ; font-src 'self'"
 }
