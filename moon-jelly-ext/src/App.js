@@ -9,7 +9,7 @@ import * as PanelManager from './functionality/PanelManager.js';
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
 
 // Components
-import { OceanProvider } from '@oceanprotocol/react';
+import { OceanProvider, useOcean } from '@oceanprotocol/react';
 import Navbar from './components/Navbar';
 import Panel from './components/Panel';
 //import PublishForm from './components/PublishForm'
@@ -22,18 +22,16 @@ import Label from './components/Label';
 import './styles/global.css';
 import './styles/App.css';
 
-
-
 let [network, infuraId] = ['mainnet', "92722306e5f042e6af0e80e253125972"];
 
 // Creates the wallet connect provider (necessary for ocean)
 const providerOptions = {
-  walletconnect: {
-    package: WalletConnectProvider,
-    options: {
-      infuraId: infuraId
+    walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+            infuraId: infuraId
+        }
     }
-  }
 };
 
 // Creates the options
@@ -49,7 +47,7 @@ const oceanDefaultConfig = new ConfigHelper().getConfig(
     infuraId // infura id
 )
 
-const config = {
+const oceanConfig = {
     ...oceanDefaultConfig,
     metadataCacheUri: 'https://your-metadata-cache.com',
     providerUri: 'https://your-provider.com'
@@ -73,7 +71,7 @@ class App extends Component {
         else {
             switch (nextToDisplay) {
                 case 'mint':
-                    return <Panel>mint</Panel>;
+                    return <Panel>mint<MyTestOceanComponent /></Panel>;
                 case 'analyze':
                     return <Panel>analyze</Panel>;
                 case 'wallet':
@@ -96,7 +94,7 @@ class App extends Component {
 
     render() {
         return (
-            <OceanProvider>
+            <OceanProvider initialConfig={oceanConfig} web3ModalOpts={web3ModalOpts}>
                 <div className={"app"}>
                     <Header nextDisplay={this.setNextPanel.bind(this)} />
 
@@ -116,6 +114,16 @@ class App extends Component {
     }
 }
 
+let MyTestOceanComponent = props => {
+    const { ocean, accountId } = useOcean();
+
+    return (
+        <ul>
+            <li>Ocean available: {`${Boolean(ocean)}`}</li>
+            <li>Account: {accountId}</li>
+        </ul>
+    )
+}
 
 const JellyFishLogo = (props) => {
     return (
