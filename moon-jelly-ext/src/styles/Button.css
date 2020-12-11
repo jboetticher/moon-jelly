@@ -12,7 +12,6 @@
     font-family: var(--font-family-base);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
-    border-radius: 0px;
     transition: 0.2s ease-out;
     color: var(--brand-white);
     background: var(--brand-grey-light);
@@ -59,7 +58,7 @@
     text-transform: uppercase;
     border-radius: 2px;
     transition: 0.2s ease-out;
-    color: var(--brand-gradient);
+    color: var(--brand-white);
     background: var(--brand-gradient);
     box-shadow: 0 9px 18px 0 rgba(0, 0, 0, 0.1);
     min-height: 45px;
@@ -97,8 +96,16 @@
 }
 
 .image :hover, :focus {
-    color: var(--brand-pink);
+    color: var(--brand-white);
     text-decoration: none;
     transform: translate3d(0, -0.05rem, 0);
     box-shadow: 0 12px 30px 0 rgba(0, 0, 0, 0.1);
+}
+
+.p-1 {
+    padding: 1rem;
+}
+
+.no-round {
+    border-radius: 0px !important;
 }

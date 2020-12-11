@@ -12,25 +12,25 @@ export default class Navbar extends PureComponent {
         return (
             <header className={"container navcontainer"}>
                 <Button
-                    primary={this.props.selected == "mint"}
+                    primary={this.props.selected == "mint"} noRound
                     onClick={this.props.setNextPanel.bind(this, "mint")}
                 >
                     Mint
                 </Button>
                 <Button
-                    primary={this.props.selected == "analyze"}
+                    primary={this.props.selected == "analyze"} noRound
                     onClick={this.props.setNextPanel.bind(this, "analyze")}
                 >
                     Analyze
                 </Button>
                 <Button
-                    primary={this.props.selected == "wallet"}
+                    primary={this.props.selected == "wallet"} noRound
                     onClick={this.props.setNextPanel.bind(this, "wallet")}
                 >
                     Wallet
                 </Button>
                 <Button
-                    primary={this.props.selected == "more"}
+                    primary={this.props.selected == "more"} noRound
                     onClick={this.props.setNextPanel.bind(this, "more")}
                 >
                     More

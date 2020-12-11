@@ -174,7 +174,7 @@ export default class DataWallet extends Component {
                         />
                         <div style={{ textAlign: "center" }}>
                             <Button
-                                primary
+                                primary padding
                                 type="submit"
                                 disabled={!formValid}
                                 onClick={this.saveWalletAddress.bind(this)}

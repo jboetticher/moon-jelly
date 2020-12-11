@@ -17,7 +17,7 @@
     --orange: #b35f36;
     --yellow: #eac146;
     
-    --brand-gradient: linear-gradient(to right bottom, --brand-purple, --brand-pink);
+    --brand-gradient: linear-gradient(to right bottom, var(--brand-purple), var(--brand-pink));
     
     --body-background: darken(--brand-white, 1%);
     

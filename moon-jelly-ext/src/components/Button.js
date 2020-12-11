@@ -8,12 +8,14 @@ export default class Button extends PureComponent {
         image: PropTypes.bool,
         primary: PropTypes.bool,
         link: PropTypes.bool,
-        href: PropTypes.string
+        href: PropTypes.string,
+        padding: PropTypes.bool,
+        noRound: PropTypes.bool
     }
 
     render() {
         let classes;
-        const { primary, link, href, image, children, ...props } = this.props;
+        const { primary, link, href, image, children, padding, noRound, ...props } = this.props;
 
         if (primary) {
             classes = "buttonPrimary";
@@ -24,6 +26,13 @@ export default class Button extends PureComponent {
         }
         else {
             classes = "button";
+        }
+
+        if(padding) {
+            classes += " p-1";
+        }
+        if(noRound) {
+            classes += " no-round";
         }
 
         return href ? (
