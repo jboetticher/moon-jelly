@@ -1,0 +1,55 @@
+@import './variables.css';
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: parent;
+    padding-top: 5px 0;
+
+}
+.logoContainer {
+    flex: 1;
+    text-align: right
+}
+.textContainer {
+    flex: 2;
+    text-align: left;
+    max-width: 200px;
+}
+.titleContainer {
+    padding-top: 10px;
+}
+.title {
+    font-weight: 400;
+    font-size: 18px;
+    color: #07333a;
+}
+.description {
+    font-weight: 300;
+    font-size: 14px;
+    color: #8b98a9;
+    text-overflow: clip;
+}
+.metadata {
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 300;
+    color: #b2b2b2;
+}
+hr {
+    margin: 0;
+    padding: 5px
+}
+br {
+    margin: 0px;
+}
+a {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+a:hover {
+    color: #7b1173
+}

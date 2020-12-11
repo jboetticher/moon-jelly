@@ -11,7 +11,7 @@ import Navbar from './components/Navbar';
 import Panel from './components/Panel';
 //import PublishForm from './components/PublishForm'
 //import Search from './components/Search'
-//import DataWallet from './components/DataWallet'
+import DataWallet from './components/DataWallet';
 import Header from './components/Header';
 import Label from './components/Label';
 //import Footer from './components/Footer'
@@ -46,7 +46,7 @@ class App extends Component {
                     return <Panel>analyze</Panel>;
                 case 'wallet':
                     console.log("Will display wallet now");
-                    return <Panel>wallet</Panel>;
+                    return <Panel><DataWallet /></Panel>;
                 case 'home':
                     console.log("Will display home now");
                     return <JellyFishLogo />

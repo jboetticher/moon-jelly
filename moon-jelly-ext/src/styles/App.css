@@ -9,6 +9,7 @@
 }
 .navbar {
     flex: 1;
+    width: inherit;
 }
 .content {
     margin-top: 160px;
