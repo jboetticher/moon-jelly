@@ -17,15 +17,14 @@ export default class Navbar extends PureComponent {
                     Mint
                 </Button>
                 <Button
-                    primary={this.props.selected == "search"}
-                >
-                    Search
-                </Button>
-
-                <Button
                     primary={this.props.selected == "analyze"}
                 >
                     Analyze
+                </Button>
+                <Button
+                    primary={this.props.selected == "wallet"}
+                >
+                    Wallet
                 </Button>
                 <Button
                     primary={this.props.selected == "more"}

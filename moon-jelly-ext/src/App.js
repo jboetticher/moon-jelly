@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 //import { ReactComponent as Jellyfish } from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
 
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar';
+import Panel from './components/Panel';
 //import PublishForm from './components/PublishForm'
 //import Search from './components/Search'
 //import DataWallet from './components/DataWallet'
@@ -21,7 +22,6 @@ class App extends Component {
         this.state = { nextToDisplay: '' }
     }
 
-    /*
     chooseDisplay(nextToDisplay) {
         switch (nextToDisplay) {
             case 'publish':
@@ -40,23 +40,26 @@ class App extends Component {
                 return <JellyFishLogo />
         }
     }
-    */
 
-    setNextDisplay(nextDisplay) {
-        switch (nextDisplay) {
-            case 'publish':
+    /**
+     * Sets the id of the next panel
+     * @param {"id of the panel to change to"} nextPanel 
+     */
+    setNextPanel(nextPanel) {
+        switch (nextPanel) {
+            case 'mint':
                 if (this.state.nextToDisplay != 'publish') {
                     this.setState({ nextToDisplay: 'publish' })
-                }
-                break;
-            case 'search':
-                if (this.state.nextToDisplay != 'search') {
-                    this.setState({ nextToDisplay: 'search' })
                 }
                 break;
             case 'wallet':
                 if (this.state.nextToDisplay != 'wallet') {
                     this.setState({ nextToDisplay: 'wallet' })
+                }
+                break;
+            case 'analyze':
+                if (this.state.nextToDisplay != 'search') {
+                    this.setState({ nextToDisplay: 'search' })
                 }
                 break;
             case 'home':
@@ -79,11 +82,11 @@ class App extends Component {
     render() {
         return (
             <div className={"app"}>
-                <Header nextDisplay={this.setNextDisplay.bind(this)} />
+                <Header nextDisplay={this.setNextPanel.bind(this)} />
 
                 <div className={"container"}>
                     <div className={"navbar"}>
-                        <Navbar nextDisplay={this.setNextDisplay.bind(this)} />
+                        <Navbar nextDisplay={this.setNextPanel.bind(this)} />
                         {/*<Navbar selected={this.state.nextToDisplay} nextDisplay={this.setNextDisplay.bind(this)} />*/}
                     </div>
                     <div className={"content"}>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 function AddPanel(panel) {
-
+    
 }
 
 function RemovePanel(panel) {
