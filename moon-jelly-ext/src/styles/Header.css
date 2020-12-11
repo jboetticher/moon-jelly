@@ -1,7 +1,10 @@
 @import '../styles/variables.css';
 
 .appHeader {
-    padding: var(--spacer) var(--spacer) / 1.5;
+    padding-left: var(--spacer);
+    padding-right: var(--spacer);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     color: var(--brand-white);
     display: flex;
     flex-wrap: wrap;
