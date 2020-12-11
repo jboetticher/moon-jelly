@@ -62,33 +62,7 @@ class App extends Component {
      * @param {"id of the panel to change to"} nextPanel 
      */
     setNextPanel(nextPanel) {
-        switch (nextPanel) {
-            case 'mint':
-                if (this.state.nextToDisplay != 'mint') {
-                    this.setState({ nextToDisplay: 'mint' })
-                }
-                break;
-            case 'wallet':
-                if (this.state.nextToDisplay != 'wallet') {
-                    this.setState({ nextToDisplay: 'wallet' })
-                }
-                break;
-            case 'analyze':
-                if (this.state.nextToDisplay != 'analyze') {
-                    this.setState({ nextToDisplay: 'analyze' })
-                }
-                break;
-            case 'home':
-                if (this.state.nextToDisplay != 'home') {
-                    this.setState({ nextToDisplay: 'home' })
-                }
-                break;
-            default:
-                if (this.state.nextToDisplay != 'home') {
-                    this.setState({ nextToDisplay: 'home' })
-                }
-                break;
-        }
+        this.setState({ nextToDisplay: nextPanel });
     }
 
     render() {

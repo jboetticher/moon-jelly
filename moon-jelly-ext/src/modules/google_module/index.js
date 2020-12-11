@@ -7,8 +7,9 @@ const google_module = () => (
 );
 
 export default {
-    props: {
-        hasPanel: "true"
-    },
     name: 'google_module',
+    properties: {
+        hasPanel: true
+    },
+    panel: google_module
 }
