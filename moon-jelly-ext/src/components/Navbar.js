@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import Button from './Button.js';
 
 export default class Navbar extends PureComponent {
     constructor(props) {
@@ -8,11 +9,23 @@ export default class Navbar extends PureComponent {
 
     render() {
         return (
-            <header style={{display: "flex"}}>
-                <div>Mint</div>
-                <div>Search</div>
-                <div>Analyze</div>
-                <div>More</div>
+            <header className={"container"}>
+                <Button
+                    primary={this.props.selected == "mint"}
+                >
+                    Publish
+                </Button>
+                <Button
+                    primary={this.props.selected == "search"}
+                >
+                    Search
+                </Button>
+
+                <Button
+                    primary={this.props.selected == "analyze"}
+                >
+                    Wallet
+                </Button>
             </header>
         )
     }

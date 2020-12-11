@@ -4,16 +4,14 @@ import React, { Component } from 'react';
 //import { ReactComponent as Jellyfish } from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
 
-//import Navbar from './components/Navbar'
+import Navbar from './components/Navbar'
 //import PublishForm from './components/PublishForm'
 //import Search from './components/Search'
 //import DataWallet from './components/DataWallet'
 import Header from './components/Header';
 import Label from './components/Label';
-import Navbar from './components/Navbar'
 //import Footer from './components/Footer'
 //import Button from './components/Button'
-
 import './styles/global.css';
 import './styles/App.css';
 
@@ -83,9 +81,10 @@ class App extends Component {
         return (
             <div className={"app"}>
                 <Header nextDisplay={this.setNextDisplay.bind(this)} />
+
                 <div className={"container"}>
                     <div className={"navbar"}>
-                        <Navbar />
+                        <Navbar nextDisplay={this.setNextDisplay.bind(this)} />
                         {/*<Navbar selected={this.state.nextToDisplay} nextDisplay={this.setNextDisplay.bind(this)} />*/}
                     </div>
                     <div className={"content"}>

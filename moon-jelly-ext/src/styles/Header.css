@@ -1,4 +1,4 @@
-@import '../styles/variables';
+@import '../styles/variables.css';
 
 .appHeader {
     padding: var(--spacer) var(--spacer) / 1.5;

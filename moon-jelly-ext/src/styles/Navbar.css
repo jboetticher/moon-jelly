@@ -1,0 +1,12 @@
+@import '../styles/variables.css';
+
+.container {
+    width: var(--appWidth);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: (var(--spacer) * 3.5);
+    position: fixed;
+    top: 50;
+    z-index: 3;
+}
