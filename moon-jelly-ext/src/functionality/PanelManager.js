@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
 function AddPanel(panel) {
-    
+
 }
 
 function RemovePanel(panel) {
 
 }
 
-function GetPanels() {
+function GetPanel(panelName) {
 
 }
 
-function HasPanel() {
-
+function HasPanel(panelName) {
+    return false;
 }
 

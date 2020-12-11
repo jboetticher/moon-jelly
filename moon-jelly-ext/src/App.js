@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 
-//import jelli from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
-//import { ReactComponent as Jellyfish } from '@oceanprotocol/art/jellyfish/jellyfish-full.svg'
+// Functionality
+import './functionality/PanelManager.js';
+
+// Assets
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
 
+// Components
 import Navbar from './components/Navbar';
 import Panel from './components/Panel';
 //import PublishForm from './components/PublishForm'
@@ -22,19 +25,30 @@ class App extends Component {
         this.state = { nextToDisplay: '' }
     }
 
+    // on startup add the core default panels like mint & search
+
+    /**
+     * 
+     * @param {the id of the display to show} nextToDisplay 
+     */
     chooseDisplay(nextToDisplay) {
+        
+        if(HasPanel(nextToDisplay)) {
+            return GetPanel("shit");
+        }
+
         switch (nextToDisplay) {
-            case 'publish':
-                console.log("Will display Publish now")
+            case 'mint':
+                console.log("Will display mint now")
                 return <PublishForm />
-            case 'search':
-                console.log("Will display Publish now")
+            case 'analyze':
+                console.log("Will display analyze now")
                 return <Search />
             case 'wallet':
-                console.log("Will display Publish now")
+                console.log("Will display wallet now")
                 return <DataWallet />
             case 'home':
-                console.log("Will display Publish now")
+                console.log("Will display home now")
                 return <JellyFishLogo />
             default:
                 return <JellyFishLogo />
@@ -42,7 +56,7 @@ class App extends Component {
     }
 
     /**
-     * Sets the id of the next panel
+     * Sets the id of the next panel.
      * @param {"id of the panel to change to"} nextPanel 
      */
     setNextPanel(nextPanel) {
@@ -58,8 +72,8 @@ class App extends Component {
                 }
                 break;
             case 'analyze':
-                if (this.state.nextToDisplay != 'search') {
-                    this.setState({ nextToDisplay: 'search' })
+                if (this.state.nextToDisplay != 'analyze') {
+                    this.setState({ nextToDisplay: 'analyze' })
                 }
                 break;
             case 'home':
@@ -73,10 +87,6 @@ class App extends Component {
                 }
                 break;
         }
-    }
-
-    onComponentDidMount() {
-        console.log("brugermy");
     }
 
     render() {
