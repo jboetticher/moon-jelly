@@ -46,7 +46,7 @@ class App extends Component {
                     return <Panel>analyze</Panel>;
                 case 'wallet':
                     console.log("Will display wallet now");
-                    return <Panel><DataWallet /></Panel>;
+                    return <DataWallet />;
                 case 'home':
                     console.log("Will display home now");
                     return <JellyFishLogo />
