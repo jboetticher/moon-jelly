@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // Functionality
-import './functionality/PanelManager.js';
+import * as PanelManager from './functionality/PanelManager.js';
 
 // Assets
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
@@ -32,26 +32,28 @@ class App extends Component {
      * @param {the id of the display to show} nextToDisplay 
      */
     chooseDisplay(nextToDisplay) {
-        
-        if(HasPanel(nextToDisplay)) {
-            return GetPanel("shit");
-        }
 
-        switch (nextToDisplay) {
-            case 'mint':
-                console.log("Will display mint now")
-                return <PublishForm />
-            case 'analyze':
-                console.log("Will display analyze now")
-                return <Search />
-            case 'wallet':
-                console.log("Will display wallet now")
-                return <DataWallet />
-            case 'home':
-                console.log("Will display home now")
-                return <JellyFishLogo />
-            default:
-                return <JellyFishLogo />
+        if (PanelManager.HasPanel(nextToDisplay)) {
+            return PanelManager.GetPanel(nextToDisplay);
+        }
+        else {
+            switch (nextToDisplay) {
+                case 'mint':
+                    console.log("Will display mint now");
+                    return <Panel>mint</Panel>;
+                case 'analyze':
+                    console.log("Will display analyze now");
+                    return <Panel>analyze</Panel>;
+                case 'wallet':
+                    console.log("Will display wallet now");
+                    return <Panel>wallet</Panel>;
+                case 'home':
+                    console.log("Will display home now");
+                    return <JellyFishLogo />
+                default:
+                    console.log("Will display home now");
+                    return <JellyFishLogo />
+            }
         }
     }
 
@@ -62,8 +64,8 @@ class App extends Component {
     setNextPanel(nextPanel) {
         switch (nextPanel) {
             case 'mint':
-                if (this.state.nextToDisplay != 'publish') {
-                    this.setState({ nextToDisplay: 'publish' })
+                if (this.state.nextToDisplay != 'mint') {
+                    this.setState({ nextToDisplay: 'mint' })
                 }
                 break;
             case 'wallet':
@@ -96,12 +98,11 @@ class App extends Component {
 
                 <div className={"container"}>
                     <div className={"navbar"}>
-                        <Navbar nextDisplay={this.setNextPanel.bind(this)} />
-                        {/*<Navbar selected={this.state.nextToDisplay} nextDisplay={this.setNextDisplay.bind(this)} />*/}
+                        <Navbar selected={this.state.nextToDisplay} setNextPanel={this.setNextPanel.bind(this)} />
+                        {/*<Navbar  nextDisplay={this.setNextDisplay.bind(this)} />*/}
                     </div>
                     <div className={"content"}>
-                        {/*this.chooseDisplay(this.state.nextToDisplay)*/}
-                        <JellyFishLogo />
+                        {this.chooseDisplay(this.state.nextToDisplay)}
                     </div>
                 </div>
 
@@ -114,7 +115,7 @@ class App extends Component {
 
 const JellyFishLogo = (props) => {
     return (
-        <div className={"defaultLabel"}>
+        <Panel>
             <div className={"jellyfish"}>
                 {/*<Jellyfish />*/}
                 <img src={Jellyfish} />
@@ -123,7 +124,7 @@ const JellyFishLogo = (props) => {
             <Label className={"defaultLabel"}>
                 Welcome to MoonJelly.
             </Label>
-        </div>
+        </Panel>
     )
 }
 

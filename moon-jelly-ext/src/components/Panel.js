@@ -1,8 +1,12 @@
 import React, { PureComponent } from 'react';
 
-export default Panel = props => {
+let Panel = props => {
 
     return (
-        <div className="defaultLabel"></div>
+        <div className="defaultLabel">
+            {props.children}
+        </div>
     );
 }
+
+export default Panel;
