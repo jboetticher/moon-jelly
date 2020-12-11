@@ -14,7 +14,7 @@ export default class Navbar extends PureComponent {
                 <Button
                     primary={this.props.selected == "mint"}
                 >
-                    Publish
+                    Mint
                 </Button>
                 <Button
                     primary={this.props.selected == "search"}
@@ -25,7 +25,12 @@ export default class Navbar extends PureComponent {
                 <Button
                     primary={this.props.selected == "analyze"}
                 >
-                    Wallet
+                    Analyze
+                </Button>
+                <Button
+                    primary={this.props.selected == "more"}
+                >
+                    More
                 </Button>
             </header>
         )

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import styles from '../styles/Button.css'
+import '../styles/Button.css'
 
 export default class Button extends PureComponent {
     static propTypes = {
@@ -16,14 +16,14 @@ export default class Button extends PureComponent {
         const { primary, link, href, image, children, ...props } = this.props;
 
         if (primary) {
-            classes = styles.buttonPrimary;
+            classes = "buttonPrimary";
         } else if (link) {
-            classes = styles.link;
+            classes = "link";
         } else if (image) {
-            classes = styles.image;
+            classes = "image";
         }
         else {
-            classes = styles.button;
+            classes = "button";
         }
 
         return href ? (
