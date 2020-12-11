@@ -40,7 +40,6 @@ class App extends Component {
                 return <JellyFishLogo />
         }
     }
-
     */
 
     setNextDisplay(nextDisplay) {
