@@ -12,7 +12,8 @@
         no-repeat center -6rem;
     background-size: cover;
     overflow: hidden;
-    position: fixed;
+    /*position: fixed;*/
+    position: inherit;
     top: 0;
     width: var(--appWidth);
     z-index: 3;

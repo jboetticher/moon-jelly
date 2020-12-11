@@ -22,5 +22,5 @@
     "https://*/"
   ],
   "content_security_policy": 
-    "default-src 'self' 'sha256-Yn68JpAtOvdtm/tD90ulbzac9ul8IHXaLb2nUIVvBog='; script-src 'self' 'sha256-Yn68JpAtOvdtm/tD90ulbzac9ul8IHXaLb2nUIVvBog='; font-src 'self' data: 'sha256-Yn68JpAtOvdtm/tD90ulbzac9ul8IHXaLb2nUIVvBog='"
+    "default-src 'self' 'sha256-Wj33Iz/8B2AzGXNt16seud/6PwCs7Z43B3D7Bo9hd4c='; script-src 'self' 'sha256-Wj33Iz/8B2AzGXNt16seud/6PwCs7Z43B3D7Bo9hd4c='; font-src 'self' data: 'sha256-Wj33Iz/8B2AzGXNt16seud/6PwCs7Z43B3D7Bo9hd4c='"
 }

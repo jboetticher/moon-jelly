@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import Button from './Button.js';
+import "../styles/Navbar.css";
 
 export default class Navbar extends PureComponent {
     constructor(props) {
@@ -9,7 +10,7 @@ export default class Navbar extends PureComponent {
 
     render() {
         return (
-            <header className={"container"}>
+            <header className={"container navcontainer"}>
                 <Button
                     primary={this.props.selected == "mint"}
                 >

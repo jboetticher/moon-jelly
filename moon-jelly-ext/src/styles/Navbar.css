@@ -1,6 +1,6 @@
 @import '../styles/variables.css';
 
-.container {
+.container .navcontainer  {
     width: var(--appWidth);
     display: flex;
     flex-direction: row;
