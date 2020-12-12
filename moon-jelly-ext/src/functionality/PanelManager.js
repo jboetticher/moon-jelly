@@ -8,11 +8,21 @@ const modulesObject = modules;
 console.log(modulesObject);
 
 function GetPanel(panelName) {
-    return (
-    <Panel>
-        {modulesObject[1].panel()}
-    </Panel>
-    );
+
+    for(var i = 0; i < modulesObject.length; i++) {
+
+        const sameName = modulesObject[i].name === panelName;
+        const panelIncluded = modulesObject[i].properties != null && modulesObject[i].properties.hasPanel === true;
+
+        if(sameName && panelIncluded) {
+            return (
+                <Panel>
+                    {modulesObject[i].panel()}
+                </Panel>
+            );
+        }
+    }
+ 
 }
 
 function HasPanel(panelName) {
