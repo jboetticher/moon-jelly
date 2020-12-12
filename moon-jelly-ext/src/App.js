@@ -22,7 +22,9 @@ import Label from './components/Label';
 import './styles/global.css';
 import './styles/App.css';
 
-let [network, infuraId] = ['mainnet', "92722306e5f042e6af0e80e253125972"];
+//let [network, infuraId] = ['mainnet', "92722306e5f042e6af0e80e253125972"];
+let [network, infuraId] = ['rinkeby', "92722306e5f042e6af0e80e253125972"];
+
 
 // Creates the wallet connect provider (necessary for ocean)
 const providerOptions = {
@@ -39,24 +41,26 @@ const web3ModalOpts = {
     network: network, // which network to use
     cacheProvider: true, // optional
     providerOptions // required
-}
+};
 
 // the default configuration, can be dynamic later.
 const oceanDefaultConfig = new ConfigHelper().getConfig(
     network, // which network to use
     infuraId // infura id
-)
+);
 
 const oceanConfig = {
     ...oceanDefaultConfig,
-    metadataCacheUri: 'https://your-metadata-cache.com',
-    providerUri: 'https://your-provider.com'
-}
+    metadataCacheUri: 'https://aquarius.' + network +'.oceanprotocol.com/',
+    providerUri: 'https://provider.' + network +'.oceanprotocol.com/'
+};
+
+console.log(oceanConfig);
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { nextToDisplay: '' }
+        this.state = { nextToDisplay: '' };
     }
 
     /**
@@ -77,9 +81,9 @@ class App extends Component {
                 case 'wallet':
                     return <DataWallet />;
                 case 'home':
-                    return <JellyFishLogo />
+                    return <HomePanel />
                 default:
-                    return <JellyFishLogo />
+                    return <HomePanel />
             }
         }
     }
@@ -117,6 +121,12 @@ class App extends Component {
 let MyTestOceanComponent = props => {
     const { ocean, accountId } = useOcean();
 
+    console.log("ocean", ocean);
+    console.log("accountId", accountId);
+
+    // it's all undefined!
+    console.log(useOcean());
+
     return (
         <ul>
             <li>Ocean available: {`${Boolean(ocean)}`}</li>
@@ -125,7 +135,7 @@ let MyTestOceanComponent = props => {
     )
 }
 
-const JellyFishLogo = (props) => {
+const HomePanel = (props) => {
     return (
         <Panel>
             <div className={"jellyfish"}>
