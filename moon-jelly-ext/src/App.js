@@ -17,6 +17,8 @@ import Panel from './components/Panel';
 import DataWallet from './components/DataWallet';
 import Header from './components/Header';
 import Label from './components/Label';
+
+import ModuleMenu from './components/ModuleMenu';
 //import Footer from './components/Footer'
 //import Button from './components/Button'
 import './styles/global.css';
@@ -69,7 +71,6 @@ class App extends Component {
      * @param {the id of the display to show} nextToDisplay 
      */
     chooseDisplay(nextToDisplay) {
-
         if (PanelManager.HasPanel(nextToDisplay)) {
             return PanelManager.GetPanel(nextToDisplay);
         }
@@ -81,6 +82,8 @@ class App extends Component {
                     return <Panel>analyze</Panel>;
                 case 'wallet':
                     return <DataWallet />;
+                case 'more':
+                    return <Panel><ModuleMenu selected={this.state.nextToDisplay} setNextPanel={this.setNextPanel.bind(this)} /></Panel>;
                 case 'home':
                     return <HomePanel />
                 default:
