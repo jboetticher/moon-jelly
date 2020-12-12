@@ -49,6 +49,7 @@ const oceanDefaultConfig = new ConfigHelper().getConfig(
     infuraId // infura id
 );
 
+
 const oceanConfig = {
     ...oceanDefaultConfig,
     metadataCacheUri: 'https://aquarius.' + network +'.oceanprotocol.com/',
@@ -119,10 +120,18 @@ class App extends Component {
 }
 
 let MyTestOceanComponent = props => {
-    const { ocean, accountId } = useOcean();
+    const { ocean, accountId, connect } = useOcean();
+
+    console.log("accountId 1", accountId, accountId === undefined);
+    
+    if(accountId === undefined) {
+        console.log("yeah it's connectin");
+        connect();
+    } 
 
     console.log("ocean", ocean);
-    console.log("accountId", accountId);
+    console.log(useOcean());
+    console.log("accountId 2", accountId);
 
     // it's all undefined!
     console.log(useOcean());
