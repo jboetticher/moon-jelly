@@ -19,11 +19,10 @@ import Button from './components/Button'
 import Header from './components/Header';
 import Label from './components/Label';
 
-// Panels
-import DataWallet from './components/DataWallet';
-import Mint from './components/Mint';
-
-import ModuleMenu from './components/ModuleMenu';
+// Complete Panels
+import DataWallet from './components/complete/DataWallet';
+import Mint from './components/complete/Mint';
+import ModuleMenu from './components/complete/ModuleMenu';
 
 // Styling
 import './styles/global.css';

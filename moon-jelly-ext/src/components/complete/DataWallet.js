@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import AssetList from './AssetList'
-import Correct from './Correct'
-import Incorrect from './Incorrect'
-import Button from './Button'
-import Input from '../components/Form/Input'
-import Form from '../components/Form/Form'
+import AssetList from '../AssetList'
+import Correct from '../Correct'
+import Incorrect from '../Incorrect'
+import Button from '../Button'
+import Input from '../../components/Form/Input'
+import Form from '../../components/Form/Form'
 import * as ethereumAddress from 'ethereum-address'
-import '../styles/DataWallet.css';
+import '../../styles/DataWallet.css';
 
 
 export default class DataWallet extends Component {

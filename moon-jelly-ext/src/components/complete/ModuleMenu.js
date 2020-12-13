@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Button from './Button.js';
-import modules from '../modules';
-import '../styles/ModuleMenu.css';
+import Button from '../Button.js';
+import modules from '../../modules';
+import '../../styles/ModuleMenu.css';
 
 // exports once
 const modulesObject = modules;
@@ -22,6 +22,7 @@ export default class ModuleMenu extends Component {
                 <Button
                     primary={this.props.selected == modulesObject[i].name} noRound
                     onClick={this.props.setNextPanel.bind(this, modulesObject[i].name)}
+                    key={i}
                 >
                     {modulesObject[i].name}
                 </Button>;
