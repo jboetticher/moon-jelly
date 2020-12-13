@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 
 // Functionality
 import { ConfigHelper } from '@oceanprotocol/lib';
@@ -14,13 +14,18 @@ import Navbar from './components/Navbar';
 import Panel from './components/Panel';
 //import PublishForm from './components/PublishForm'
 //import Search from './components/Search'
-import DataWallet from './components/DataWallet';
+//import Footer from './components/Footer'
+import Button from './components/Button'
 import Header from './components/Header';
 import Label from './components/Label';
 
+// Panels
+import DataWallet from './components/DataWallet';
+import Mint from './components/Mint';
+
 import ModuleMenu from './components/ModuleMenu';
-//import Footer from './components/Footer'
-//import Button from './components/Button'
+
+// Styling
 import './styles/global.css';
 import './styles/App.css';
 
@@ -54,8 +59,8 @@ const oceanDefaultConfig = new ConfigHelper().getConfig(
 
 const oceanConfig = {
     ...oceanDefaultConfig,
-    metadataCacheUri: 'https://aquarius.' + network +'.oceanprotocol.com/',
-    providerUri: 'https://provider.' + network +'.oceanprotocol.com/'
+    metadataCacheUri: 'https://aquarius.' + network + '.oceanprotocol.com/',
+    providerUri: 'https://provider.' + network + '.oceanprotocol.com/'
 };
 
 console.log(oceanConfig);
@@ -77,7 +82,7 @@ class App extends Component {
         else {
             switch (nextToDisplay) {
                 case 'mint':
-                    return <Panel>mint<MyTestOceanComponent /></Panel>;
+                    return <Mint />;
                 case 'analyze':
                     return <Panel>analyze</Panel>;
                 case 'wallet':
@@ -122,42 +127,43 @@ class App extends Component {
     }
 }
 
-let MyTestOceanComponent = props => {
-    const { ocean, accountId, connect } = useOcean();
-
-    console.log("accountId 1", accountId, accountId === undefined);
-    
-    if(accountId === undefined) {
-        console.log("yeah it's connectin");
-        connect();
-    } 
-
-    console.log("ocean", ocean);
-    console.log(useOcean());
-    console.log("accountId 2", accountId);
-
-    // it's all undefined!
-    console.log(useOcean());
-
-    return (
-        <ul>
-            <li>Ocean available: {`${Boolean(ocean)}`}</li>
-            <li>Account: {accountId}</li>
-        </ul>
-    )
-}
-
 const HomePanel = (props) => {
+
+    console.log(useOcean());
+    let { ocean, accountId, connect, refreshBalance, status } = useOcean();
+
+    let [oceanConnected, setOceanConnected] = useState(status > 0);
+    useEffect( () => {
+        setOceanConnected(status > 0);
+    }, [status]);
+
+    let walletConnectionNotice = oceanConnected ? <div></div> :
+        <div className={"mt-2"}>
+            <Label className={"defaultLabel"}>
+                Connect your wallet to start.
+            </Label>
+            <Button
+                primary padding
+                type="submit"
+                disabled={oceanConnected}
+                onClick={() => {
+                    console.log("Showing connect popup.");
+                    connect();
+                }}
+            >
+                Connect to Wallet
+            </Button>
+        </div>;
+
     return (
         <Panel>
-            <div className={"jellyfish"}>
-                {/*<Jellyfish />*/}
-                <img src={Jellyfish} />
-            </div>
-            <br />
             <Label className={"defaultLabel"}>
-                Welcome to MoonJelly.
+                Welcome to MoonJelly!
             </Label>
+            <img className={"jellyfish"} src={Jellyfish} />
+            <div className={"mt-1"}>
+                {walletConnectionNotice}
+            </div>
         </Panel>
     )
 }
