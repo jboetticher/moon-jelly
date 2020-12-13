@@ -12,12 +12,14 @@ import ConnectPanel from '../ConnectPanel.js';
 let Mint = props => {
 
     // Publish helpers
-    let { publish, publishStep, publishStepText, isLoading, publishError }
+    let { publish, publishStep, publishStepText, isLoading }
         = usePublish();
+    let [ddo, setddo] = useState(null);
     useEffect(() => {
         console.log("isLoading", isLoading);
         console.log("publishStep", publishStep);
         console.log("publishStepText", publishStepText);
+        console.log("open pricing menu", walletConnected, publishStep >= 7, !isLoading);
     }, [isLoading, publishStep, publishStepText]);
 
     async function handlePublish() {
@@ -39,42 +41,108 @@ let Mint = props => {
             additionalInformation: {
                 description: 'Test Asset by Jeremy from MoonJelly (coming soon)'
             }
-        }, 'access').
-            then((res) => console.log('big pog then', res));
-
-        /*
-        console.log(ddo);
-
-        // Heads Up! You should now create pricing for your data set
-        // with the `usePricing()` hook in another step.
-        // Pricing helpers
-        const {
-            createPricing,
-            buyDT,
-            sellDT,
-            pricingStepText,
-            pricingError
-        } = usePricing(ddo)
-        */
+        }, 'access')
+            .then((resDDO) => {
+                console.log("Publish was successful. Now moving on to pricing.", resDDO);
+                setddo(resDDO);
+            });
     }
 
+
+    let detailsText = "Waiting for Publishing...";
+    if (isLoading && (publishStepText !== undefined || publishStep !== undefined)) {
+        detailsText = "Publish Step " + publishStep + ": " + publishStepText;
+    }
 
     // Use this logic to determine whether or not the wallet has been connected.
     let { walletConnected } = useWalletReady();
 
-    let mintPanel = !walletConnected ? <ConnectPanel /> :
+    // publish thing
+    let publishLoader = <div />;
+    if (walletConnected && publishStep >= 7 && !isLoading && ddo != null) {
+        publishLoader = <PricingMenu ddo={ddo} />
+    }
+    else if (walletConnected) 
+    {
+        publishLoader =
         <Panel>
             <Label>
-                {publishStepText === undefined ? "Waiting..." : publishStepText}
+                {detailsText}
             </Label>
             <Button primary padding onClick={() => {
                 handlePublish()
             }}>
                 Publish
             </Button>
-        </Panel>;
+            <div className={"loader"}></div>
+        </Panel>
+    }
+
+
+    let mintPanel = !walletConnected ? <ConnectPanel /> : publishLoader;
 
     return (mintPanel);
+}
+
+let PricingMenu = props => {
+
+    console.log("ddo in price menu: ", props?.ddo);
+
+    // Pricing options
+    const priceOptions = {
+        price: 10,
+        dtAmount: 10,
+        type: 'fixed',
+        weightOnDataToken: '',
+        swapFee: ''
+    };
+
+    // Pricing helpers
+    let [pricingData, setPricingData] = useState([false, "Waiting for Pricing...", 0]);
+    const {
+        mint,
+        createPricing,
+        buyDT,
+        sellDT,
+        pricingStep,
+        pricingStepText,
+        pricingIsLoading,
+        pricingError
+    } = usePricing(props.ddo);
+
+
+    async function handlePricing() {
+        mint(1000)
+            .then(res => {
+                return createPricing(priceOptions);
+            })
+    }
+
+    // State data for text later.
+    useEffect(() => {
+        setPricingData([pricingIsLoading, pricingStep, pricingStepText]);
+    }, [pricingIsLoading, pricingStep, pricingStepText]);
+
+    // notification text logic
+    let detailsText = "Waiting for Pricing...";
+    if (pricingIsLoading && pricingStep > 0) {
+        detailsText = "Pricing Step " + pricingStep + ": " + pricingStepText;
+    }
+
+    console.log("pricing mennooo");
+
+    return (
+        <div>
+            <Label>
+                {detailsText}
+            </Label>
+            <Button primary padding onClick={() => {
+                handlePricing()
+            }}>
+                Start Pricing
+            </Button>
+        </div>
+    );
 }
 
 
