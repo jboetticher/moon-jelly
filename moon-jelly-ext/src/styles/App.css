@@ -34,8 +34,8 @@
 }
 .jellyfish {
     padding-top: var(--spacer);
-    width: calc(var(--appWidth) / 1.5);
-    height: calc(var(--appHeight) / 1.3);
+    width: calc(var(--appWidth) / 1.8);
+    height: calc(var(--appHeight) / 1.7);
 }
 
 .mt-1 {
