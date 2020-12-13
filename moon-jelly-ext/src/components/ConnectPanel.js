@@ -26,7 +26,7 @@ const ConnectPanel = (props) => {
     let {connect, walletConnected} = useWalletReady();
 
     let noticeText = props?.titleText == null ?
-        "Woah there! You need to connect to the wallet before you can do that." :
+        "Woah there! You need to connect to your wallet before you can do that." :
         props?.titleText;
 
     if (walletConnected) noticeText = props?.connectedText == null ? "Thanks for connecting!" : props?.connectedText;
