@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { useOcean } from '@oceanprotocol/react';
+import { useWalletReady } from '../functionality/CustomOceanHooks.js';
 
 // Components
 import Label from './Label.js';
@@ -15,44 +15,48 @@ import Panel from './Panel.js';
 const ConnectPanel = (props) => {
 
     // Use this logic to determine whether or not the wallet has been connected.
+    /*
     let { connect, status } = useOcean();
     let [oceanConnected, setOceanConnected] = useState(status > 0);
     useEffect(() => {
         setOceanConnected(status > 0);
     }, [status]);
+    */
 
-
+    let {connect, walletConnected} = useWalletReady();
 
     let noticeText = props?.titleText == null ?
         "Woah there! You need to connect to the wallet before you can do that." :
         props?.titleText;
 
-    if (oceanConnected) noticeText = props?.connectedText == null ? "Thanks for connecting!" : props?.connectedText;
+    if (walletConnected) noticeText = props?.connectedText == null ? "Thanks for connecting!" : props?.connectedText;
 
-        return (
-            <Panel>
-                <div className={"mt-2"}>
-                    <Label className={"defaultLabel"}>
-                        {noticeText}
-                    </Label>
-                    {
-                        oceanConnected ? <div /> :
-                            <Button
-                                primary padding
-                                type="submit"
-                                disabled={oceanConnected}
-                                onClick={() => {
-                                    console.log("Showing connect popup.");
-                                    connect();
-                                }}
-                            >
-                                Connect to Wallet
+    return (
+        <Panel>
+            <div className={"mt-2"}>
+                <Label className={"defaultLabel"}>
+                    {noticeText}
+                </Label>
+                <br />
+                <div style={{ height: 15 }} />
+                {
+                    walletConnected ? <div /> :
+                        <Button
+                            primary padding
+                            type="submit"
+                            disabled={walletConnected}
+                            onClick={() => {
+                                console.log("Showing connect popup.");
+                                connect();
+                            }}
+                        >
+                            Connect to Wallet
                         </Button>
-                    }
+                }
 
-                </div>
-            </Panel>
-        );
+            </div>
+        </Panel>
+    );
 }
 
 export default ConnectPanel;

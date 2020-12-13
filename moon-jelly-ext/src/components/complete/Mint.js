@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { useOcean } from '@oceanprotocol/react';
+import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
 
 import Form from '../Form/Form.js';
 import Panel from '../Panel.js';
@@ -8,20 +8,18 @@ import ConnectPanel from '../ConnectPanel.js';
 
 let Mint = props => {
 
-    const { ocean, accountId, connect } = useOcean();
-    if (accountId === undefined) {
-        console.log("Showing connect popup.");
-        connect();
-    }
-    
+    // Use this logic to determine whether or not the wallet has been connected.
+    let { walletConnected } = useWalletReady();
 
-    return (
+    let mintPanel = !walletConnected ? <ConnectPanel /> :
         <Panel>
-            <p>{accountId}</p>
+            Mint Data Tokens
             <Form>
+                
             </Form>
-        </Panel>
-    );
+        </Panel>;
+
+    return (mintPanel);
 }
 
 export default Mint;
