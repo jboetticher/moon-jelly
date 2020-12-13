@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import Button from '../Button.js';
+//import Button from '../Button.js';
 import modules from '../../modules';
 import '../../styles/ModuleMenu.css';
+import ModuleMenuEntry from '../ModuleMenuEntry.js';
 
 // exports once
 const modulesObject = modules;
@@ -12,20 +13,14 @@ export default class ModuleMenu extends Component {
         this.state = {}
     }
 
-    renderModules(){
+    renderModules() {
         var mods = [];
 
         // Loop through all the modules to create a button/toggle for each
-        for(var i = 0; i < modulesObject.length; i++) {
+        for (var i = 0; i < modulesObject.length; i++) {
             // create the element
-            let currentModule = 
-                <Button
-                    primary={this.props.selected == modulesObject[i].name} noRound
-                    onClick={this.props.setNextPanel.bind(this, modulesObject[i].name)}
-                    key={i}
-                >
-                    {modulesObject[i].name}
-                </Button>;
+            let currentModule =
+                <ModuleMenuEntry name={modulesObject[i].name} key={i} selected = {this.props.selected} setNextPanel = {this.props.setNextPanel} />;
 
             // Add the module button/toggle to the array
             mods.push(currentModule);
@@ -35,11 +30,11 @@ export default class ModuleMenu extends Component {
         return mods;
     }
 
-    render(){
+    render() {
         return (
             <div className="grid-container">
                 {this.renderModules()}
-            </div> 
+            </div>
         );
     }
 }
