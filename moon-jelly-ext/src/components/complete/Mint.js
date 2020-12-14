@@ -151,21 +151,19 @@ let PricingMenu = props => {
 
     // Pricing options
     const priceOptions = {
-        price: 1,
-        dtAmount: 10,
-        oceanAmount: 10,
         type: 'fixed',
+        price: 1,
+        dtAmount: 1000,
+        oceanAmount: 10,
         weightOnDataToken: '',
         swapFee: ''
     };
 
     async function handlePricing() {
         console.log("handlePricing called");
-        mint(1000)
-            .then(res => {
-                console.log("createPricing called with priceOptions: ", priceOptions);
-                return createPricing(priceOptions);
-            })
+
+        console.log("createPricing called with priceOptions: ", priceOptions);
+        createPricing(priceOptions);
     }
 
     // State data for text later.
