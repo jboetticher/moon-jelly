@@ -91,7 +91,7 @@ export default class DataWallet extends Component {
     }
 
     validateWalletAddress(name, value) {
-        if (name != "address") {
+        if (name !== "address") {
             return
         }
         let fieldValidationErrors = this.state.formErrors
@@ -156,7 +156,7 @@ export default class DataWallet extends Component {
         )
     }
     renderWalletForm() {
-        let { address, formValid, formErrors } = this.state
+        let { address, formValid } = this.state
         return (
             <div className={"container"}>
                 <Form
