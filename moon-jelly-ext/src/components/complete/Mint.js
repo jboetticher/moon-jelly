@@ -13,24 +13,28 @@ import Correct from '../Correct.js';
 let Mint = props => {
 
     // Form data
+    let [url, setURL] = useState("");
+    let [author, setAuthor] = useState("");
+    let [dataname, setDataName] = useState("");
 
     // Publish helpers
-    let { publish, publishStep, publishStepText, isLoading }
+    let { publish, publishStep, publishStepText, isLoading, publishError }
         = usePublish();
     let [ddo, setddo] = useState(null);
     useEffect(() => {
         console.log("isLoading", isLoading);
         console.log("publishStep", publishStep);
         console.log("publishStepText", publishStepText);
-        console.log("open pricing menu", walletConnected, publishStep >= 7, !isLoading);
+        console.log("publishError", publishError);
     }, [isLoading, publishStep, publishStepText]);
 
     async function handlePublish() {
         const ddo = await publish({
             main: {
                 type: 'dataset',
-                name: "Jeremy's Assets uwu",
-                author: "jeremy",
+                name: dataname,
+                dateCreated: new Date(Date.now()).toISOString().split('.')[0] + 'Z', // remove milliseconds
+                author: author,
                 license: 'MIT',
                 files: [{
                     url: 'https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt',
@@ -51,6 +55,9 @@ let Mint = props => {
             });
     }
 
+    function formIsValid() {
+        return url !== "" && author != "" && dataname != "";
+    }
 
     let detailsText = "Waiting for Publishing...";
     if (isLoading && publishStepText !== undefined) {
@@ -84,46 +91,53 @@ let Mint = props => {
         else {
             publishLoader =
                 <Panel>
-                    <div className={"mb-2"}>
-                        Press the button to start minting!
+                    <form className={"form"}>
+                        <Input
+                            type="text"
+                            name="dataname"
+                            placeholder={dataname ? dataname : "My Assets"}
+                            value={dataname}
+                            help="Enter the name of your dataset."
+                            onChange={(e) => {
+                                const { name, value } = e.target;
+                                setDataName(value)
+                            }}
+                        />
+                        <Input
+                            type="text"
+                            name="dataurl"
+                            placeholder={url ? url : "Data URL"}
+                            value={url}
+                            help="Enter the link to your the data."
+                            onChange={(e) => {
+                                const { name, value } = e.target;
+                                setURL(value)
+                            }}
+                        />
+                        <Input
+                            type="text"
+                            name="author"
+                            placeholder={author ? author : "Author Name"}
+                            value={author}
+                            help="Enter the name of the data set's author (displayed on the Ocean Market)."
+                            onChange={(e) => {
+                                const { name, value } = e.target;
+                                setAuthor(value)
+                            }}
+                        />
+                        <div className={"mb-2"}>
+                            Press the button to start minting!
                     </div>
-                    <Button primary padding onClick={() => {
-                        handlePublish();
-                    }}>
-                        Publish
+                        <Button primary padding type="submit" disabled={!formIsValid()}
+                            onClick={() => {
+                                handlePublish();
+                            }
+                        }>
+                            Publish
                     </Button>
+                    </form>
                 </Panel>
         }
-
-        /*
-            <Input
-                type="text"
-                name="address"
-                placeholder={address ? address : "Your Wallet Address"}
-                value={address}
-                help="Enter your valid Ethereum Address"
-                onChange={this.handleUserInput.bind(this)}
-            />
-        */
-
-        //let [url, setURL] = useState("");
-        //let [author, setAuthor] = useState("OceanProtocol User");
-        //let [name, setName] = useState("My Assets");
-
-        /*
-        type: 'dataset',
-            name: "Jeremy's Assets uwu",
-            author: "jeremy",
-            license: 'MIT',
-            files: [{
-                url: 'https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt',
-                checksum: 'efb2c764274b745f5fc37f97c6b0e761',
-                contentLength: '4535431',
-                contentType: 'text/csv',
-                encoding: 'UTF-8',
-                compression: 'zip'
-            }]
-        */
     }
 
 
@@ -153,8 +167,8 @@ let PricingMenu = props => {
     const priceOptions = {
         type: 'fixed',
         price: 1,
-        dtAmount: 1000,
-        oceanAmount: 10,
+        dtAmount: 500,
+        oceanAmount: 0,
         weightOnDataToken: '',
         swapFee: ''
     };
