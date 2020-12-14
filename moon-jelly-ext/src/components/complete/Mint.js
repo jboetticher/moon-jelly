@@ -132,7 +132,7 @@ let Mint = props => {
                             onClick={() => {
                                 handlePublish();
                             }
-                        }>
+                            }>
                             Publish
                     </Button>
                     </form>
@@ -151,12 +151,16 @@ let PricingMenu = props => {
     console.log("ddo in price menu: ", props?.ddo);
 
     // Pricing helpers
+    let [price, setPrice] = useState(1);
+    let [dtAmount, setDTAmount] = useState(500);
+
+    // Pricing helpers
     let [pricingData, setPricingData] = useState([false, "Waiting for Pricing...", 0, undefined]);
     const {
-        mint,
+        //mint,
         createPricing,
         //buyDT,
-        sellDT,
+        //sellDT,
         pricingStep,
         pricingStepText,
         pricingIsLoading,
@@ -164,10 +168,10 @@ let PricingMenu = props => {
     } = usePricing(props.ddo);
 
     // Pricing options
-    const priceOptions = {
+    let priceOptions = {
         type: 'fixed',
-        price: 1,
-        dtAmount: 500,
+        price: price,
+        dtAmount: dtAmount,
         oceanAmount: 0,
         weightOnDataToken: '',
         swapFee: ''
@@ -209,6 +213,28 @@ let PricingMenu = props => {
     else {
         pricingSection =
             <Panel>
+                <Input
+                    type="text"
+                    name="price"
+                    placeholder={price ? price : 1}
+                    value={dataname}
+                    help="Enter the price of your datatoken."
+                    onChange={(e) => {
+                        const { name, value } = e.target;
+                        setPrice(value)
+                    }}
+                />
+                <Input
+                    type="text"
+                    name="price"
+                    placeholder={dtAmount ? dtAmount : 500}
+                    value={dataname}
+                    help="Enter the amount of datatokens that ocean can sell."
+                    onChange={(e) => {
+                        const { name, value } = e.target;
+                        setDTAmount(value)
+                    }}
+                />
                 <div className={"mb-2"}>
                     Press the button to start the pricing process!
                 </div>
