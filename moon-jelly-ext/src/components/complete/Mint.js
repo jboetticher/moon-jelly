@@ -16,6 +16,7 @@ let Mint = props => {
     let [url, setURL] = useState("");
     let [author, setAuthor] = useState("");
     let [dataname, setDataName] = useState("");
+    let [description, setDescription] = useState("");
 
     // Publish helpers
     let { publish, publishStep, publishStepText, isLoading, publishError }
@@ -46,7 +47,7 @@ let Mint = props => {
                 }]
             },
             additionalInformation: {
-                description: 'Test Asset by Jeremy from MoonJelly (coming soon)'
+                description: description
             }
         }, 'access')
             .then((resDDO) => {
@@ -56,7 +57,20 @@ let Mint = props => {
     }
 
     function formIsValid() {
-        return url !== "" && author != "" && dataname != "";
+        return url !== "" && author != "" && dataname != "" && isValidUrl(url);
+    }
+
+    function isValidUrl(str) {
+        var pattern = new RegExp(
+            '^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$',
+            'i'
+        ) // fragment locator
+        return !!pattern.test(str)
     }
 
     let detailsText = "Waiting for Publishing...";
@@ -123,6 +137,17 @@ let Mint = props => {
                             onChange={(e) => {
                                 const { name, value } = e.target;
                                 setAuthor(value)
+                            }}
+                        />
+                        <Input
+                            type="text"
+                            name="author"
+                            placeholder={description ? description : "Data Description"}
+                            value={description}
+                            help="Enter the description of the data set."
+                            onChange={(e) => {
+                                const { name, value } = e.target;
+                                setDescription(value)
                             }}
                         />
                         <div className={"mb-2"}>
@@ -217,7 +242,7 @@ let PricingMenu = props => {
                     type="text"
                     name="price"
                     placeholder={price ? price : 1}
-                    value={dataname}
+                    value={price}
                     help="Enter the price of your datatoken."
                     onChange={(e) => {
                         const { name, value } = e.target;
@@ -228,7 +253,7 @@ let PricingMenu = props => {
                     type="text"
                     name="price"
                     placeholder={dtAmount ? dtAmount : 500}
-                    value={dataname}
+                    value={dtAmount}
                     help="Enter the amount of datatokens that ocean can sell."
                     onChange={(e) => {
                         const { name, value } = e.target;

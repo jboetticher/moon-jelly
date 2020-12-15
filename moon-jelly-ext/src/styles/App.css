@@ -10,6 +10,7 @@
 .navbar {
     flex: 1;
     width: inherit;
+    margin-top: 80px;
 }
 .content {
     margin-top: 4rem;
