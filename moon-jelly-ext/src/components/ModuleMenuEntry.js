@@ -1,6 +1,43 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import Button from './Button.js';
+import { useWebStorage } from '../functionality/WebStorageHooks.js'
 
+/**
+ * Stores the state of the checkbox as module_name, value in localStorage
+ * ex. ['slate_module', 'false'] or ['google_module', 'true']
+ */
+let ModuleMenuEntry = props => {
+    let { storeToLocal, getFromLocal } = useWebStorage();
+
+    // keeps track of state of checkbox (when this changes, checkbox visually updates)
+    let [enabled, setEnabled] = useState(getFromLocal(props.name) == 'true' ? true : false);
+
+    // called when checkbox is clicked
+    // flips the enabled state value
+    // flips the value stored in localStorage
+    function onCheckChange(){
+        storeToLocal(props.name, !enabled);
+        setEnabled(!enabled);
+    }
+
+    return (
+        <div>
+            <input type="checkbox" checked={enabled} 
+                onChange={() => onCheckChange()} />
+
+            <Button
+                primary={props.selected == props.name} noRound
+                onClick={props.setNextPanel.bind(props.name)}
+            >
+                {props.name}
+            </Button>
+        </div>
+    );
+}
+
+export default ModuleMenuEntry
+
+/*
 export default class ModuleMenuEntry extends Component {
     constructor(props) {
         super(props);
@@ -8,6 +45,8 @@ export default class ModuleMenuEntry extends Component {
             enabled: false
         }
     }
+
+    //let { useStoreToLocal, useGetFromLocal } = useWebStorage();
 
     // Check if we can use web storage in the browser
     storageAvailable(type) {
@@ -87,3 +126,4 @@ export default class ModuleMenuEntry extends Component {
         );
     }
 }
+*/
