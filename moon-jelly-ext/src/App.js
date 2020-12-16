@@ -23,6 +23,7 @@ import Label from './components/Label';
 import DataWallet from './components/complete/DataWallet';
 import Mint from './components/complete/Mint';
 import ModuleMenu from './components/complete/ModuleMenu';
+import Market from './components/complete/Market';
 
 // Styling
 import './styles/global.css';
@@ -82,8 +83,8 @@ class App extends Component {
             switch (nextToDisplay) {
                 case 'mint':
                     return <Mint />;
-                case 'analyze':
-                    return <Panel>analyze</Panel>;
+                case 'market':
+                    return <Market />;
                 case 'wallet':
                     return <DataWallet />;
                 case 'more':

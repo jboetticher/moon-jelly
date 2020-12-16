@@ -18,10 +18,10 @@ export default class Navbar extends PureComponent {
                     Mint
                 </Button>
                 <Button
-                    primary={this.props.selected == "analyze"} noRound
-                    onClick={this.props.setNextPanel.bind(this, "analyze")}
+                    primary={this.props.selected == "market"} noRound
+                    onClick={this.props.setNextPanel.bind(this, "market")}
                 >
-                    Analyze
+                    Market
                 </Button>
                 <Button
                     primary={this.props.selected == "wallet"} noRound
