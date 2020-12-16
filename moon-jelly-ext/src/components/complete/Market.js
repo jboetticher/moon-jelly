@@ -14,7 +14,7 @@ let Analyze = props => {
 
     const request = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?=");
     fetch(request)
-        .then(response => response.blob())
+        .then(response => response.json())
         .then(response => console.log(response));
 
     let [searchterms, setSearchterms] = useState("");
