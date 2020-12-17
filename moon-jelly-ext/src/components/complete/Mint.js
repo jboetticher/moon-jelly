@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
-
-import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
 import { usePublish, usePricing } from '@oceanprotocol/react';
+import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
+import CryptoJS from '../../../node_modules/crypto-js';
 
-import Input from '../Form/Input.js';
-import Button from '../Button.js';
 import Panel from '../Panel.js';
 import Label from '../Label.js';
-import ConnectPanel from '../ConnectPanel.js';
+import Button from '../Button.js';
 import Correct from '../Correct.js';
+import Input from '../Form/Input.js';
+import ConnectPanel from '../ConnectPanel.js';
 
 let Mint = props => {
 
     // Form data
     let [url, setURL] = useState("");
     let [author, setAuthor] = useState("");
+    let [urlData, setURLData] = useState("");
     let [dataname, setDataName] = useState("");
     let [description, setDescription] = useState("");
 
-    // Publish helpers
+    //#region Publish Helpers
+
     let { publish, publishStep, publishStepText, isLoading, publishError }
         = usePublish();
     let [ddo, setddo] = useState(null);
@@ -38,12 +40,12 @@ let Mint = props => {
                 author: author,
                 license: 'MIT',
                 files: [{
-                    url: 'https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt',
-                    checksum: 'efb2c764274b745f5fc37f97c6b0e761',
-                    contentLength: '4535431',
-                    contentType: 'text/csv',
-                    encoding: 'UTF-8',
-                    compression: 'zip'
+                    url: url, //'https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt',
+                    checksum: urlData.checksum == null ? "efb2c764274b745f5fc37f97c6b0e761" : urlData.checksum, //'efb2c764274b745f5fc37f97c6b0e761',
+                    contentLength: urlData.checksum == null ? "4535431" : urlData.contentLength,//'4535431',
+                    contentType: urlData.checksum == null ? "text/csv" : urlData.contentType,//'text/csv',
+                    encoding: urlData.checksum == null ? "UTF-8" : urlData.encoding,//'UTF-8',
+                    compression: urlData.checksum == null ? "zip" : urlData.compression//'zip'
                 }]
             },
             additionalInformation: {
@@ -56,11 +58,11 @@ let Mint = props => {
             });
     }
 
-    function formIsValid() {
-        return url !== "" && author != "" && dataname != "" && isValidUrl(url);
-    }
+    //#endregion
 
-    function isValidUrl(str) {
+    //#region  Validation Functions
+
+    function isValidUrl(url) {
         var pattern = new RegExp(
             '^(https?:\\/\\/)?' + // protocol
             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
@@ -70,30 +72,90 @@ let Mint = props => {
             '(\\#[-a-z\\d_]*)?$',
             'i'
         ) // fragment locator
-        return !!pattern.test(str)
+        return !!pattern.test(url)
     }
 
-    let detailsText = "Waiting for Publishing...";
-    if (isLoading && publishStepText !== undefined) {
-        detailsText = "Publish Step " + publishStep + ": " + publishStepText;
-    }
-    else if (isLoading && publishStep !== undefined) {
-        console.log("Custom text queried.", publishStep === 0 || publishStep === 4)
-        if (publishStep === 0 || publishStep === 4) {
-            detailsText = "Checking for user authentication..."
+    async function parseURLData(str) {
+        if (isValidUrl(str)) {
+            const request = new Request(str);
+            try {
+                /* testing to see where the issue lies...
+                 * 
+                 * 
+                 * 
+                */
+
+                setURLData(null);
+                let recievedURLData = { checksum: "", contentLength: "", contentType: "", encoding: "", compression: "" };
+                const response = await fetch(request);
+                console.log(response);
+                if (!response.ok) throw new Error("There was an issue with the code of the response.");
+
+                let blob = await response.blob();
+                console.log(blob);
+                //recievedURLData.contentLength = blob.size; // this results in an issue
+                //recievedURLData.contentType = blob.type; // does not result in an issue
+                //recievedURLData.encoding = "UTC-8"; // don't know how to find this from the file
+                //recievedURLData.compression = "zip"; // don't know how to find this from the file
+
+                var a = new FileReader();
+                await new Promise((resolve, reject) => {
+                    a.readAsBinaryString(blob);
+                    
+                    a.onerror = () => {
+                        a.abort();
+                        reject(new DOMException("Problem parsing input file!"));
+                    };
+                    
+                    a.onloadend = () => {
+                        resolve();
+                    };       
+                });
+                recievedURLData.checksum = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(a.result)).toString();
+
+                // ^ checksum does not result in an issue. so far, only the blob.type resulted in an issue
+
+                console.log(recievedURLData);
+                setURLData(recievedURLData);
+            }
+            catch (e) {
+                console.log("Error with getting data from the URL:", e);
+                setURLData(null);
+            }
+        }
+        else {
+            setURLData("null");
         }
     }
 
-    // Use this logic to determine whether or not the wallet has been connected.
-    let { walletConnected } = useWalletReady();
+    function isFormValid() {
+        return url !== "" && author != "" && dataname != "" //&& urlData != null;
+    }
 
-    // publish thing
+    //#endregion
+
+    // Determines whether or not the wallet has been connected.
+    let { walletConnected: isWalletConnected } = useWalletReady();
+
+    // Figures out what to display based on which step in publishing it's in.
     let publishLoader = <div />;
-    if (walletConnected && publishStep >= 7 && !isLoading && ddo != null) {
+    if (isWalletConnected && publishStep >= 7 && !isLoading && ddo != null) {
         publishLoader = <PricingMenu ddo={ddo} />
     }
-    else if (walletConnected) {
+    else if (isWalletConnected) {
         if (isLoading) {
+
+            let detailsText = "Waiting for Publishing...";
+            if (publishStepText !== undefined) {
+                detailsText = "Publish Step " + publishStep + ": " + publishStepText;
+            }
+            else if (publishStep !== undefined) {
+                console.log("Custom text queried.", publishStep === 0 || publishStep === 4)
+                if (publishStep === 0 || publishStep === 4) {
+                    detailsText = "Checking for user authentication..."
+                }
+            }
+
             publishLoader =
                 <Panel>
                     <Label>
@@ -125,7 +187,8 @@ let Mint = props => {
                             help="Enter the link to your the data."
                             onChange={(e) => {
                                 const { name, value } = e.target;
-                                setURL(value)
+                                setURL(value);
+                                parseURLData(value);
                             }}
                         />
                         <Input
@@ -153,7 +216,7 @@ let Mint = props => {
                         <div className={"mb-2"}>
                             Press the button to start minting!
                     </div>
-                        <Button primary padding type="submit" disabled={!formIsValid()}
+                        <Button primary padding type="submit" disabled={!isFormValid()}
                             onClick={() => {
                                 handlePublish();
                             }
@@ -165,9 +228,7 @@ let Mint = props => {
         }
     }
 
-
-    let mintPanel = !walletConnected ? <ConnectPanel /> : publishLoader;
-
+    let mintPanel = !isWalletConnected ? <ConnectPanel /> : publishLoader;
     return (mintPanel);
 }
 
