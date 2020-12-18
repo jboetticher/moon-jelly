@@ -32,6 +32,7 @@ let Mint = props => {
     }, [isLoading, publishStep, publishStepText]);
 
     async function handlePublish() {
+        console.log("publish urlData ", urlData);
         const ddo = await publish({
             main: {
                 type: 'dataset',
@@ -41,11 +42,11 @@ let Mint = props => {
                 license: 'MIT',
                 files: [{
                     url: url, //'https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt',
-                    checksum: urlData.checksum == null ? "efb2c764274b745f5fc37f97c6b0e761" : urlData.checksum, //'efb2c764274b745f5fc37f97c6b0e761',
-                    contentLength: urlData.checksum == null ? "4535431" : urlData.contentLength,//'4535431',
-                    contentType: urlData.checksum == null ? "text/csv" : urlData.contentType,//'text/csv',
-                    encoding: urlData.checksum == null ? "UTF-8" : urlData.encoding,//'UTF-8',
-                    compression: urlData.checksum == null ? "zip" : urlData.compression//'zip'
+                    checksum:  urlData.checksum, //'efb2c764274b745f5fc37f97c6b0e761',
+                    contentLength: urlData.contentLength,//'4535431',
+                    contentType: urlData.contentType,//'text/csv',
+                    encoding: urlData.encoding,//'UTF-8',
+                    compression: urlData.compression//'zip'
                 }]
             },
             additionalInformation: {
@@ -75,28 +76,27 @@ let Mint = props => {
         return !!pattern.test(url)
     }
 
+    /**
+     * Attempts to put file data into the urlData state from the url, but currently sets it all to "" because that's the only way we could make it work. =(
+     * @param {the url to parse through} str 
+     */
     async function parseURLData(str) {
         if (isValidUrl(str)) {
             const request = new Request(str);
             try {
-                /* testing to see where the issue lies...
-                 * 
-                 * 
-                 * 
-                */
-
                 setURLData(null);
                 let recievedURLData = { checksum: "", contentLength: "", contentType: "", encoding: "", compression: "" };
                 const response = await fetch(request);
                 console.log(response);
                 if (!response.ok) throw new Error("There was an issue with the code of the response.");
 
+                /*
                 let blob = await response.blob();
                 console.log(blob);
-                //recievedURLData.contentLength = blob.size; // this results in an issue
-                //recievedURLData.contentType = blob.type; // does not result in an issue
-                //recievedURLData.encoding = "UTC-8"; // don't know how to find this from the file
-                //recievedURLData.compression = "zip"; // don't know how to find this from the file
+                //recievedURLData.contentLength = blob.size;
+                //recievedURLData.contentType = blob.type; 
+                //recievedURLData.encoding = "UTC-8"; 
+                //recievedURLData.compression = "zip"; 
 
                 var a = new FileReader();
                 await new Promise((resolve, reject) => {
@@ -111,11 +111,10 @@ let Mint = props => {
                         resolve();
                     };       
                 });
-                recievedURLData.checksum = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(a.result)).toString();
+                //recievedURLData.checksum = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(a.result)).toString();
+                */
 
-                // ^ checksum does not result in an issue. so far, only the blob.type resulted in an issue
-
-                console.log(recievedURLData);
+                //console.log("recievedURL being used", recievedURLData);
                 setURLData(recievedURLData);
             }
             catch (e) {
@@ -129,7 +128,7 @@ let Mint = props => {
     }
 
     function isFormValid() {
-        return url !== "" && author != "" && dataname != "" //&& urlData != null;
+        return url !== "" && author != "" && dataname != "" && urlData != null;
     }
 
     //#endregion
