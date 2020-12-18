@@ -15,19 +15,19 @@ let Market = props => {
     const request = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?=");
     const request2 = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=test");
 
-    // may or may not be funny code but it works so
-    let requestAsJson = "";
-
+    
+    // returns a Promise
     async function getJsonData() {
-
-        /*fetch(request2)
-            .then(response => response.json())
-            .then(data => jsonData = data);*/
-
-        let data = await fetch(request2);
-        let jsonData = await data.json();
-
-        return jsonData;    
+        try {
+            let data = await fetch('https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=' + searchterms);
+            let jsonData = await data.json();
+            return jsonData;   
+        }
+        catch(error) {
+            console.log(error);
+            return null;
+        }
+         
     }
 
 
@@ -50,7 +50,7 @@ let Market = props => {
                 <Button
                     type="button"
                     onClick={() => {
-                        console.log(getJsonData());
+                        getJsonData().then(jsonData => console.log(jsonData));
                     }}
                 >
                     Search
