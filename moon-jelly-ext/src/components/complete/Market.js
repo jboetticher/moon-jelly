@@ -10,12 +10,26 @@ import Label from '../Label.js';
 import ConnectPanel from '../ConnectPanel.js';
 import Correct from '../Correct.js';
 
-let Analyze = props => {
+let Market = props => {
 
     const request = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?=");
-    fetch(request)
-        .then(response => response.json())
-        .then(response => console.log(response));
+    const request2 = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=test");
+
+    // may or may not be funny code but it works so
+    let requestAsJson = "";
+
+    async function getJsonData() {
+
+        /*fetch(request2)
+            .then(response => response.json())
+            .then(data => jsonData = data);*/
+
+        let data = await fetch(request2);
+        let jsonData = await data.json();
+
+        return jsonData;    
+    }
+
 
     let [searchterms, setSearchterms] = useState("");
 
@@ -30,13 +44,21 @@ let Analyze = props => {
                     help="Search for a dataset."
                     onChange={(e) => {
                         const { name, value } = e.target;
-                        setSearchterms(value)
+                        setSearchterms(value);
                     }}
                 />
+                <Button
+                    type="button"
+                    onClick={() => {
+                        console.log(getJsonData());
+                    }}
+                >
+                    Search
+                </Button>
             </form>
         </Panel>
     );
 }
 
-export default Analyze;
-export { Analyze };
+export default Market;
+export { Market };
