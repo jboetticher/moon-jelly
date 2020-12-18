@@ -1,0 +1,9 @@
+.searchForm {
+    display: flex;
+}
+
+#tokenSearchButton {
+    margin-top: 6px;
+    height: 45px;
+    width: 80px;
+}
