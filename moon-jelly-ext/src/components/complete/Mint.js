@@ -120,9 +120,12 @@ let Mint = props => {
                     xhttp.open('HEAD', url);
                     xhttp.onreadystatechange = function () {
                         if (this.readyState == this.DONE) {
-                            console.log(this.status);
-                            console.log(this.getResponseHeader("Content-Type"));
-                            console.log(this.getAllResponseHeaders());
+                            console.log("header status:", this.status);
+                            const headerMap = getResponseHeaderMap(this);
+                            console.log(getResponseHeaderMap(this));
+
+                            recievedURLData.contentType = headerMap["content-type"];
+                            recievedURLData.contentLength = headerMap["content-length"];
                             resolve();
                         }
                     };
@@ -135,7 +138,7 @@ let Mint = props => {
 
 
 
-                //console.log("recievedURL being used", recievedURLData);
+                console.log("recievedURL being used", recievedURLData);
                 setURLData(recievedURLData);
             }
             catch (e) {
@@ -155,6 +158,18 @@ let Mint = props => {
         console.log("urlData", null);
 
         return url !== "" && author != "" && dataname != "" && urlData != null;
+    }
+
+    function getResponseHeaderMap(xhr) {
+        const headers = {};
+        xhr.getAllResponseHeaders()
+            .trim()
+            .split(/[\r\n]+/)
+            .map(value => value.split(/: /))
+            .forEach(keyValue => {
+              headers[keyValue[0].trim()] = keyValue[1].trim();
+            });
+        return headers;
     }
 
     //#endregion
@@ -241,10 +256,8 @@ let Mint = props => {
                         <div className={"mb-2"}>
                             Press the button to start minting!
                     </div>
-                        <Button primary padding type="submit" disabled={!isFormValid()}
-                            onClick={() => {
-                                handlePublish();
-                            }
+                        <Button padding type="submit" disabled={!isFormValid()} primary
+                            onClick={() => {handlePublish();}
                             }>
                             Publish
                     </Button>
