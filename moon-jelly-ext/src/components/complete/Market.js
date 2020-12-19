@@ -36,20 +36,49 @@ let Market = props => {
     function renderResults() {
         let resultEntries = [];
 
+        // if search results is empty, return nothing        
+        if (searchResults == "") return;
+
         // for a single page (default 1)
-        if(searchResults == "") return;
-        for(var i=0;i<searchResults['results'].length;i++){
-            let name = searchResults['results'][i]['service'][0]['attributes']['main']['name'];
-            //let desc = entry['service'][0]['attributes']['additionalInformation']['desc'];
+        for (var i = 0; i < searchResults['results'].length; i++) {
+
+            let asset = searchResults['results'][i];
+
+            let datatokenSymbol = asset['dataTokenInfo']['symbol'];
+            let datatokenPrice = asset['price']['ocean'];
+            let assetName = asset['service'][0]['attributes']['main']['name'];
+            let assetAuthor = asset['service'][0]['attributes']['main']['author'];
+            let assetDesc = asset['service'][0]['attributes']['additionalInformation'] != null ? asset['service'][0]['attributes']['additionalInformation']['description'] : "No description availiable";
 
             let resultEntry =
-                <div classname="entry" key={i}>
-                    Name: {name}
-                    {/*desc*/}
+                <div className="assetEntry" key={i}>
+                    <header>
+                        <div className="assetDatatokenSymbol">
+                            {datatokenSymbol}
+                        </div>
+                        <div className="assetName">
+                            {assetName}
+                        </div>
+                        <div className="assetAuthor">
+                            {assetAuthor}
+                        </div>
+                    </header>
+
+                    <div className="assetDesc">
+                        {assetDesc}
+                    </div>
+
+                    <footer>
+                        <div className="assetPrice">
+                            {datatokenPrice} OCEAN
+                        </div>
+                    </footer>
                 </div>;
-            
+
             resultEntries.push(resultEntry);
         }
+
+
 
         return resultEntries;
     }
@@ -86,7 +115,7 @@ let Market = props => {
                 >
                     Search
                 </Button>
-                
+
             </form>
             <div>
                 {renderResults()}
