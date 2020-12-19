@@ -32,6 +32,28 @@ let Market = props => {
 
     }
 
+    // creates an array of divs from the search results
+    function renderResults() {
+        let resultEntries = [];
+
+        // for a single page (default 1)
+        if(searchResults == "") return;
+        for(var i=0;i<searchResults['results'].length;i++){
+            let name = searchResults['results'][i]['service'][0]['attributes']['main']['name'];
+            //let desc = entry['service'][0]['attributes']['additionalInformation']['desc'];
+
+            let resultEntry =
+                <div classname="entry" key={i}>
+                    Name: {name}
+                    {/*desc*/}
+                </div>;
+            
+            resultEntries.push(resultEntry);
+        }
+
+        return resultEntries;
+    }
+
 
     let [searchTerms, setSearchTerms] = useState("");
 
@@ -64,8 +86,11 @@ let Market = props => {
                 >
                     Search
                 </Button>
-
+                
             </form>
+            <div>
+                {renderResults()}
+            </div>
         </Panel>
     );
 }
