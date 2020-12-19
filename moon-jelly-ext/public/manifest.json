@@ -22,5 +22,5 @@
     "http://*/",
     "https://*/"
   ],
-  "content_security_policy": "default-src 'self' https://*.oceanprotocol.com; connect-src wss://bridge.walletconnect.org/ https://*.infura.io/v3/92722306e5f042e6af0e80e253125972 https://*.oceanprotocol.com/ ; script-src 'self' ; font-src 'self' ; style-src 'unsafe-inline' ; img-src * data:"
+  "content_security_policy": "default-src 'self' https://*.oceanprotocol.com; connect-src https://* wss://bridge.walletconnect.org/ https://*.infura.io/v3/92722306e5f042e6af0e80e253125972 https://*.oceanprotocol.com/ ; script-src 'self' ; font-src 'self' ; style-src 'unsafe-inline' ; img-src * data:"
 }

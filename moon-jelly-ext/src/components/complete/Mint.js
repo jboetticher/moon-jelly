@@ -42,7 +42,7 @@ let Mint = props => {
                 license: 'MIT',
                 files: [{
                     url: url, //'https://raw.githubusercontent.com/tbertinmahieux/MSongsDB/master/Tasks_Demos/CoverSongs/shs_dataset_test.txt',
-                    checksum:  urlData.checksum, //'efb2c764274b745f5fc37f97c6b0e761',
+                    checksum: urlData.checksum, //'efb2c764274b745f5fc37f97c6b0e761',
                     contentLength: urlData.contentLength,//'4535431',
                     contentType: urlData.contentType,//'text/csv',
                     encoding: urlData.encoding,//'UTF-8',
@@ -114,6 +114,27 @@ let Mint = props => {
                 //recievedURLData.checksum = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(a.result)).toString();
                 */
 
+                // attempts to get file type and charset
+                await new Promise((resolve, reject) => {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.open('HEAD', url);
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == this.DONE) {
+                            console.log(this.status);
+                            console.log(this.getResponseHeader("Content-Type"));
+                            console.log(this.getAllResponseHeaders());
+                            resolve();
+                        }
+                    };
+                    xhttp.onerror = function() {
+                        xhttp.abort();
+                        reject(new DOMException("Problem requesting HEAD!"));
+                    }
+                    xhttp.send();
+                });
+
+
+
                 //console.log("recievedURL being used", recievedURLData);
                 setURLData(recievedURLData);
             }
@@ -128,6 +149,11 @@ let Mint = props => {
     }
 
     function isFormValid() {
+        console.log("url", url);
+        console.log("author", author);
+        console.log("dataname", dataname);
+        console.log("urlData", null);
+
         return url !== "" && author != "" && dataname != "" && urlData != null;
     }
 
@@ -333,6 +359,7 @@ let PricingMenu = props => {
 
     return (pricingSection);
 }
+
 
 
 export default Mint;
