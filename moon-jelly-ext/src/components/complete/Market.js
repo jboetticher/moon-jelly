@@ -10,6 +10,7 @@ import Label from '../Label.js';
 import ConnectPanel from '../ConnectPanel.js';
 import Correct from '../Correct.js';
 
+import MarketAssetList from '../MarketAssetList';
 import '../../styles/Market.css';
 
 let Market = props => {
@@ -40,45 +41,23 @@ let Market = props => {
 
     }
 
-    // Creates and returns next and prev page buttons to navigate search results
-    // Buttons will not display if there are no search results (searchResults['total_pages'] == 0)
-    // Prev button will not display if it is on page one (pageNumber == 1)
-    // Next button will not display if it is on last page (pageNumber == searchResults['total_pages'])
-    function renderPageButtons() {
-
-        // if search results is empty, return nothing        
-        if (searchResults == "") return;
-
-        return (
-            <div className="navButtons">
-                {renderPrevButton()}
-                {renderNextButton()}
-            </div>
-        );
-
-
-    }
-
     // Creates a next page button
     function renderNextButton() {
-        /*if (searchResults['total_pages'] == 0 || pageNumber == searchResults['total_pages']) {
-            return;
-        }*/
         return (
             <Button
                 type="button"
-                className="button nextPageButton"
+                className="button pageButton"
                 onClick={() => {
                     console.log("next");
 
                     // if the pageNumber == total pages, don't increment and don't fetch (do nothing)
-                    if(pageNumber == searchResults['total_pages']) return;
+                    if (pageNumber == searchResults['total_pages']) return;
 
                     // if the pageNumber == total pages, don't increment
                     setPageNumber(++pageNumber);
 
                     getJsonData().then(jsonData => {
-                        console.log(jsonData);               
+                        console.log(jsonData);
                         setSearchResults(jsonData);
                     });
 
@@ -92,13 +71,11 @@ let Market = props => {
 
     // Creates a prev page button
     function renderPrevButton() {
-        /*if (searchResults['total_pages'] == 0 || pageNumber == 1) {
-            return;
-        }*/
+
         return (
             <Button
                 type="button"
-                className="button prevPageButton"
+                className="button pageButton"
                 onClick={() => {
                     console.log("prev");
 
@@ -109,7 +86,7 @@ let Market = props => {
                     setPageNumber(--pageNumber);
 
                     getJsonData().then(jsonData => {
-                        console.log(jsonData);      
+                        console.log(jsonData);
                         setSearchResults(jsonData);
                     });
                 }}
@@ -119,14 +96,17 @@ let Market = props => {
         );
     }
 
-    // creates an array of divs from the search results and returns is
+    // Creates the results panel with page nav buttons
     function renderResults() {
         let resultEntries = [];
 
         // if search results is empty, return nothing        
         if (searchResults == "") return;
 
-        // for a single page 
+        // if search results has empty results
+        if (searchResults['total_pages'] == 0) return "No results found";
+
+        // for a single page of results
         for (var i = 0; i < searchResults['results'].length; i++) {
 
             let asset = searchResults['results'][i];
@@ -166,9 +146,24 @@ let Market = props => {
             resultEntries.push(resultEntry);
         }
 
+        return (
+            <div className="results">
 
+                <div className="navButtons">
+                    {renderPrevButton()}
+                    {renderNextButton()}
+                </div>
+                {pageNumber}
 
-        return resultEntries;
+                <MarketAssetList results={searchResults}> </MarketAssetList>
+
+                <div className="navButtons">
+                    {renderPrevButton()}
+                    {renderNextButton()}
+                </div>
+
+            </div>
+        );
     }
 
     return (
@@ -201,22 +196,9 @@ let Market = props => {
                     Search
                 </Button>
             </form>
-            <div className="results">
 
-                <div className="navButtons">
-                    {renderPrevButton()}
-                    {renderNextButton()}
-                </div>
-                {pageNumber}
+            {renderResults()}
 
-                {renderResults()}
-
-                <div className="navButtons">
-                    {renderPrevButton()}
-                    {renderNextButton()}
-                </div>
-
-            </div>
         </Panel>
     );
 }

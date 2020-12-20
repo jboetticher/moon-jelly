@@ -3,11 +3,11 @@
 }
 
 .assetEntry {
-    border: solid;
+    /*border: solid;
     border-width: 2px;
     padding: 5px;
     margin: 4px;
-    max-width: 300px;
+    max-width: 300px;*/
 }
 
 .assetDatatokenSymbol {
@@ -21,6 +21,7 @@
 .assetAuthor {
     font-size: 1rem;
 }
+
 
 
 #tokenSearchButton {
