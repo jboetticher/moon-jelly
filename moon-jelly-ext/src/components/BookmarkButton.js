@@ -4,15 +4,14 @@ import { ConfigHelperConfig } from '@oceanprotocol/lib/dist/node/utils/ConfigHel
 import { useBookmarks } from '../functionality/BookmarkHooks.js';
 import { useOcean } from '@oceanprotocol/react'
 
-import BookmarkIcon from '../assets/bookmark.svg'
-import styles from './Bookmark.module.css'
+import Bookmark from '../assets/Bookmark.svg';
 
-let BookmarkButton = (props, { did }: { did: string }) => {
+let BookmarkButton = (props) => {
   const { config } = useOcean()
   const { getBookmarks, addBookmark, removeBookmark } = useBookmarks();
   let bookmarks = getBookmarks();
   const isBookmarked =
-    bookmarks && bookmarks[(config as ConfigHelperConfig).network]?.includes(did)
+    bookmarks && bookmarks[config.network]?.includes(did)
 
   function handleBookmark() {
     isBookmarked ? removeBookmark(did) : addBookmark(did)
@@ -21,7 +20,7 @@ let BookmarkButton = (props, { did }: { did: string }) => {
   return (
     <button
       onClick={handleBookmark}
-      className={`${styles.bookmark} ${isBookmarked ? styles.active : ''} `}
+      //className={`${styles.bookmark} ${isBookmarked ? styles.active : ''} `}
       title={isBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}
     >
       <BookmarkIcon />
