@@ -29,6 +29,7 @@ import Market from './components/complete/Market';
 import './styles/global.css';
 import './styles/App.css';
 
+
 //#region Provider Setups
 
 //let [network, infuraId] = ['mainnet', "92722306e5f042e6af0e80e253125972"];

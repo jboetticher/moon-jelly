@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { usePublish, usePricing } from '@oceanprotocol/react';
 import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
-import CryptoJS from '../../../node_modules/crypto-js';
 
 import Panel from '../Panel.js';
 import Label from '../Label.js';
@@ -9,6 +8,8 @@ import Button from '../Button.js';
 import Correct from '../Correct.js';
 import Input from '../Form/Input.js';
 import ConnectPanel from '../ConnectPanel.js';
+
+import { useMintPage } from '../../functionality/MintPageHooks';
 
 let Mint = props => {
 
@@ -174,6 +175,13 @@ let Mint = props => {
 
     //#endregion
 
+    let { isMintPageOpen, insertAuthorNameIntoMintForm } = useMintPage();
+    let testbutton = <Button onClick={() => {
+        insertAuthorNameIntoMintForm("author name inserted");
+    }}>
+        click this
+    </Button>
+
     // Determines whether or not the wallet has been connected.
     let { walletConnected: isWalletConnected } = useWalletReady();
 
@@ -233,7 +241,7 @@ let Mint = props => {
                         />
                         <Input
                             type="text"
-                            name="author"
+                            name="dataAuthor"
                             placeholder={author ? author : "Author Name"}
                             value={author}
                             help="Enter the name of the data set's author (displayed on the Ocean Market)."
@@ -269,6 +277,7 @@ let Mint = props => {
     let mintPanel = !isWalletConnected ? <ConnectPanel /> : publishLoader;
     return (
         <div id={"mintPanel"}>
+            {testbutton}
             {mintPanel}
         </div>
     );
