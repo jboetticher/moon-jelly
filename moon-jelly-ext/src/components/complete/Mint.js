@@ -207,6 +207,7 @@ let Mint = props => {
         else {
             publishLoader =
                 <Panel>
+                    Publish to the Ocean Market
                     <form className={"form"}>
                         <Input
                             type="text"
@@ -253,10 +254,11 @@ let Mint = props => {
                                 setDescription(value)
                             }}
                         />
-                        <div className={"mb-2"}>
+                        <Label htmlFor="publishButton">
                             Press the button to start minting!
-                    </div>
+                        </Label>
                         <Button padding type="submit" disabled={!isFormValid()} primary
+                            name="publishButton"
                             onClick={() => { handlePublish(); }
                             }>
                             Publish

@@ -173,6 +173,7 @@ let Market = props => {
 
     return (
         <Panel>
+            Browse the Ocean Market
             <form className={"form searchForm"}>
 
                 <Input
@@ -199,7 +200,6 @@ let Market = props => {
                 >
                     Search
                 </Button>
-
             </form>
             <div className="results">
 
