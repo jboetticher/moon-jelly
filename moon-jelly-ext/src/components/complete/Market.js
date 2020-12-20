@@ -23,7 +23,7 @@ let Market = props => {
     let [searchResults, setSearchResults] = useState("");
 
     // Keeps track of page number of results
-    let [pageNumber, setPageNumber] = useState("1");
+    let [pageNumber, setPageNumber] = useState(1);
 
     // Returns a Promise to evaluate for the data
     // Data is based on the search terms and page number
@@ -56,44 +56,67 @@ let Market = props => {
             </div>
         );
 
-        // Helper function to decide whether next button should be made
-        function renderNextButton() {
-            if (searchResults['total_pages'] == 0 || pageNumber == searchResults['total_pages']) {
-                return;
-            }
-            return (
-                <Button
-                    type="button"
-                    className="button nextPageButton"
-                    onClick={() => {
-                        let currPage = pageNumber;
-                        setPageNumber(currPage++);
-                    }}
-                >
-                    {">>>"}
-                </Button>
-            );
 
-        }
+    }
 
-        // Helper function to decide whether prev button should be made
-        function renderPrevButton() {
-            if (searchResults['total_pages'] == 0 || pageNumber == 1) {
-                return;
-            }
-            return (
-                <Button
-                    type="button"
-                    className="button prevPageButton"
-                    onClick={() => {
-                        let currPage = pageNumber;
-                        setPageNumber(currPage--);
-                    }}
-                >
-                    {"<<<"}
-                </Button>
-            );
-        }
+    // Creates a next page button
+    function renderNextButton() {
+        /*if (searchResults['total_pages'] == 0 || pageNumber == searchResults['total_pages']) {
+            return;
+        }*/
+        return (
+            <Button
+                type="button"
+                className="button nextPageButton"
+                onClick={() => {
+                    console.log("next");
+
+                    // if the pageNumber == total pages, don't increment and don't fetch (do nothing)
+                    if(pageNumber == searchResults['total_pages']) return;
+
+                    // if the pageNumber == total pages, don't increment
+                    setPageNumber(++pageNumber);
+
+                    getJsonData().then(jsonData => {
+                        console.log(jsonData);               
+                        setSearchResults(jsonData);
+                    });
+
+                }}
+            >
+                {">>>"}
+            </Button>
+        );
+
+    }
+
+    // Creates a prev page button
+    function renderPrevButton() {
+        /*if (searchResults['total_pages'] == 0 || pageNumber == 1) {
+            return;
+        }*/
+        return (
+            <Button
+                type="button"
+                className="button prevPageButton"
+                onClick={() => {
+                    console.log("prev");
+
+                    // if the pageNumber is 1, don't decrement and and don't fetch (do nothing)
+                    if (pageNumber == 1) return;
+
+
+                    setPageNumber(--pageNumber);
+
+                    getJsonData().then(jsonData => {
+                        console.log(jsonData);      
+                        setSearchResults(jsonData);
+                    });
+                }}
+            >
+                {"<<<"}
+            </Button>
+        );
     }
 
     // creates an array of divs from the search results and returns is
@@ -103,7 +126,7 @@ let Market = props => {
         // if search results is empty, return nothing        
         if (searchResults == "") return;
 
-        // for a single page (default 1)
+        // for a single page 
         for (var i = 0; i < searchResults['results'].length; i++) {
 
             let asset = searchResults['results'][i];
@@ -179,9 +202,20 @@ let Market = props => {
 
             </form>
             <div className="results">
-                {renderPageButtons()}
+
+                <div className="navButtons">
+                    {renderPrevButton()}
+                    {renderNextButton()}
+                </div>
+                {pageNumber}
+
                 {renderResults()}
-                {renderPageButtons()}
+
+                <div className="navButtons">
+                    {renderPrevButton()}
+                    {renderNextButton()}
+                </div>
+
             </div>
         </Panel>
     );
