@@ -14,14 +14,22 @@ import '../../styles/Market.css';
 
 let Market = props => {
 
-    const request = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?=");
-    const request2 = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=test");
+    //const request = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?=");
 
+    // Keeps track of text in search box
+    let [searchTerms, setSearchTerms] = useState("");
 
-    // returns a Promise
+    // Keeps track of fetched data using searchTerms
+    let [searchResults, setSearchResults] = useState("");
+
+    // Keeps track of page number of results
+    let [pageNumber, setPageNumber] = useState("1");
+
+    // Returns a Promise to evaluate for the data
+    // Data is based on the search terms and page number
     async function getJsonData() {
         try {
-            let data = await fetch('https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=' + searchTerms);
+            let data = await fetch('https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=' + searchTerms + '&page=' + pageNumber);
             let jsonData = await data.json();
             return jsonData;
         }
@@ -32,7 +40,63 @@ let Market = props => {
 
     }
 
-    // creates an array of divs from the search results
+    // Creates and returns next and prev page buttons to navigate search results
+    // Buttons will not display if there are no search results (searchResults['total_pages'] == 0)
+    // Prev button will not display if it is on page one (pageNumber == 1)
+    // Next button will not display if it is on last page (pageNumber == searchResults['total_pages'])
+    function renderPageButtons() {
+
+        // if search results is empty, return nothing        
+        if (searchResults == "") return;
+
+        return (
+            <div className="navButtons">
+                {renderPrevButton()}
+                {renderNextButton()}
+            </div>
+        );
+
+        // Helper function to decide whether next button should be made
+        function renderNextButton() {
+            if (searchResults['total_pages'] == 0 || pageNumber == searchResults['total_pages']) {
+                return;
+            }
+            return (
+                <Button
+                    type="button"
+                    className="button nextPageButton"
+                    onClick={() => {
+                        let currPage = pageNumber;
+                        setPageNumber(currPage++);
+                    }}
+                >
+                    {">>>"}
+                </Button>
+            );
+
+        }
+
+        // Helper function to decide whether prev button should be made
+        function renderPrevButton() {
+            if (searchResults['total_pages'] == 0 || pageNumber == 1) {
+                return;
+            }
+            return (
+                <Button
+                    type="button"
+                    className="button prevPageButton"
+                    onClick={() => {
+                        let currPage = pageNumber;
+                        setPageNumber(currPage--);
+                    }}
+                >
+                    {"<<<"}
+                </Button>
+            );
+        }
+    }
+
+    // creates an array of divs from the search results and returns is
     function renderResults() {
         let resultEntries = [];
 
@@ -48,7 +112,8 @@ let Market = props => {
             let datatokenPrice = asset['price']['ocean'];
             let assetName = asset['service'][0]['attributes']['main']['name'];
             let assetAuthor = asset['service'][0]['attributes']['main']['author'];
-            let assetDesc = asset['service'][0]['attributes']['additionalInformation'] != null ? asset['service'][0]['attributes']['additionalInformation']['description'] : "No description availiable";
+            let assetDesc = asset['service'][0]['attributes']['additionalInformation'] != null ?
+                asset['service'][0]['attributes']['additionalInformation']['description'] : "No description availiable";
 
             let resultEntry =
                 <div className="assetEntry" key={i}>
@@ -83,11 +148,6 @@ let Market = props => {
         return resultEntries;
     }
 
-
-    let [searchTerms, setSearchTerms] = useState("");
-
-    let [searchResults, setSearchResults] = useState("");
-
     return (
         <Panel>
             <form className={"form searchForm"}>
@@ -109,6 +169,7 @@ let Market = props => {
                     onClick={() => {
                         getJsonData().then(jsonData => {
                             console.log(jsonData);
+                            setPageNumber("1");
                             setSearchResults(jsonData);
                         });
                     }}
@@ -117,8 +178,10 @@ let Market = props => {
                 </Button>
 
             </form>
-            <div>
+            <div className="results">
+                {renderPageButtons()}
                 {renderResults()}
+                {renderPageButtons()}
             </div>
         </Panel>
     );
