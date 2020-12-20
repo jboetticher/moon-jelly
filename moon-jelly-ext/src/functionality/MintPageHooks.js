@@ -9,52 +9,44 @@ function useMintPage() {
         return (typeof (mintPage) != 'undefined' && mintPage != null);
     }
 
-    function insert(inputName, data)
-    {
-        if(!isMintPageOpen()) console.error("The user is not currently on the mint panel. Use PanelContext to switch.");
+    function insert(inputName, data) {
+        if (!isMintPageOpen()) console.error("The user is not currently on the mint panel. Use PanelContext to switch.");
 
         var inputElement = document.getElementById(inputName);
-        if(inputElement != null) inputElement.value = data;
+        if (inputElement != null) inputElement.value = data;
         else console.error("Could not find the " + inputName + " input.");
     }
 
     /**
-     * Inserts a value into the asset name input of the mint page, if the user is on the mint page. Throws an error otherwise.
-     * @param {the name of the author to be displayed on the ocean market} authorName 
+     * Inserts the name into the asset name input of the mint page, if the user is on the mint page. Throws an error otherwise.
+     * @param {the name of the data to be displayed on the ocean market} name 
      */
-    function insertAssetName(url) {
-        
+    function insertAssetName(name) {
+        insert("dataname", name);
     }
 
-    // set data url method
-    // 1. check for open mint, otherwise throw error
-    // 2. find element with id "dataurl"
-    // 3. slap it into the value section
-    function insertURL(url)
-    {
-
+    /**
+     * Inserts a value into the asset name input of the mint page, if the user is on the mint page. Throws an error otherwise.
+     * @param {the url of the data to be displayed on the ocean market} url 
+     */
+    function insertURL(url) {
+        insert("dataurl", url)
     }
 
     /**
      * Inserts a value into the author input of the mint page, if the user is on the mint page. Throws an error otherwise.
      * @param {the name of the author to be displayed on the ocean market} authorName 
      */
-    function insertAuthorName(authorName)
-    {
-        if(!isMintPageOpen()) console.error("The user is not currently on the mint panel. Use PanelContext to switch.");
-
-        var authorVariable = document.getElementById("dataAuthor");
-        if(authorVariable != null) authorVariable.value = authorName;
-        else console.error("Could not find the author name input.");
+    function insertAuthorName(authorName) {
+        insert("dataAuthor", authorName);
     }
 
-    // set description input method
-    // 1. check for open mint, otherwise throw error
-    // 2. find element with id "dataDescription"
-    // 3. slap it into the value section
-    function insertDescription(description)
-    {
-        
+    /**
+     * Inserts a value into the descrption input of the mint page, if the user is on the mint page. Throws an error otherwise.
+     * @param {the description of the data to be displayed on the ocean market} authorName 
+     */
+    function insertDescription(description) {
+        insert("dataDescription", description);
     }
 
     return { isMintPageOpen, insertAssetName, insertURL, insertAuthorName, insertDescription };
