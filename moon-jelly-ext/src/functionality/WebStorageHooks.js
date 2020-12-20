@@ -4,7 +4,7 @@ function useWebStorage() {
 
     /**
      * Function to check if a certain webstorage type is availiable
-     * I just took this function from the mozilla docs
+     * From mozilla docs
      * https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
      * @param {"type of webstorage to access, typically 'localStorage' "} type
      */

@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
+import { useWebStorage } from '../../functionality/WebStorageHooks.js';
 
 import AssetList from '../AssetList'
 import Correct from '../Correct'
@@ -18,6 +19,8 @@ let Wallet = props => {
     // Determines whether or not the wallet has been connected.
     let { walletConnected: isWalletConnected } = useWalletReady();
     walletPanel = !isWalletConnected ? <ConnectPanel /> : walletPanel;
+
+
 
     return(
         <div id="walletPanel">
