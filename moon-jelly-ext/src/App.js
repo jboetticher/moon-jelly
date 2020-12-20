@@ -29,6 +29,8 @@ import Market from './components/complete/Market';
 import './styles/global.css';
 import './styles/App.css';
 
+//#region Provider Setups
+
 //let [network, infuraId] = ['mainnet', "92722306e5f042e6af0e80e253125972"];
 let [network, infuraId] = ['rinkeby', "92722306e5f042e6af0e80e253125972"];
 
@@ -64,6 +66,12 @@ const oceanConfig = {
 };
 
 console.log(oceanConfig);
+
+
+
+export const PanelContext = React.createContext();
+
+//#endregion
 
 class App extends Component {
     constructor(props) {
@@ -108,20 +116,21 @@ class App extends Component {
     render() {
         return (
             <OceanProvider initialConfig={oceanConfig} web3ModalOpts={web3ModalOpts}>
-                <div className={"app"}>
-                    <Header nextDisplay={this.setNextPanel.bind(this)} />
+                <PanelContext.Provider value={this.setNextPanel.bind(this)}>
+                    <div className={"app"}>
+                        <Header nextDisplay={this.setNextPanel.bind(this)} />
 
-                    <div className={"container"}>
-                        <div className={"navbar"}>
-                            <Navbar selected={this.state.nextToDisplay} setNextPanel={this.setNextPanel.bind(this)} />
-                            {/*<Navbar  nextDisplay={this.setNextDisplay.bind(this)} />*/}
-                        </div>
-                        <div className={"content"}>
-                            {this.chooseDisplay(this.state.nextToDisplay)}
+                        <div className={"container"}>
+                            <div className={"navbar"}>
+                                <Navbar selected={this.state.nextToDisplay} />
+                                {/*<Navbar  nextDisplay={this.setNextDisplay.bind(this)} />*/}
+                            </div>
+                            <div className={"content"}>
+                                {this.chooseDisplay(this.state.nextToDisplay)}
+                            </div>
                         </div>
                     </div>
-                    {/*<Footer />*/}
-                </div>
+                </PanelContext.Provider>
             </OceanProvider>
         )
     }
@@ -133,7 +142,7 @@ const HomePanel = (props) => {
     let { ocean, accountId, connect, refreshBalance, status } = useOcean();
 
     let [oceanConnected, setOceanConnected] = useState(status > 0);
-    useEffect( () => {
+    useEffect(() => {
         setOceanConnected(status > 0);
     }, [status]);
 
@@ -167,6 +176,7 @@ const HomePanel = (props) => {
         </Panel>
     )
 }
+
 
 
 export default App

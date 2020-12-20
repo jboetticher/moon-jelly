@@ -129,7 +129,7 @@ let Mint = props => {
                             resolve();
                         }
                     };
-                    xhttp.onerror = function() {
+                    xhttp.onerror = function () {
                         xhttp.abort();
                         reject(new DOMException("Problem requesting HEAD!"));
                     }
@@ -167,7 +167,7 @@ let Mint = props => {
             .split(/[\r\n]+/)
             .map(value => value.split(/: /))
             .forEach(keyValue => {
-              headers[keyValue[0].trim()] = keyValue[1].trim();
+                headers[keyValue[0].trim()] = keyValue[1].trim();
             });
         return headers;
     }
@@ -244,7 +244,7 @@ let Mint = props => {
                         />
                         <Input
                             type="text"
-                            name="author"
+                            name="dataDescription"
                             placeholder={description ? description : "Data Description"}
                             value={description}
                             help="Enter the description of the data set."
@@ -257,7 +257,7 @@ let Mint = props => {
                             Press the button to start minting!
                     </div>
                         <Button padding type="submit" disabled={!isFormValid()} primary
-                            onClick={() => {handlePublish();}
+                            onClick={() => { handlePublish(); }
                             }>
                             Publish
                     </Button>
@@ -267,7 +267,11 @@ let Mint = props => {
     }
 
     let mintPanel = !isWalletConnected ? <ConnectPanel /> : publishLoader;
-    return (mintPanel);
+    return (
+        <div id={"mintPanel"}>
+            {mintPanel}
+        </div>
+    );
 }
 
 let PricingMenu = props => {

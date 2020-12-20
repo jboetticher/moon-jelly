@@ -1,41 +1,40 @@
-import React, { PureComponent } from 'react';
+import React, { useContext, PureComponent } from 'react';
+import { PanelContext } from '../App.js';
 import Button from './Button.js';
 import "../styles/Navbar.css";
 
-export default class Navbar extends PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
+let Navbar = props => {
 
-    render() {
-        return (
-            <header className={"container navcontainer"}>
-                <Button
-                    primary={this.props.selected == "mint"} noRound
-                    onClick={this.props.setNextPanel.bind(this, "mint")}
-                >
-                    Mint
-                </Button>
-                <Button
-                    primary={this.props.selected == "market"} noRound
-                    onClick={this.props.setNextPanel.bind(this, "market")}
-                >
-                    Market
-                </Button>
-                <Button
-                    primary={this.props.selected == "wallet"} noRound
-                    onClick={this.props.setNextPanel.bind(this, "wallet")}
-                >
-                    Wallet
-                </Button>
-                <Button
-                    primary={this.props.selected == "more"} noRound
-                    onClick={this.props.setNextPanel.bind(this, "more")}
-                >
-                    More
-                </Button>
-            </header>
-        )
-    }
+    let context = useContext(PanelContext);
+
+    return (
+        <header className={"container navcontainer"} id={"main-navbar"}>
+            <Button
+                primary={props.selected == "mint"} noRound
+                onClick={() => context("mint")}
+            >
+                Mint
+            </Button>
+            <Button
+                primary={props.selected == "market"} noRound
+                onClick={() => context("market")}
+            >
+                Market
+            </Button>
+            <Button
+                primary={props.selected == "wallet"} noRound
+                onClick={() => context("wallet")}
+            >
+                Wallet
+            </Button>
+            <Button
+                primary={props.selected == "more"} noRound
+                onClick={() => context("more")}
+            >
+                More
+            </Button>
+        </header>
+    )
 }
+
+export default Navbar;
