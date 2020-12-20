@@ -4,7 +4,7 @@ import { ConfigHelperConfig } from '@oceanprotocol/lib/dist/node/utils/ConfigHel
 import { useBookmarks } from '../functionality/BookmarkHooks.js';
 import { useOcean } from '@oceanprotocol/react'
 
-import Bookmark from '../assets/Bookmark.svg';
+import BookmarkIcon from '../assets/Bookmark.svg';
 
 let BookmarkButton = (props) => {
   const { config } = useOcean()
