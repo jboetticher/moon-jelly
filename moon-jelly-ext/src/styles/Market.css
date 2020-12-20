@@ -2,6 +2,27 @@
     display: flex;
 }
 
+.assetEntry {
+    border: solid;
+    border-width: 2px;
+    padding: 5px;
+    margin: 4px;
+    max-width: 300px;
+}
+
+.assetDatatokenSymbol {
+    font-size: 1rem;
+}
+
+.assetName {
+    font-size: 1.5rem;
+}
+
+.assetAuthor {
+    font-size: 1rem;
+}
+
+
 #tokenSearchButton {
     margin-top: 6px;
     height: 45px;
