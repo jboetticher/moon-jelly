@@ -20,7 +20,7 @@ import Header from './components/Header';
 import Label from './components/Label';
 
 // Complete Panels
-import DataWallet from './components/complete/DataWallet';
+import Wallet from './components/complete/Wallet';
 import Mint from './components/complete/Mint';
 import ModuleMenu from './components/complete/ModuleMenu';
 import Market from './components/complete/Market';
@@ -95,7 +95,7 @@ class App extends Component {
                 case 'market':
                     return <Market />;
                 case 'wallet':
-                    return <DataWallet />;
+                    return <Wallet />;
                 case 'more':
                     return <Panel><ModuleMenu selected={this.state.nextToDisplay} setNextPanel={this.setNextPanel.bind(this)} /></Panel>;
                 case 'home':
