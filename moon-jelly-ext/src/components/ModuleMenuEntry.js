@@ -1,6 +1,7 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useState, useContext } from 'react'
 import Button from './Button.js';
 import { useWebStorage } from '../functionality/WebStorageHooks.js'
+import { PanelContext } from '../App.js';
 
 /**
  * Stores the state of the checkbox as module_name, value in localStorage
@@ -8,6 +9,8 @@ import { useWebStorage } from '../functionality/WebStorageHooks.js'
  */
 let ModuleMenuEntry = props => {
     let { storeToLocal, getFromLocal } = useWebStorage();
+
+    let setNextPanel = useContext(PanelContext);
 
     // keeps track of state of checkbox (when this changes, checkbox visually updates)
     let [enabled, setEnabled] = useState(getFromLocal(props.name) == 'true' ? true : false);
@@ -27,7 +30,7 @@ let ModuleMenuEntry = props => {
 
             <Button
                 primary={props.selected == props.name} noRound
-                onClick={props.setNextPanel.bind(props.name)}
+                onClick={() => setNextPanel(props.name)}
             >
                 {props.name}
             </Button>

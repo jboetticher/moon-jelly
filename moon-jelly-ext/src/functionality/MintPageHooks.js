@@ -30,7 +30,7 @@ function useMintPage() {
      * @param {the url of the data to be displayed on the ocean market} url 
      */
     function insertURL(url) {
-        insert("dataurl", url)
+        insert("dataurl", url);
     }
 
     /**
@@ -43,7 +43,7 @@ function useMintPage() {
 
     /**
      * Inserts a value into the descrption input of the mint page, if the user is on the mint page. Throws an error otherwise.
-     * @param {the description of the data to be displayed on the ocean market} authorName 
+     * @param {the description of the data to be displayed on the ocean market} description 
      */
     function insertDescription(description) {
         insert("dataDescription", description);

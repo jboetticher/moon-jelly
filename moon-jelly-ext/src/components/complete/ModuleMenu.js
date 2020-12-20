@@ -16,7 +16,7 @@ let ModuleMenu = props => {
         for (var i = 0; i < modulesObject.length; i++) {
             // create the element
             let currentModule =
-                <ModuleMenuEntry name={modulesObject[i].name} key={i} selected = {props.selected} setNextPanel = {props.setNextPanel} />;
+                <ModuleMenuEntry name={modulesObject[i].name} key={i} selected = {props.selected} />;
 
             // Add the module button/toggle to the array
             mods.push(currentModule);

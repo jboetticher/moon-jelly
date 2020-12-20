@@ -9,8 +9,6 @@ import Correct from '../Correct.js';
 import Input from '../Form/Input.js';
 import ConnectPanel from '../ConnectPanel.js';
 
-import { useMintPage } from '../../functionality/MintPageHooks';
-
 let Mint = props => {
 
     // Form data
@@ -175,12 +173,6 @@ let Mint = props => {
 
     //#endregion
 
-    let { isMintPageOpen, insertAuthorNameIntoMintForm } = useMintPage();
-    let testbutton = <Button onClick={() => {
-        insertAuthorNameIntoMintForm("author name inserted");
-    }}>
-        click this
-    </Button>
 
     // Determines whether or not the wallet has been connected.
     let { walletConnected: isWalletConnected } = useWalletReady();
@@ -277,7 +269,6 @@ let Mint = props => {
     let mintPanel = !isWalletConnected ? <ConnectPanel /> : publishLoader;
     return (
         <div id={"mintPanel"}>
-            {testbutton}
             {mintPanel}
         </div>
     );
