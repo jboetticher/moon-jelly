@@ -1,3 +1,5 @@
+@import 'variables.css';
+
 .searchForm {
     display: flex;
 }
@@ -5,17 +7,52 @@
 .accordion {
     /*background-color: aqua;*/
     /*border-color: aqua;*/
-    border: 2px solid aqua;
+    /*border: 2px solid aqua;*/
+    display: grid;
+    grid-gap: 5px;
+}
+
+.gradient-border-wrap {
+    background: var(--brand-gradient);
+    /*border-radius: var(--border-radius);*/
+    padding-top: 2px;
+    /*padding-bottom: 2px;*/
 }
 
 .accordionSection {
-    background-color: red;
+    background-color: var(--brand-white);
+
+    /*border-radius: var(--border-radius);*/
+    
+    text-align: left;
+    color: var(--brand-black);
+
+    padding: 5px;
+}
+
+.tokenSymbol {
+    font-size: var(--font-size-base);
+    color: var(--color-secondary);
 }
 
 .accordionSectionInner {
-    background-color: green;
+    background-color: var(--brand-white);
+
+    border-top: 2px solid var(--brand-grey-lighter);
+    padding-left: 15px;
+
+    font-size: 1.2rem;
+    /*font-weight: 600;*/
 }
 
+.assetAuthor {
+    font-size: var(--font-size-base);
+    color: var(--color-secondary);
+}
+
+.assetName {
+    font-weight: 600;
+}
 
 #tokenSearchButton {
     margin-top: 6px;

@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-/* Taken from https://www.digitalocean.com/community/tutorials/react-react-accordion-component */
+/* Based on https://www.digitalocean.com/community/tutorials/react-react-accordion-component */
 
 class AccordionSection extends Component {
   static propTypes = {
     children: PropTypes.instanceOf(Object).isRequired,
     isOpen: PropTypes.bool.isRequired,
     label: PropTypes.string.isRequired,
+    labelExtra: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired
   };
 
@@ -28,11 +29,12 @@ class AccordionSection extends Component {
         }}*/
       >
         <div onClick={onClick} style={{ cursor: "pointer" }}>
-          {label}
-          <div style={{ float: "right" }}>
+          <div className="accordionLabel tokenSymbol">{label}</div>
+          {this.props.labelExtra}
+          {/*<div style={{ float: "right" }}>
             {!isOpen && <span>&#9650;</span>}
             {isOpen && <span>&#9660;</span>}
-          </div>
+          </div>*/}
         </div>
         {isOpen && (
           <div
