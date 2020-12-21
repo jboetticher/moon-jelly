@@ -1,3 +1,4 @@
+import { render } from '@testing-library/react';
 import React, { Component } from 'react'
 //import Button from '../Button.js';
 import modules from '../../modules';
@@ -16,7 +17,7 @@ let ModuleMenu = props => {
         for (var i = 0; i < modulesObject.length; i++) {
             // create the element
             let currentModule =
-                <ModuleMenuEntry name={modulesObject[i].name} key={i} selected = {props.selected} />;
+                <ModuleMenuEntry {...modulesObject[i]} key={i} selected = {props.selected} />;
 
             // Add the module button/toggle to the array
             mods.push(currentModule);
@@ -26,11 +27,7 @@ let ModuleMenu = props => {
         return mods;
     }
 
-    return (
-        <div className="grid-container">
-            {renderModules()}
-        </div>
-    );    
+    return (renderModules());    
 }
 
 export default ModuleMenu;

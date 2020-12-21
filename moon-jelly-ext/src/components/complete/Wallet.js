@@ -19,8 +19,6 @@ let Wallet = props => {
     let { walletConnected: isWalletConnected } = useWalletReady();
     walletPanel = !isWalletConnected ? <ConnectPanel /> : walletPanel;
 
-
-
     return(
         <div id="walletPanel">
             {walletPanel}

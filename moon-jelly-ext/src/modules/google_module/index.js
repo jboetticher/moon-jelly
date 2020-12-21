@@ -8,7 +8,6 @@ const google_module = () => (
 
 export default {
     name: 'google_module',
-    title: "Google Drive",
     properties: {
         hasPanel: true
     },

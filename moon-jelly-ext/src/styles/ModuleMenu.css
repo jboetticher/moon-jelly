@@ -1,3 +1,23 @@
 .grid-container {
     display: inline-grid;
 }
+
+.module-menu-entry {
+    text-align: left;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    min-height: 35px;
+}
+
+.v-center {
+    position: relative;
+    top: 50%;
+    transform: translateY(12%);
+}
+
+.module-entry-title {
+    overflow: hidden;
+    flex-grow: 1;
+}
