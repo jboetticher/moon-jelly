@@ -4,6 +4,8 @@ import Input from './Form/Input.js';
 import Button from './Button.js';
 import Panel from './Panel.js';
 
+import Accordion from './Accordion';
+
 import './../styles/Market.css';
 
 let MarketAssetList = props => {
@@ -18,23 +20,24 @@ let MarketAssetList = props => {
             let asset = props.results['results'][i];
 
             let datatokenSymbol = asset['dataTokenInfo']['symbol'];
-            let datatokenPrice = asset['price']['ocean'];
+            let datatokenPrice = parseFloat(asset['price']['ocean']).toFixed(3);
             let assetName = asset['service'][0]['attributes']['main']['name'];
             let assetAuthor = asset['service'][0]['attributes']['main']['author'];
             let assetDesc = asset['service'][0]['attributes']['additionalInformation'] != null ?
                 asset['service'][0]['attributes']['additionalInformation']['description'] : "No description availiable";
+            let did = asset['id'];
 
             let resultEntry =
-                <div className="assetEntry" key={i}>
-                    <button
-                        className="button collapseButton"
-                    >
-                        {datatokenSymbol}
-                    </button>
-                    <div className="collapseContent">
-                        <p>{assetName}</p>
-                    </div>
-                </div>;
+                    <div 
+                        label={datatokenSymbol} 
+                        labelExtra={createLabelExtra(assetName, assetAuthor, datatokenPrice)}
+                        key={i}
+                        className="assetBody"
+                    >   
+                        <a className="mt-1" href={"https://market.oceanprotocol.com/asset/" + did} target="_blank">View on Ocean Market</a>
+
+                        <div className="assetDesc mt-1">{assetDesc}</div>   
+                    </div>;
 
             resultEntries.push(resultEntry);
         }
@@ -42,14 +45,26 @@ let MarketAssetList = props => {
         return resultEntries;
     }
 
-    function toggleCollapse(){
-        
+    function createLabelExtra(name, author, price){
+        return(
+            <div className="assetInfo">
+                <div className="assetName">{name}</div>
+                <div className="assetAuthor">{author}</div> 
+                <div className="assetPrice">{price}  <span className="tokenSymbol">OCEAN</span></div>              
+            </div>
+
+
+            
+        );
     }
 
 
     return (
         <div>
-            {renderResults()}
+            <Accordion allowMultipleOpen>
+                {renderResults()}
+            </Accordion>
+            
         </div>
     );
 }

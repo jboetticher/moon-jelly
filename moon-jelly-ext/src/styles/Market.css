@@ -1,28 +1,58 @@
+@import 'variables.css';
+
 .searchForm {
     display: flex;
 }
 
-.assetEntry {
-    /*border: solid;
-    border-width: 2px;
+.accordion {
+    /*background-color: aqua;*/
+    /*border-color: aqua;*/
+    /*border: 2px solid aqua;*/
+    display: grid;
+    grid-gap: 5px;
+}
+
+.gradient-border-wrap {
+    background: var(--brand-gradient);
+    /*border-radius: var(--border-radius);*/
+    padding-top: 2px;
+    /*padding-bottom: 2px;*/
+}
+
+.accordionSection {
+    background-color: var(--brand-white);
+
+    /*border-radius: var(--border-radius);*/
+    
+    text-align: left;
+    color: var(--brand-black);
+
     padding: 5px;
-    margin: 4px;
-    max-width: 300px;*/
 }
 
-.assetDatatokenSymbol {
-    font-size: 1rem;
+.tokenSymbol {
+    font-size: var(--font-size-base);
+    color: var(--color-secondary);
 }
 
-.assetName {
-    font-size: 1.5rem;
+.accordionSectionInner {
+    background-color: var(--brand-white);
+
+    border-top: 2px solid var(--brand-grey-lighter);
+    padding-left: 15px;
+
+    font-size: 1.2rem;
+    /*font-weight: 600;*/
 }
 
 .assetAuthor {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
+    color: var(--color-secondary);
 }
 
-
+.assetName {
+    font-weight: 600;
+}
 
 #tokenSearchButton {
     margin-top: 6px;

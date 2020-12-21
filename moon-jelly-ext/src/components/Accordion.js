@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import AccordionSection from "./AccordionSection";
 
-/* Taken from https://www.digitalocean.com/community/tutorials/react-react-accordion-component */
+/* Based on  https://www.digitalocean.com/community/tutorials/react-react-accordion-component */
 
 class Accordion extends Component {
   static propTypes = {
@@ -19,7 +19,7 @@ class Accordion extends Component {
     super(props);
 
     const openSections = {};
-    
+
     this.props.children.forEach(child => {
       if (child.props.isOpen) {
         openSections[child.props.label] = true;
@@ -51,22 +51,26 @@ class Accordion extends Component {
   };
 
   render() {
-    const { 
+    const {
       onClick,
       props: { children },
       state: { openSections },
     } = this;
 
     return (
-      <div style={{ border: "2px solid #008f68" }}>
-        {children.map(child => (
-          <AccordionSection
-            isOpen={!!openSections[child.props.label]}
-            label={child.props.label}
-            onClick={onClick}
-          >
-            {child.props.children}
-          </AccordionSection>
+      <div className="accordion" /*style={{ border: " " }}*/>
+        {children.map((child, index) => (
+          <div className="gradient-border-wrap">
+            <AccordionSection
+              isOpen={!!openSections[child.props.label]}
+              label={child.props.label}
+              labelExtra={child.props.labelExtra}
+              onClick={onClick}
+              key={index}
+            >
+              {child.props.children}
+            </AccordionSection>
+          </div>
         ))}
       </div>
     );
