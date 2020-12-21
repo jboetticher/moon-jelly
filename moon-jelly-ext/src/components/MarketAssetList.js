@@ -4,6 +4,8 @@ import Input from './Form/Input.js';
 import Button from './Button.js';
 import Panel from './Panel.js';
 
+import Accordion from './Accordion';
+
 import './../styles/Market.css';
 
 let MarketAssetList = props => {
@@ -25,16 +27,10 @@ let MarketAssetList = props => {
                 asset['service'][0]['attributes']['additionalInformation']['description'] : "No description availiable";
 
             let resultEntry =
-                <div className="assetEntry" key={i}>
-                    <button
-                        className="button collapseButton"
-                    >
-                        {datatokenSymbol}
-                    </button>
-                    <div className="collapseContent">
+                    <div label={ assetName + " - " + datatokenSymbol}key={i}>
                         <p>{assetName}</p>
-                    </div>
-                </div>;
+                        <p>{assetDesc}</p>
+                    </div>;
 
             resultEntries.push(resultEntry);
         }
@@ -49,7 +45,10 @@ let MarketAssetList = props => {
 
     return (
         <div>
-            {renderResults()}
+            <Accordion allowMultipleOpen>
+                {renderResults()}
+            </Accordion>
+            
         </div>
     );
 }
