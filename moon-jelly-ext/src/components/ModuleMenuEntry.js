@@ -1,4 +1,4 @@
-import React, { Component, useState, useContext } from 'react'
+import React, { Component, useState, useContext, useEffect } from 'react'
 import Switch from 'react-switch';
 import Button from './Button.js';
 import { useWebStorage } from '../functionality/WebStorageHooks.js'
@@ -16,13 +16,11 @@ let ModuleMenuEntry = props => {
     // keeps track of state of checkbox (when this changes, checkbox visually updates)
     let [enabled, setEnabled] = useState(getFromLocal(props.name) == 'true' ? true : false);
 
-    // called when checkbox is clicked
-    // flips the enabled state value
-    // flips the value stored in localStorage
-    function onCheckChange() {
-        storeToLocal(props.name, !enabled);
-        setEnabled(!enabled);
-    }
+    // updates in local storage
+    useEffect(() => {
+        storeToLocal(props.name, enabled);
+        console.log(props.name, getFromLocal(props.name));
+    }, [enabled]);
 
     const viewButton = !enabled ? <></> :
         <div className={"mr-1"}>
@@ -45,8 +43,12 @@ let ModuleMenuEntry = props => {
             {viewButton}
             <Switch
                 className="react-switch mr-1 v-center"
-                onChange={setEnabled}
+                onChange={(checked, e, id) =>  {
+                    console.log("check change ", checked);
+                    setEnabled(checked);
+                }}
                 checked={enabled}
+                onColor="#ff4092"
             />
         </div>
     );

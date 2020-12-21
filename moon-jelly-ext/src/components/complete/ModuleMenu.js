@@ -1,9 +1,9 @@
-import { render } from '@testing-library/react';
 import React, { Component } from 'react'
-//import Button from '../Button.js';
+import Panel from '../Panel.js';
 import modules from '../../modules';
 import '../../styles/ModuleMenu.css';
 import ModuleMenuEntry from '../ModuleMenuEntry.js';
+import '../../styles/variables.css';
 
 // exports once
 const modulesObject = modules;
@@ -17,7 +17,7 @@ let ModuleMenu = props => {
         for (var i = 0; i < modulesObject.length; i++) {
             // create the element
             let currentModule =
-                <ModuleMenuEntry {...modulesObject[i]} key={i} selected = {props.selected} />;
+                <ModuleMenuEntry {...modulesObject[i]} key={i} selected={props.selected} />;
 
             // Add the module button/toggle to the array
             mods.push(currentModule);
@@ -27,40 +27,12 @@ let ModuleMenu = props => {
         return mods;
     }
 
-    return (renderModules());    
+    return (
+        <Panel>
+            MoonJelly Modules
+            {renderModules()}
+        </Panel>
+    );
 }
 
 export default ModuleMenu;
-
-/*
-export default class ModuleMenu extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
-
-    renderModules() {
-        var mods = [];
-
-        // Loop through all the modules to create a button/toggle for each
-        for (var i = 0; i < modulesObject.length; i++) {
-            // create the element
-            let currentModule =
-                <ModuleMenuEntry name={modulesObject[i].name} key={i} selected = {this.props.selected} setNextPanel = {this.props.setNextPanel} />;
-
-            // Add the module button/toggle to the array
-            mods.push(currentModule);
-        }
-
-        // Return array to display
-        return mods;
-    }
-
-    render() {
-        return (
-            <div className="grid-container">
-                {this.renderModules()}
-            </div>
-        );
-    }
-}*/
