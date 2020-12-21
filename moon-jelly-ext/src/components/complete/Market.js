@@ -7,11 +7,11 @@ import Panel from '../Panel.js';
 import MarketAssetList from '../MarketAssetList';
 import '../../styles/Market.css';
 
-import { useMarketPage } from '../../functionality/MarketPageHooks.js'
+import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 
 let Market = props => {
 
-    var {insertSearchTerm} = useMarketPage();
+    var { fetchDataBySearchterm } = useAquariusFetch();
 
     //const request = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?=");
 
@@ -26,7 +26,7 @@ let Market = props => {
 
     // Returns a Promise to evaluate for the data
     // Data is based on the search terms and page number
-    async function getJsonData() {
+    /*async function getJsonData() {
         try {
             let data = await fetch('https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=' + searchTerms + '&page=' + pageNumber);
             let jsonData = await data.json();
@@ -37,7 +37,7 @@ let Market = props => {
             return null;
         }
 
-    }
+    }*/
 
     // Creates a next page button
     function renderNextButton() {
@@ -54,7 +54,7 @@ let Market = props => {
                     // if the pageNumber == total pages, don't increment
                     setPageNumber(++pageNumber);
 
-                    getJsonData().then(jsonData => {
+                    fetchDataBySearchterm('rinkeby', searchTerms, pageNumber).then(jsonData => {
                         console.log(jsonData);
                         setSearchResults(jsonData);
                     });
@@ -80,10 +80,9 @@ let Market = props => {
                     // if the pageNumber is 1, don't decrement and and don't fetch (do nothing)
                     if (pageNumber == 1) return;
 
-
                     setPageNumber(--pageNumber);
 
-                    getJsonData().then(jsonData => {
+                    fetchDataBySearchterm('rinkeby', searchTerms, pageNumber).then(jsonData => {
                         console.log(jsonData);
                         setSearchResults(jsonData);
                     });
@@ -123,43 +122,55 @@ let Market = props => {
     }
 
     return (
-        <div id="marketPanel">          
-        <Panel>
-            Browse the Ocean Market
+        <div id="marketPanel">
+            <Panel>
+                Browse the Ocean Market
             <form className={"form searchForm"}>
 
-                <Input
-                    type="text"
-                    id="tokenSearch"
-                    placeholder={searchTerms ? searchTerms : "Search for Data Tokens."}
-                    value={searchTerms}
-                    onChange={(e) => {
-                        const { name, value } = e.target;
-                        setSearchTerms(value);
-                        console.log("set searchterm as", value);
-                    }}
-                />
-                <Button
-                    type="button"
-                    id="tokenSearchButton"
-                    onClick={() => {
-                        getJsonData().then(jsonData => {
-                            console.log(jsonData);
-                            setPageNumber("1");
-                            setSearchResults(jsonData);
-                        });
-                    }}
-                >
-                    Search
+                    <Input
+                        type="text"
+                        id="tokenSearch"
+                        placeholder={searchTerms ? searchTerms : "Search for Data Tokens."}
+                        value={searchTerms}
+                        onChange={(e) => {
+                            const { name, value } = e.target;
+                            setSearchTerms(value);
+                            //console.log("set searchterm as", value);
+                        }}
+                    />
+                    <Button
+                        type="button"
+                        id="tokenSearchButton"
+                        onClick={() => {
+                            /*getJsonData().then(jsonData => {
+                                console.log(jsonData);
+                                setPageNumber("1");
+                                setSearchResults(jsonData);
+                            });*/
+                            fetchDataBySearchterm('rinkeby', searchTerms, '1').then(jsonData => {
+                                console.log(jsonData);
+                                setPageNumber("1"); // resets page number to 1 if it was not 1
+                                setSearchResults(jsonData);
+                            });
+                        }}
+                    >
+                        Search
                 </Button>
-            </form>
-            
-            {renderResults()}
+                </form>
 
-        </Panel>
+                {renderResults()}
+
+            </Panel>
+            <Button
+                onClick={() => {
+                    fetchDataBySearchterm("rinkeby", "test", "1").then(res => console.log(res));
+                }}
+            >
+                test
+        </Button>
         </div>
 
-        
+
     );
 }
 

@@ -13,4 +13,29 @@ function useWalletReady() {
     return { connect, walletConnected: oceanConnected };
 }
 
-export { useWalletReady };
+function useAquariusFetch() {
+
+    /**
+     * Fetches from aquarius and returns a promise to evaluate with the results
+     * @param {The network for aquarius to query, ie 'mainnet', 'rinkeby'} network
+     * @param {The text to filter the fetch results by} searchterm
+     * @param {The page of the results to query, typically '1'} page
+     */
+    function fetchDataBySearchterm(network, searchterm, page) {
+        return fetch('https://aquarius.' + network + '.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=' + searchterm + '&page=' + page)
+            .then(data => data.json());
+    }
+
+    /**
+     * Fetches from aquarius and returns a promise to evaluate with the results
+     * @param {The network for aquarius to query, ie 'mainnet', 'rinkeby'} network
+     * @param {The text to filter the fetch results by} walletid
+     */
+    function fetchDataByWallet(network, walletid) {
+
+    }
+
+    return { fetchDataBySearchterm, fetchDataByWallet };
+}
+
+export { useWalletReady, useAquariusFetch };
