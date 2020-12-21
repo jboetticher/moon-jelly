@@ -5,9 +5,13 @@
   "description": "An expansion on the jellyfish cross-browser extension to help with publishing and accessing the ocean protocol.",
   "version": "0.0.1",
 
+  "background": {
+    "scripts": ["eventPage.js"],
+    "persistent": false
+  },
   "browser_action": {
-    "default_popup": "index.html",
-    "default_title": "Open the popup"
+    "default_title": "MoonJelly",
+    "default_popup": "index.html"
   },
   "icons": {
     "16": "jellyfish-48.png",
@@ -19,6 +23,7 @@
     "tabs",
     "storage",
     "notifications",
+    "contextMenus",
     "http://*/",
     "https://*/"
   ],

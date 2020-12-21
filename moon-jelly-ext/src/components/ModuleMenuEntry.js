@@ -25,14 +25,15 @@ let ModuleMenuEntry = props => {
 
     return (
         <div>
+            {props.name}
             <input type="checkbox" checked={enabled} 
                 onChange={() => onCheckChange()} />
 
             <Button
-                primary={props.selected == props.name} noRound
+                primary={props.selected == props.name} padding
                 onClick={() => setNextPanel(props.name)}
             >
-                {props.name}
+                View
             </Button>
         </div>
     );

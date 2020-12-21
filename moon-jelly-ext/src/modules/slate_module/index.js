@@ -7,6 +7,7 @@ const slate_module = () => (
 );
 
 export default {
+    title: "Slate",
     name: 'slate_module',
     properties: {
         hasPanel: true

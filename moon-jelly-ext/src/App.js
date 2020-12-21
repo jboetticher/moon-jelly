@@ -1,9 +1,10 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useContext, useEffect, useState } from 'react';
 
 // Functionality
 import { ConfigHelper } from '@oceanprotocol/lib';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import * as PanelManager from './functionality/PanelManager.js';
+import { useWebStorage } from './functionality/WebStorageHooks.js';
 
 // Assets
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
@@ -124,7 +125,6 @@ class App extends Component {
                         <div className={"container"}>
                             <div className={"navbar"}>
                                 <Navbar selected={this.state.nextToDisplay} />
-                                {/*<Navbar  nextDisplay={this.setNextDisplay.bind(this)} />*/}
                             </div>
                             <div className={"content"}>
                                 {this.chooseDisplay(this.state.nextToDisplay)}
@@ -138,6 +138,21 @@ class App extends Component {
 }
 
 const HomePanel = (props) => {
+
+    // Checks for search page
+    let goToPage = useContext(PanelContext);
+    let { getFromLocal, storeToLocal } = useWebStorage();
+    let [oceanSearchCheck, oceanSearchCheckSet] = useState(getFromLocal('searchOnOcean'));
+    if(oceanSearchCheck !== "") {
+        alert(oceanSearchCheck);
+
+        goToPage("market");
+        // here you would go to the search page via hook and slap it in
+
+        // makes sure it doesn't send again
+        storeToLocal("searchOnOcean", "");
+        oceanSearchCheckSet("");
+    }
 
     console.log(useOcean());
     let { ocean, accountId, connect, refreshBalance, status } = useOcean();
