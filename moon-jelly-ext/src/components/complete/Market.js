@@ -157,15 +157,6 @@ let Market = props => {
             {renderResults()}
 
         </Panel>
-
-        <Button
-            type="button"
-            onClick={() => {
-                insertSearchTerm("dab");
-            }}
-        >
-            clcik me
-        </Button>
         </div>
 
         
