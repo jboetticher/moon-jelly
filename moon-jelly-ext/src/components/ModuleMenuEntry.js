@@ -1,4 +1,5 @@
 import React, { Component, useState, useContext } from 'react'
+import Switch from 'react-switch';
 import Button from './Button.js';
 import { useWebStorage } from '../functionality/WebStorageHooks.js'
 import { PanelContext } from '../App.js';
@@ -18,7 +19,7 @@ let ModuleMenuEntry = props => {
     // called when checkbox is clicked
     // flips the enabled state value
     // flips the value stored in localStorage
-    function onCheckChange(){
+    function onCheckChange() {
         storeToLocal(props.name, !enabled);
         setEnabled(!enabled);
     }
@@ -26,9 +27,11 @@ let ModuleMenuEntry = props => {
     return (
         <div>
             {props.name}
-            <input type="checkbox" checked={enabled} 
-                onChange={() => onCheckChange()} />
-
+            <Switch
+                className="react-switch"
+                onChange={setEnabled}
+                checked={enabled}
+            />
             <Button
                 primary={props.selected == props.name} padding
                 onClick={() => setNextPanel(props.name)}
@@ -111,7 +114,7 @@ export default class ModuleMenuEntry extends Component {
             // if localstorage is unavailable, use component state
             return this.state.enabled;
         }
-        
+
     }
 
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
 import { useWebStorage } from '../../functionality/WebStorageHooks.js';
 
-import AssetList from '../AssetList'
 import Correct from '../Correct'
 import Incorrect from '../Incorrect'
 import Button from '../Button'

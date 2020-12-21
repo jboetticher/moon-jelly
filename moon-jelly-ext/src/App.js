@@ -143,9 +143,7 @@ const HomePanel = (props) => {
     let goToPage = useContext(PanelContext);
     let { getFromLocal, storeToLocal } = useWebStorage();
     let [oceanSearchCheck, oceanSearchCheckSet] = useState(getFromLocal('searchOnOcean'));
-    if(oceanSearchCheck !== "") {
-        alert(oceanSearchCheck);
-
+    if(oceanSearchCheck !== "" && oceanSearchCheck !== null && oceanSearchCheck !== undefined) {
         goToPage("market");
         // here you would go to the search page via hook and slap it in
 
