@@ -60,13 +60,12 @@ class Accordion extends Component {
     return (
       <div className="accordion" /*style={{ border: " " }}*/>
         {children.map((child, index) => (
-          <div className="gradient-border-wrap">
+          <div className="gradient-border-wrap" key={index}>
             <AccordionSection
               isOpen={!!openSections[child.props.label]}
               label={child.props.label}
               labelExtra={child.props.labelExtra}
-              onClick={onClick}
-              key={index}
+              onClick={onClick}       
             >
               {child.props.children}
             </AccordionSection>

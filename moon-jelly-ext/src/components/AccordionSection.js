@@ -8,7 +8,6 @@ class AccordionSection extends Component {
     children: PropTypes.instanceOf(Object).isRequired,
     isOpen: PropTypes.bool.isRequired,
     label: PropTypes.string.isRequired,
-    labelExtra: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired
   };
 
