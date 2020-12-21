@@ -27,7 +27,10 @@ let MarketAssetList = props => {
                 asset['service'][0]['attributes']['additionalInformation']['description'] : "No description availiable";
 
             let resultEntry =
-                    <div label={ assetName + " - " + datatokenSymbol}key={i}>
+                    <div 
+                        label={ assetName + " - " + datatokenSymbol}key={i}
+                        className="assetBody"
+                    >
                         <p>{assetName}</p>
                         <p>{assetDesc}</p>
                     </div>;

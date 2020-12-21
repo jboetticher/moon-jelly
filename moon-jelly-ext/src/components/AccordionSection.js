@@ -20,11 +20,12 @@ class AccordionSection extends Component {
 
     return (
       <div
-        style={{
+        className="accordionSection"
+        /*style={{
           background: isOpen ? "#fae042" : "#6db65b",
           border: "1px solid #008f68",
           padding: "5px 10px"
-        }}
+        }}*/
       >
         <div onClick={onClick} style={{ cursor: "pointer" }}>
           {label}
@@ -35,12 +36,13 @@ class AccordionSection extends Component {
         </div>
         {isOpen && (
           <div
-            style={{
+            className="accordionSectionInner"
+            /*style={{
               background: "#6db65b",
               border: "2px solid #008f68",
               marginTop: 10,
               padding: "10px 20px"
-            }}
+            }}*/
           >
             {this.props.children}
           </div>

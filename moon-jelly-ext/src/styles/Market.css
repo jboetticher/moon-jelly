@@ -2,26 +2,19 @@
     display: flex;
 }
 
-.assetEntry {
-    /*border: solid;
-    border-width: 2px;
-    padding: 5px;
-    margin: 4px;
-    max-width: 300px;*/
+.accordion {
+    /*background-color: aqua;*/
+    /*border-color: aqua;*/
+    border: 2px solid aqua;
 }
 
-.assetDatatokenSymbol {
-    font-size: 1rem;
+.accordionSection {
+    background-color: red;
 }
 
-.assetName {
-    font-size: 1.5rem;
+.accordionSectionInner {
+    background-color: green;
 }
-
-.assetAuthor {
-    font-size: 1rem;
-}
-
 
 
 #tokenSearchButton {
