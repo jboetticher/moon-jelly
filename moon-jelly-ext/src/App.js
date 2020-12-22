@@ -5,6 +5,7 @@ import { ConfigHelper } from '@oceanprotocol/lib';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import * as PanelManager from './functionality/PanelManager.js';
 import { useWebStorage } from './functionality/WebStorageHooks.js';
+import { useMarketPage } from './functionality/MarketPageHooks.js';
 
 // Assets
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
@@ -111,8 +112,8 @@ class App extends Component {
      * Sets the id of the next panel.
      * @param {"id of the panel to change to"} nextPanel 
      */
-    setNextPanel(nextPanel) {
-        this.setState({ nextToDisplay: nextPanel });
+    setNextPanel(nextPanel, response) {
+        this.setState({ nextToDisplay: nextPanel }, response);
     }
 
     render() {
@@ -141,11 +142,14 @@ const HomePanel = (props) => {
 
     // Checks for search page
     let goToPage = useContext(PanelContext);
+    let { insertSearchTerm } = useMarketPage();
     let { getFromLocal, storeToLocal } = useWebStorage();
     let [oceanSearchCheck, oceanSearchCheckSet] = useState(getFromLocal('searchOnOcean'));
     if(oceanSearchCheck !== "" && oceanSearchCheck !== null && oceanSearchCheck !== undefined) {
-        goToPage("market");
-        // here you would go to the search page via hook and slap it in
+        goToPage("market", () => {
+            // here you would go to the search page via hook and slap it in
+            insertSearchTerm(oceanSearchCheck);
+        });
 
         // makes sure it doesn't send again
         storeToLocal("searchOnOcean", "");

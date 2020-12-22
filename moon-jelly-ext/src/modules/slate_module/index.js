@@ -1,9 +1,13 @@
 // slate integration
 
 import React from 'react';
+import SlateFetch from './SlateFetch.js';
+import Panel from '../../components/Panel.js';
 
 const slate_module = () => (
-    <div>Slate Module</div>
+    <Panel>
+        <SlateFetch />
+    </Panel>
 );
 
 export default {

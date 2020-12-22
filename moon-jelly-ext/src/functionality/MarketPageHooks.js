@@ -1,5 +1,4 @@
 import React, { Component, useEffect, useState } from 'react';
-import { useOcean } from '@oceanprotocol/react';
 
 function useMarketPage() {
 
