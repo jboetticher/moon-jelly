@@ -63,7 +63,8 @@ let SlateFetch = () => {
                         console.log("set searchterm as", value);
                     }}
                 />
-                <Button primary padding onClick={() => {
+                <Button primary padding onClick={(e) => {
+                    e.preventDefault();
                     storeToLocal(SLATE_API_SECRET_KEY, apiKey);
                 }}>
                     Store Slate API Key
@@ -91,8 +92,12 @@ let SlateFetch = () => {
                             setAPIKey(value);
                         }}
                     />
-                    <Button primary padding onClick={() => {
+                    <Button primary padding onClick={(e) => {
+                        e.preventDefault();
                         storeToLocal(SLATE_API_SECRET_KEY, apiKey);
+                        var apiInputter = document.getElementById("slateAPIKeyInput");
+                        apiInputter.value = "";
+                        apiInputter.placeholder = "API Key Set Successfully!";
                     }}>
                         Store Slate API Key
                     </Button>
