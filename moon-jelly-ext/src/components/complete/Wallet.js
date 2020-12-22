@@ -37,7 +37,7 @@ let Wallet = props => {
         }
         
         return (
-            assetResults != "" ? <MarketAssetList results={assetResults}> </MarketAssetList> : null
+            assetResults != "" ? <div> <div>My Published Assets</div> <MarketAssetList results={assetResults}> </MarketAssetList> </div> : null
         );
     }
 
@@ -52,7 +52,7 @@ let Wallet = props => {
             <Panel>
                 {walletPanel}
 
-                <div>My Published Assets</div>
+                
                 {renderWalletAssets()}
             </Panel>
         </div>
