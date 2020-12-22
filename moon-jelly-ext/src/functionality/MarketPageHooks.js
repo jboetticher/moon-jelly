@@ -30,10 +30,13 @@ function useMarketPage() {
      */
     function insertSearchTerm(term) {
         insert("tokenSearch", term);
-        let searchbox = document.getElementById("tokenSearch");
 
         var searchButton = document.getElementById("tokenSearchButton");
         
+        //this doesn't work and the button click still works so i'm leaving it
+            //var searchForm = document.getElementById("searchForm"); 
+            //searchForm.submit(); 
+
         // We have to wait for the state to change in order to search the terms
         // Yes this is bad code because I'm not sure how to do it otherwise
         setTimeout(() => {  

@@ -9,9 +9,13 @@ import '../../styles/Market.css';
 
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 
+//import { useMarketPage } from '../../functionality/MarketPageHooks.js'
+
 let Market = props => {
 
     const { fetchDataBySearchterm } = useAquariusFetch();
+
+    //const { insertSearchTerm } = useMarketPage();
 
     //const request = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?=");
 
@@ -41,10 +45,12 @@ let Market = props => {
 
     // Creates a next page button
     function renderNextButton() {
+        if (pageNumber == searchResults['total_pages']) return;
+
         return (
             <Button
                 type="button"
-                className="button pageButton"
+                className="button nextButton"
                 onClick={() => {
                     console.log("next");
 
@@ -70,10 +76,12 @@ let Market = props => {
     // Creates a prev page button
     function renderPrevButton() {
 
+        if (pageNumber == 1) return <div></div>;
+
         return (
             <Button
                 type="button"
-                className="button pageButton"
+                className="button prevButton"
                 onClick={() => {
                     console.log("prev");
 
@@ -125,8 +133,15 @@ let Market = props => {
         <div id="marketPanel">
             <Panel>
                 Browse the Ocean Market
-            <form className={"form searchForm"}>
-
+            <form id={"searchForm"} onSubmit={(e) => {
+                    console.log("HELLO");
+                    e.preventDefault();
+                    fetchDataBySearchterm('rinkeby', searchTerms, '1').then(jsonData => {
+                        console.log(jsonData);
+                        setPageNumber("1"); // resets page number to 1 if it was not 1
+                        setSearchResults(jsonData);
+                    });
+                }}>
                     <Input
                         type="text"
                         id="tokenSearch"
@@ -139,20 +154,8 @@ let Market = props => {
                         }}
                     />
                     <Button
-                        type="button"
+                        type="submit"
                         id="tokenSearchButton"
-                        onClick={() => {
-                            /*getJsonData().then(jsonData => {
-                                console.log(jsonData);
-                                setPageNumber("1");
-                                setSearchResults(jsonData);
-                            });*/
-                            fetchDataBySearchterm('rinkeby', searchTerms, '1').then(jsonData => {
-                                console.log(jsonData);
-                                setPageNumber("1"); // resets page number to 1 if it was not 1
-                                setSearchResults(jsonData);
-                            });
-                        }}
                     >
                         Search
                 </Button>
