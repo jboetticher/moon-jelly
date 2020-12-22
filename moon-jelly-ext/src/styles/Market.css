@@ -69,6 +69,8 @@
     border-radius: var(--border-radius);
     color: #fff;
     padding: .2rem;
+    position: relative;
+    bottom: 1px;
 }
 
 .assetLabelPricing{
