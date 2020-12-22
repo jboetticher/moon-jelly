@@ -1,2 +1,3 @@
 # moon-jelly
-An expansion on the jellyfish cross-browser extension to help with publishing and accessing the ocean protocol.
+A chromium browser extension to help with publishing and accessing the ocean protocol & market.
+Expands off of the Jellyfish extension by Dhaval Kalavadiya.
