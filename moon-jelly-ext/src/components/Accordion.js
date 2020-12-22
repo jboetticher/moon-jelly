@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import AccordionSection from "./AccordionSection";
 
-/* Based on  https://www.digitalocean.com/community/tutorials/react-react-accordion-component */
+/* Based on https://www.digitalocean.com/community/tutorials/react-react-accordion-component */
 
 class Accordion extends Component {
   static propTypes = {

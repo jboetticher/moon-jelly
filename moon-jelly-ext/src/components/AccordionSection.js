@@ -28,7 +28,7 @@ class AccordionSection extends Component {
         }}*/
       >
         <div onClick={onClick} style={{ cursor: "pointer" }}>
-          <div className="accordionLabel tokenSymbol">{label}</div>
+          <div className="accordionLabel">{label}</div>
           {this.props.labelExtra}
           {/*<div style={{ float: "right" }}>
             {!isOpen && <span>&#9650;</span>}

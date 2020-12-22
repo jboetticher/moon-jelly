@@ -46,12 +46,34 @@
 }
 
 .assetAuthor {
-    font-size: var(--font-size-base);
-    color: var(--color-secondary);
+    /*font-size: var(--font-size-base);
+    color: var(--color-secondary);*/
 }
 
-.assetName {
-    font-weight: 600;
+.assetPrice{
+    text-align: right;
+    vertical-align: middle;
+}
+
+.priceNumber{
+    font-weight: 700;
+    margin-right: 3px;
+}
+
+.poolSymbol{
+    margin-left: 3px;
+    background: var(--brand-gradient);
+    font-size: var(--font-size-mini);       
+    font-family: var(--font-family-base);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--border-radius);
+    color: #fff;
+    padding: .2rem;
+}
+
+.assetLabelPricing{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 #tokenSearchButton {

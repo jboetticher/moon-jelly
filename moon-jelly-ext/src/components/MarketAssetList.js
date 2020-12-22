@@ -25,18 +25,20 @@ let MarketAssetList = props => {
             let assetAuthor = asset['service'][0]['attributes']['main']['author'];
             let assetDesc = asset['service'][0]['attributes']['additionalInformation'] != null ?
                 asset['service'][0]['attributes']['additionalInformation']['description'] : "No description availiable";
+            let pool = asset['price']['pools'];
             let did = asset['id'];
 
             let resultEntry =
                     <div 
-                        label={datatokenSymbol} 
-                        labelExtra={createLabelExtra(assetName, assetAuthor, datatokenPrice)}
+                        //label={datatokenSymbol}
+                        label={assetName} 
+                        labelExtra={createLabelExtra(datatokenSymbol, datatokenPrice, pool)}
                         key={i}
                         className="assetBody"
                     >   
                         <a className="mt-1" href={"https://market.oceanprotocol.com/asset/" + did} target="_blank">View on Ocean Market</a>
 
-                        <div className="assetDesc mt-1">{assetDesc}</div>   
+                        {/*<div className="assetDesc mt-1">{assetDesc}</div> */} 
                     </div>;
 
             resultEntries.push(resultEntry);
@@ -45,12 +47,17 @@ let MarketAssetList = props => {
         return resultEntries;
     }
 
-    function createLabelExtra(name, author, price){
+    function createLabelExtra(datatokenSymbol, price, pool){
         return(
-            <div className="assetInfo">
-                <div className="assetName">{name}</div>
-                <div className="assetAuthor">{author}</div> 
-                <div className="assetPrice">{price}  <span className="tokenSymbol">OCEAN</span></div>              
+            <div className="assetLabelPricing">
+                {/*<div className="assetName">{name}</div>
+                <div className="assetAuthor">{author}</div> */}
+                <div className="tokenSymbol"> {datatokenSymbol} </div>
+                <div className="assetPrice tokenSymbol"> 
+                    <span className="priceNumber">{price}</span>  
+                    <span>OCEAN</span>
+                    {pool.length > 0 ? <span className="poolSymbol">POOL</span> : null}
+                </div>              
             </div>
 
 
