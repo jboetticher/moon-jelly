@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Button from '../../components/Button.js';
 import Input from '../../components/Form/Input.js';
 import ConnectPanel from '../../components/ConnectPanel.js';
-import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
-import { useWebStorage } from '../../functionality/WebStorageHooks.js';
-import Settings from './settings.svg';
-import './slate.css';
 import Accordion from '../../components/Accordion.js';
 import AccordionSection from '../../components/AccordionSection.js';
+
+import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
+import { useWebStorage } from '../../functionality/WebStorageHooks.js';
+
+import Settings from './assets/settings.svg';
+import SlateIcon from './assets/slateicon-32x32.png';
+
+import './slate.css';
 
 const SLATE_API_SECRET_KEY = "slate_api_key";
 
@@ -86,7 +90,8 @@ let SlateFetch = () => {
             <div>
                 <image className="settings-button" src={Settings} />
                 <div className="mb-2">
-                    Slate Integration
+                    <image src={SlateIcon} />
+                    Slate You Own
                 </div>
                 <Accordion className="mt-2">{
                     slateData?.slates?.map((x, i) => {
