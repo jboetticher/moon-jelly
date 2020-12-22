@@ -9,7 +9,8 @@ const SLATE_API_SECRET_KEY = "slate_api_key";
 
 let SlateFetch = () => {
     const { storeToLocal, getFromLocal } = useWebStorage();
-    let [ apiKey, setAPIKey ] = useState(getFromLocal(SLATE_API_SECRET_KEY));
+    let [apiKey, setAPIKey] = useState(getFromLocal(SLATE_API_SECRET_KEY));
+    let [slateData, setSlateData] = useState(null);
 
 
 
@@ -32,6 +33,7 @@ let SlateFetch = () => {
         });
         const json = await response.json();
         console.log(json);
+        setSlateData(json);
     }
 
     function knowsSlateAPIKey() {
@@ -42,14 +44,14 @@ let SlateFetch = () => {
     //#endregion
 
 
-    
+
     const { walletConnected: isWalletConnected } = useWalletReady();
-    let slatePanel = <></>;
+    let slateComponent = <></>;
     if (!isWalletConnected) {
-        slatePanel = <ConnectPanel />;
+        slateComponent = <ConnectPanel />;
     }
     else if (!knowsSlateAPIKey()) {
-        slatePanel = <>
+        slateComponent = <>
             Slate Integration
             <form>
                 <Input
@@ -73,40 +75,51 @@ let SlateFetch = () => {
         </>;
     }
     else {
-        slatePanel =
+        slateComponent =
             <div>
-                Slate Integration
-            <Button onClick={() => fetchFromSlate()}>
-                    fetcharoonie
-            </Button>
-            <div>
-                Reset Slate API Key
-                <form>
-                    <Input
-                        type="text"
-                        id="slateAPIKeyInput"
-                        placeholder={apiKey ? apiKey : "Input your Slate API key."}
-                        value={apiKey}
-                        onChange={(e) => {
-                            const { name, value } = e.target;
-                            setAPIKey(value);
-                        }}
-                    />
-                    <Button primary padding onClick={(e) => {
-                        e.preventDefault();
-                        storeToLocal(SLATE_API_SECRET_KEY, apiKey);
-                        var apiInputter = document.getElementById("slateAPIKeyInput");
-                        apiInputter.value = "";
-                        apiInputter.placeholder = "API Key Set Successfully!";
-                    }}>
-                        Store Slate API Key
-                    </Button>
-                </form>
-            </div>
+                <div>
+                    Slate Integration
+                </div>
+                <div>{
+                    slateData?.slates?.map((x, i) => {
+                        <div key={i}>
+                            {x.name}
+                        </div>
+                    })
+                }</div>
+                <Button onClick={() => fetchFromSlate()}>
+                    Fetch From Slate
+                </Button>
+                <div>
+                    Reset Slate API Key
+                    <form>
+                        <Input
+                            type="text"
+                            id="slateAPIKeyInput"
+                            placeholder={apiKey ? apiKey : "Input your Slate API key."}
+                            value={apiKey}
+                            onChange={(e) => {
+                                const { name, value } = e.target;
+                                setAPIKey(value);
+                            }}
+                        />
+                        <Button primary padding onClick={(e) => {
+                            e.preventDefault();
+                            storeToLocal(SLATE_API_SECRET_KEY, apiKey);
+                            var apiInputter = document.getElementById("slateAPIKeyInput");
+                            apiInputter.value = "";
+                            apiInputter.placeholder = "API Key Set Successfully!";
+
+                            fetchFromSlate();
+                        }}>
+                            Store Slate API Key
+                        </Button>
+                    </form>
+                </div>
             </div>;
     }
 
-    return (slatePanel);
+    return (slateComponent);
 }
 
 export default SlateFetch;
