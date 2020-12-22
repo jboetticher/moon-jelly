@@ -1,3 +1,5 @@
+@import '../../styles/variables.css';
+
 .settings-button {
     margin: 1rem;
     position: fixed;
@@ -5,4 +7,15 @@
     right: 15px;
     width: 32px;
     height: 32px;
+}
+
+.assetDesc {
+    font-size: var(--font-size-small);
+}
+
+.slate-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: .5rem;
 }

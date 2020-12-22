@@ -102,10 +102,6 @@
     box-shadow: 0 12px 30px 0 rgba(0, 0, 0, 0.1);
 }
 
-.p-1 {
-    padding: 1rem;
-}
-
 .no-round {
     border-radius: 0px !important;
 }

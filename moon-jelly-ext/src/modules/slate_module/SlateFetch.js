@@ -93,7 +93,13 @@ let SlateFetch = () => {
                         { console.log(x); }
                         return (
                             <AccordionSection key={i} label={x.slatename}>
-                                Bro Song
+                                <div className="assetBody">
+                                    <div className="assetDesc mt-1">{x.data.body}</div>
+                                    <div className="slate-button-container">
+                                        <Button paddingx>View Slate Items</Button>
+                                        <Button paddingx>Go to Slate</Button>
+                                    </div>
+                                </div>
                             </AccordionSection>
                         );
                     })
