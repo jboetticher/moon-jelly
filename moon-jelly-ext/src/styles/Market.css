@@ -73,14 +73,23 @@
     bottom: 1px;
 }
 
-.assetLabelPricing{
+.assetLabelPricing {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
 
+.pageButton {
+    background: #ffc0cb00;
+    color: var(--brand-pink);
+    font-size: var(--font-size-large);
+    box-shadow: none;
+    padding-bottom: 2px;
+}
+
 .navButtons{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 5px;   
 }
 
 #tokenSearchButton {
