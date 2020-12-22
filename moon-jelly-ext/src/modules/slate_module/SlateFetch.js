@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../components/Button.js';
 import Input from '../../components/Form/Input.js';
 import ConnectPanel from '../../components/ConnectPanel.js';
 import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
 import { useWebStorage } from '../../functionality/WebStorageHooks.js';
+import Settings from './settings.svg';
+import './slate.css';
+import Accordion from '../../components/Accordion.js';
+import AccordionSection from '../../components/AccordionSection.js';
 
 const SLATE_API_SECRET_KEY = "slate_api_key";
 
@@ -11,7 +15,11 @@ let SlateFetch = () => {
     const { storeToLocal, getFromLocal } = useWebStorage();
     let [apiKey, setAPIKey] = useState(getFromLocal(SLATE_API_SECRET_KEY));
     let [slateData, setSlateData] = useState(null);
+    //fetchFromSlate();
 
+    useEffect(() => {
+        console.log(slateData);
+    }, [slateData]);
 
 
     //#region Helper Methods
@@ -32,7 +40,6 @@ let SlateFetch = () => {
             })
         });
         const json = await response.json();
-        console.log(json);
         setSlateData(json);
     }
 
@@ -77,19 +84,25 @@ let SlateFetch = () => {
     else {
         slateComponent =
             <div>
+                <image className="settings-button" src={Settings} />
                 <div>
                     Slate Integration
                 </div>
-                <div>{
+                <Accordion>{
                     slateData?.slates?.map((x, i) => {
-                        <div key={i}>
-                            {x.name}
-                        </div>
+                        { console.log(x); }
+                        return (
+                            <AccordionSection key={i} label={x.slatename}>
+                                Bro Song
+                            </AccordionSection>
+                        );
                     })
-                }</div>
-                <Button onClick={() => fetchFromSlate()}>
-                    Fetch From Slate
-                </Button>
+                }</Accordion>
+                <div className="my-2">
+                    <Button onClick={() => fetchFromSlate()}>
+                        Fetch From Slate
+                    </Button>
+                </div>
                 <div>
                     Reset Slate API Key
                     <form>

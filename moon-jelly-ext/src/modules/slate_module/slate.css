@@ -1,6 +1,8 @@
 .settings-button {
     margin: 1rem;
     position: fixed;
-    top: 0px;
-    right: 0px;
+    top: 125px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
 }
