@@ -1,6 +1,6 @@
 @import 'variables.css';
 
-.searchForm {
+#searchForm {
     display: flex;
 }
 
@@ -74,6 +74,11 @@
 }
 
 .assetLabelPricing{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.navButtons{
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
