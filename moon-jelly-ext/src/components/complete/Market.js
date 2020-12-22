@@ -50,7 +50,7 @@ let Market = props => {
         return (
             <Button
                 type="button"
-                className="button nextButton"
+                className="button pageButton"
                 onClick={() => {
                     console.log("next");
 
@@ -81,7 +81,7 @@ let Market = props => {
         return (
             <Button
                 type="button"
-                className="button prevButton"
+                className="button pageButton"
                 onClick={() => {
                     console.log("prev");
 
@@ -114,14 +114,16 @@ let Market = props => {
 
                 <div className="navButtons">
                     {renderPrevButton()}
+                    <span>{pageNumber}</span>
                     {renderNextButton()}
                 </div>
-                {pageNumber}
+                
 
                 <MarketAssetList results={searchResults}> </MarketAssetList>
 
                 <div className="navButtons">
                     {renderPrevButton()}
+                    <span>{pageNumber}</span>
                     {renderNextButton()}
                 </div>
 
