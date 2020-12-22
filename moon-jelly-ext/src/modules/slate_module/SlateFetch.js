@@ -9,7 +9,7 @@ const SLATE_API_SECRET_KEY = "slate_api_key";
 
 let SlateFetch = () => {
     const { storeToLocal, getFromLocal } = useWebStorage();
-    let [ apiKey, setAPIKey ] = useState("");
+    let [ apiKey, setAPIKey ] = useState(getFromLocal(SLATE_API_SECRET_KEY));
 
 
 
