@@ -19,29 +19,44 @@ import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 
 let Wallet = props => {
 
-    const { accountId } = useOcean();
+    const { balance, accountId } = useOcean();
     const { fetchDataByWallet } = useAquariusFetch();
 
     // Keeps track of fetched asset data 
     let [assetResults, setAssetResults] = useState("");
 
-    function renderWalletAssets() {
-        if(accountId == null) return "account not linked";
+    function renderPublishedWalletAssets() {
+        if (accountId == null) return /*"account not linked"*/;
 
         // if asset results is empty, fetch it
-        if(assetResults == ""){
+        if (assetResults == "") {
             fetchDataByWallet("rinkeby", accountId).then(res => {
                 console.log("wallet stuff", res);
                 setAssetResults(res);
             });
         }
-        
+
         return (
             assetResults != "" ? <div> <div>My Published Assets</div> <MarketAssetList results={assetResults}> </MarketAssetList> </div> : null
         );
     }
 
-    let walletPanel = <div>Wallet Panel boi</div>;
+    function renderWalletBalance(){
+        console.log(balance);
+        return(
+            <div>
+                Wallet Balance
+                <div className="tokenSymbol">{parseFloat(balance['ocean']).toFixed(3)} OCEAN</div>
+                <div className="tokenSymbol">{parseFloat(balance['eth']).toFixed(3)} ETH</div>
+            </div>
+        );
+    }
+
+    let walletPanel =
+        <div>
+            {renderWalletBalance()}
+            {renderPublishedWalletAssets()}
+        </div>;
 
     // Determines whether or not the wallet has been connected.
     let { walletConnected: isWalletConnected } = useWalletReady();
@@ -50,10 +65,7 @@ let Wallet = props => {
     return (
         <div id="walletPanel">
             <Panel>
-                {walletPanel}
-
-                
-                {renderWalletAssets()}
+                {walletPanel}        
             </Panel>
         </div>
     );
