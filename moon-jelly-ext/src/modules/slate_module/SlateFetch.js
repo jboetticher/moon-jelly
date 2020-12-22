@@ -9,7 +9,11 @@ const SLATE_API_SECRET_KEY = "slate_api_key";
 
 let SlateFetch = () => {
     const { storeToLocal, getFromLocal } = useWebStorage();
-    let { apiKey, setAPIKey } = useState("");
+    let [ apiKey, setAPIKey ] = useState("");
+
+
+
+    //#region Helper Methods
 
     async function fetchFromSlate() {
         const response = await fetch('https://slate.host/api/v1/get', {
@@ -17,7 +21,7 @@ let SlateFetch = () => {
             headers: {
                 'Content-Type': 'application/json',
                 // NOTE: your API key
-                Authorization: 'Basic ' + 'SLAa8bae4c4-c5f9-420b-ada5-a95af1a06abbTE',
+                Authorization: 'Basic ' + apiKey,//'SLAa8bae4c4-c5f9-420b-ada5-a95af1a06abbTE',
             },
             body: JSON.stringify({
                 data: {
@@ -35,6 +39,10 @@ let SlateFetch = () => {
         return locAPIKEY !== null && locAPIKEY !== undefined && locAPIKEY !== '';
     }
 
+    //#endregion
+
+
+    
     const { walletConnected: isWalletConnected } = useWalletReady();
     let slatePanel = <></>;
     if (!isWalletConnected) {
@@ -67,10 +75,29 @@ let SlateFetch = () => {
         slatePanel =
             <div>
                 Slate Integration
-            <Button
-                    onClick={() => fetchFromSlate()}>
+            <Button onClick={() => fetchFromSlate()}>
                     fetcharoonie
             </Button>
+            <div>
+                Reset Slate API Key
+                <form>
+                    <Input
+                        type="text"
+                        id="slateAPIKeyInput"
+                        placeholder={apiKey ? apiKey : "Input your Slate API key."}
+                        value={apiKey}
+                        onChange={(e) => {
+                            const { name, value } = e.target;
+                            setAPIKey(value);
+                        }}
+                    />
+                    <Button primary padding onClick={() => {
+                        storeToLocal(SLATE_API_SECRET_KEY, apiKey);
+                    }}>
+                        Store Slate API Key
+                    </Button>
+                </form>
+            </div>
             </div>;
     }
 
