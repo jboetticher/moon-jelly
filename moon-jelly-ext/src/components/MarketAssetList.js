@@ -20,7 +20,7 @@ let MarketAssetList = props => {
             let asset = props.results['results'][i];
 
             let datatokenSymbol = asset['dataTokenInfo']['symbol'];
-            let datatokenPrice = parseFloat(asset['price']['ocean']).toFixed(3);
+            let datatokenPrice = parseFloat(asset['price']['value']).toFixed(3);
             let assetName = asset['service'][0]['attributes']['main']['name'];
             let assetAuthor = asset['service'][0]['attributes']['main']['author'];
             let assetDesc = asset['service'][0]['attributes']['additionalInformation'] != null ?
