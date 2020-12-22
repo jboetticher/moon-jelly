@@ -20,7 +20,7 @@ class Accordion extends Component {
 
     const openSections = {};
 
-    this.props.children.forEach(child => {
+    this.props.children?.forEach(child => {
       if (child.props.isOpen) {
         openSections[child.props.label] = true;
       }
@@ -59,7 +59,7 @@ class Accordion extends Component {
 
     return (
       <div className="accordion" /*style={{ border: " " }}*/>
-        {children.map((child, index) => (
+        {children?.map((child, index) => (
           <div className="gradient-border-wrap" key={index}>
             <AccordionSection
               isOpen={!!openSections[child.props.label]}
