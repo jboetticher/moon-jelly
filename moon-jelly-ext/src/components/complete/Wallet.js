@@ -26,7 +26,7 @@ let Wallet = props => {
     let [assetResults, setAssetResults] = useState("");
 
     function renderWalletAssets() {
-        if(accountId == null) return "accoutn not linked";
+        if(accountId == null) return "account not linked";
 
         // if asset results is empty, fetch it
         if(assetResults == ""){

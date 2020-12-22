@@ -15,26 +15,26 @@ let SlateFetch = () => {
     const { storeToLocal, getFromLocal } = useWebStorage();
     let [apiKey, setAPIKey] = useState(getFromLocal(SLATE_API_SECRET_KEY));
     let [slateData, setSlateData] = useState(null);
-    //fetchFromSlate();
+    if(slateData === null) fetchFromSlate();
 
     useEffect(() => {
         console.log(slateData);
     }, [slateData]);
 
 
+
     //#region Helper Methods
 
     async function fetchFromSlate() {
+        setSlateData(undefined); // sets to undefined so as not to send request too many times
         const response = await fetch('https://slate.host/api/v1/get', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // NOTE: your API key
-                Authorization: 'Basic ' + apiKey,//'SLAa8bae4c4-c5f9-420b-ada5-a95af1a06abbTE',
+                Authorization: 'Basic ' + apiKey,
             },
             body: JSON.stringify({
                 data: {
-                    // NOTE: optional, if you want your private slates too.
                     private: true
                 }
             })
@@ -85,10 +85,10 @@ let SlateFetch = () => {
         slateComponent =
             <div>
                 <image className="settings-button" src={Settings} />
-                <div>
+                <div className="mb-2">
                     Slate Integration
                 </div>
-                <Accordion>{
+                <Accordion className="mt-2">{
                     slateData?.slates?.map((x, i) => {
                         { console.log(x); }
                         return (
@@ -98,12 +98,7 @@ let SlateFetch = () => {
                         );
                     })
                 }</Accordion>
-                <div className="my-2">
-                    <Button onClick={() => fetchFromSlate()}>
-                        Fetch From Slate
-                    </Button>
-                </div>
-                <div>
+                <div className="mt-2">
                     Reset Slate API Key
                     <form>
                         <Input
