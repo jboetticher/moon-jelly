@@ -10,8 +10,36 @@ import Form from '../../components/Form/Form'
 import * as ethereumAddress from 'ethereum-address'
 import '../../styles/DataWallet.css';
 import ConnectPanel from '../ConnectPanel.js';
+import Panel from '../Panel.js';
+
+import MarketAssetList from '../MarketAssetList';
+
+import { useOcean } from '@oceanprotocol/react';
+import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 
 let Wallet = props => {
+
+    const { accountId } = useOcean();
+    const { fetchDataByWallet } = useAquariusFetch();
+
+    // Keeps track of fetched asset data 
+    let [assetResults, setAssetResults] = useState("");
+
+    function renderWalletAssets() {
+        if(accountId == null) return "accoutn not linked";
+
+        // if asset results is empty, fetch it
+        if(assetResults == ""){
+            fetchDataByWallet("rinkeby", accountId).then(res => {
+                console.log("wallet stuff", res);
+                setAssetResults(res);
+            });
+        }
+        
+        return (
+            assetResults != "" ? <MarketAssetList results={assetResults}> </MarketAssetList> : null
+        );
+    }
 
     let walletPanel = <div>Wallet Panel boi</div>;
 
@@ -19,9 +47,14 @@ let Wallet = props => {
     let { walletConnected: isWalletConnected } = useWalletReady();
     walletPanel = !isWalletConnected ? <ConnectPanel /> : walletPanel;
 
-    return(
+    return (
         <div id="walletPanel">
-            {walletPanel}
+            <Panel>
+                {walletPanel}
+
+                <div>My Published Assets</div>
+                {renderWalletAssets()}
+            </Panel>
         </div>
     );
 }
