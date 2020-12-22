@@ -14,10 +14,10 @@
     "default_popup": "index.html"
   },
   "icons": {
-    "16": "jellyfish-48.png",
-    "48": "jellyfish-48.png",
-    "128": "jellyfish-128.png",
-    "512": "jellyfish-512.png"
+    "16": "moon_jellu.png",
+    "48": "moon_jellu.png",
+    "128": "moon_jellu.png",
+    "512": "moon_jellu.png"
   },
   "permissions": [
     "tabs",
