@@ -11,7 +11,7 @@ import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 
 let Market = props => {
 
-    var { fetchDataBySearchterm } = useAquariusFetch();
+    const { fetchDataBySearchterm } = useAquariusFetch();
 
     //const request = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?=");
 
@@ -161,13 +161,7 @@ let Market = props => {
                 {renderResults()}
 
             </Panel>
-            <Button
-                onClick={() => {
-                    fetchDataBySearchterm("rinkeby", "test", "1").then(res => console.log(res));
-                }}
-            >
-                test
-        </Button>
+
         </div>
 
 

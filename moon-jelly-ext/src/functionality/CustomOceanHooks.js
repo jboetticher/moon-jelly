@@ -32,7 +32,8 @@ function useAquariusFetch() {
      * @param {The text to filter the fetch results by} walletid
      */
     function fetchDataByWallet(network, walletid) {
-
+        return fetch('https://aquarius.' + network + '.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=' + walletid)
+            .then(data => data.json());
     }
 
     return { fetchDataBySearchterm, fetchDataByWallet };
