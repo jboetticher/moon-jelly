@@ -14,10 +14,10 @@
     "default_popup": "index.html"
   },
   "icons": {
-    "16": "moon_jellu.png",
-    "48": "moon_jellu.png",
-    "128": "moon_jellu.png",
-    "512": "moon_jellu.png"
+    "16": "moonyjell.png",
+    "48": "moonyjell.png",
+    "128": "moonyjell.png",
+    "512": "moonyjell.png"
   },
   "permissions": [
     "tabs",
