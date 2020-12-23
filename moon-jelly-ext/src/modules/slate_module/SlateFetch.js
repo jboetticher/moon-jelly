@@ -113,7 +113,7 @@ let SlateFetch = () => {
                                 <div className="assetBody">
                                     <div className="assetDesc mt-1">{x.data.body}</div>
                                     <div className="slate-button-container">
-                                        <Button paddingx onClick={(e) => setSlateState(i)}>View Slate Items</Button>
+                                        <Button paddingx onClick={(e) => setSlateState(i)}>View Items</Button>
                                         <Button paddingx>Go to Slate</Button>
                                     </div>
                                 </div>
