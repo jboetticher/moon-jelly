@@ -21,3 +21,7 @@
     overflow: hidden;
     flex-grow: 1;
 }
+
+.react-switch-bg > div {
+    top: -6px !important;
+}
