@@ -13,7 +13,17 @@ function useMintPage() {
         if (!isMintPageOpen()) console.error("The user is not currently on the mint panel. Use PanelContext to switch.");
 
         var inputElement = document.getElementById(inputName);
-        if (inputElement != null) inputElement.value = data;
+        if (inputElement != null) {
+            // set value using react's internal guy
+            // from https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
+            var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+            nativeInputValueSetter.call(inputElement, data);
+
+            // send an event
+            var ev2 = new Event('input', { bubbles: true });
+            inputElement.dispatchEvent(ev2);
+
+        }
         else console.error("Could not find the " + inputName + " input.");
     }
 

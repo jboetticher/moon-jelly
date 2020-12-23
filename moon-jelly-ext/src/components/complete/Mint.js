@@ -154,7 +154,7 @@ let Mint = props => {
         console.log("url", url);
         console.log("author", author);
         console.log("dataname", dataname);
-        console.log("urlData", null);
+        console.log("urlData", urlData);
 
         return url !== "" && author != "" && dataname != "" && urlData != null;
     }
@@ -233,7 +233,7 @@ let Mint = props => {
                                 // make new input, check for data there. If it exists, then use that data. Otherwise, parse it.
                                 // this is so that the metadata can be inputted easily from other apis.
                                 // make the hidden input field accessible from the mint page hooks
-                                const hiddenData = document.getElementById("hiddenMetadata").value;
+                                const hiddenData = document.getElementById("hiddenMetadata")?.value;
                                 if(hiddenData === "")
                                 {
                                     parseURLData(value);
@@ -271,7 +271,6 @@ let Mint = props => {
                             }}
                         />
                         <Input
-                            type="text"
                             name="dataDescription"
                             placeholder={description ? description : "Data Description"}
                             value={description}
@@ -284,7 +283,9 @@ let Mint = props => {
                         <input 
                             type="hidden"
                             name="hiddenMetadata"
+                            id="hiddenMetadata"
                             value={""}
+                            onChange={(e) => console.log("hidden value changed")}
                             />
                         <Label htmlFor="publishButton">
                             Press the button to start minting!

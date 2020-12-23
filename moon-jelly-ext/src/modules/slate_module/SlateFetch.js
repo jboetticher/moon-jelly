@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 // components
 import AccordionSection from '../../components/AccordionSection.js';
@@ -6,6 +6,7 @@ import ConnectPanel from '../../components/ConnectPanel.js';
 import Accordion from '../../components/Accordion.js';
 import Input from '../../components/Form/Input.js';
 import Button from '../../components/Button.js';
+import { PanelContext } from '../../App.js';
 
 // hooks
 import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
@@ -23,10 +24,14 @@ import './slate.css';
 const SLATE_API_SECRET_KEY = "slate_api_key";
 
 let SlateFetch = () => {
+    const goToPage = useContext(PanelContext);
     const { storeToLocal, getFromLocal } = useWebStorage();
+    const { insertAssetName, insertURL, insertAuthorName, insertDescription, insertMetaData } = useMintPage();
+
     let [apiKey, setAPIKey] = useState(getFromLocal(SLATE_API_SECRET_KEY));
     let [slateData, setSlateData] = useState(null);
     let [slateState, setSlateState] = useState(undefined);
+
     if (slateData === null) fetchFromSlate();
 
     useEffect(() => {
@@ -81,7 +86,6 @@ let SlateFetch = () => {
                     onChange={(e) => {
                         const { name, value } = e.target;
                         setAPIKey(value);
-                        console.log("set searchterm as", value);
                     }}
                 />
                 <Button primary padding onClick={(e) => {
@@ -127,11 +131,26 @@ let SlateFetch = () => {
                 {
                     slateData?.slates[slateState].data.objects.map((x, i) => {
                         return (
-                            <div className={"module-menu-entry my-1"}>
-                                <h6 key={i} className={"module-entry-title"} style={{ margin: "0px" }}>
+                            <div key={i} className={"module-menu-entry my-1"}>
+                                <h6 className={"module-entry-title"} style={{ margin: "0px" }}>
                                     {x.name}
                                 </h6>
-                                <Button onClick={() => console.log("bing bong")}
+                                <Button onClick={() => {
+                                    // do mint stuff
+                                    goToPage("mint", () => {
+                                        insertMetaData(JSON.stringify({
+                                            checksum: "", 
+                                            contentLength: undefined,//x.size, 
+                                            contentType: x.type, 
+                                            encoding: "", 
+                                            compression: "" 
+                                        }));
+                                        insertURL(x.url);
+                                        insertAssetName(x.title);
+                                        insertAuthorName(x.author);
+                                        insertDescription(x.body);
+                                    });
+                                }}
                                     paddingx style={{ maxHeight: "35px" }}>
                                     Mint
                                 </Button>
