@@ -49,7 +49,15 @@ function useMintPage() {
         insert("dataDescription", description);
     }
 
-    return { isMintPageOpen, insertAssetName, insertURL, insertAuthorName, insertDescription };
+    /**
+     * Inserts metadata into the mint page to be published (instead of parsing the url). This step MUST be done BEFORE the insertion of the URL.
+     * @param {json of metadata (in string format) to be sent to the ocean market} metadata
+     */
+    function insertMetaData(metadata) {
+        insert("hiddenMetadata", metadata);
+    }
+
+    return { isMintPageOpen, insertAssetName, insertURL, insertAuthorName, insertDescription, insertMetaData };
 }
 
 export { useMintPage };

@@ -229,7 +229,34 @@ let Mint = props => {
                             onChange={(e) => {
                                 const { name, value } = e.target;
                                 setURL(value);
-                                parseURLData(value);
+
+                                // make new input, check for data there. If it exists, then use that data. Otherwise, parse it.
+                                // this is so that the metadata can be inputted easily from other apis.
+                                // make the hidden input field accessible from the mint page hooks
+                                const hiddenData = document.getElementById("hiddenMetadata").value;
+                                if(hiddenData === "")
+                                {
+                                    parseURLData(value);
+                                }
+                                else {
+                                    try {
+                                        const parsedMetaData = JSON.parse(hiddenData);
+                                        let recievedURLData = 
+                                        { 
+                                            checksum: parsedMetaData.checksum ? parsedMetaData.checksum : "", 
+                                            contentLength: parsedMetaData.contentLength ? parsedMetaData.contentLength : "", 
+                                            contentType: parsedMetaData.contentType ? parsedMetaData.contentType : "", 
+                                            encoding: parsedMetaData.encoding ? parsedMetaData.encoding : "", 
+                                            compression: parsedMetaData.compression ? parsedMetaData.compression : "" 
+                                        };
+                                        setURLData(recievedURLData);
+                                        console.log("hook set url data: ", recievedURLData);
+                                    }
+                                    catch(e) {
+                                        console.log("An issue was detected with parsing the outgoing metadata. ", hiddenData);
+                                        parseURLData(value);
+                                    }
+                                }
                             }}
                         />
                         <Input
@@ -254,6 +281,11 @@ let Mint = props => {
                                 setDescription(value)
                             }}
                         />
+                        <input 
+                            type="hidden"
+                            name="hiddenMetadata"
+                            value={""}
+                            />
                         <Label htmlFor="publishButton">
                             Press the button to start minting!
                         </Label>
@@ -262,7 +294,7 @@ let Mint = props => {
                             onClick={() => { handlePublish(); }
                             }>
                             Publish
-                    </Button>
+                        </Button>
                     </form>
                 </Panel>
         }
