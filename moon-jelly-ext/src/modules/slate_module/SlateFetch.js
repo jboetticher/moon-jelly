@@ -152,7 +152,7 @@ let SlateFetch = () => {
         slateComponent =
             <div>
                 {dataView}
-                <img src={SlateIcon} className={"mb-1 mt-1"} />
+                <img src={SlateIcon} className={"mb-1 mt-2"} />
                 <div className="mt-2">
                     Reset Slate API Key
                     <form>
