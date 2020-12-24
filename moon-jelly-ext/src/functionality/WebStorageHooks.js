@@ -48,7 +48,7 @@ function useWebStorage() {
             //console.log("stored", localStorage.getItem(key));
         }
         else {
-            Logger.log("gtoreToLocal could not access localStorage");
+            Logger.log("storeToLocal could not access localStorage");
         }
     }
 
@@ -74,7 +74,25 @@ function useWebStorage() {
         }
     }
 
-    return { storageAvailable, storeToLocal, getFromLocal };
+    /**
+     * Removes provided key and associated value from localStorage
+     * https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#Setting_values_in_storage
+     * @param {"key you want to remove"} key
+     */
+    function removeFromLocal(key) {
+        if (storageAvailable('localStorage')) {
+
+            let val = localStorage.removeItem(key);
+
+            return val;
+        }
+        else {
+            Logger.log("removeFromLocal could not access localStorage");
+            return "";
+        }
+    }
+
+    return { storageAvailable, storeToLocal, getFromLocal, removeFromLocal };
 }
 
 export { useWebStorage };
