@@ -68,7 +68,7 @@ let SlateFetch = () => {
     //#endregion
 
 
-
+    
     const { walletConnected: isWalletConnected } = useWalletReady();
     let slateComponent = <></>;
     if (!isWalletConnected) {

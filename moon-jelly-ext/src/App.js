@@ -6,6 +6,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import * as PanelManager from './functionality/PanelManager.js';
 import { useWebStorage } from './functionality/WebStorageHooks.js';
 import { useMarketPage } from './functionality/MarketPageHooks.js';
+import modules from './modules';
 
 // Assets
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
@@ -14,9 +15,6 @@ import Jellyfish from './assets/ocean-jelly-placeholder.svg';
 import { OceanProvider, useOcean } from '@oceanprotocol/react';
 import Navbar from './components/MainNavbar';
 import Panel from './components/Panel';
-//import PublishForm from './components/PublishForm'
-//import Search from './components/Search'
-//import Footer from './components/Footer'
 import Button from './components/Button'
 import Header from './components/Header';
 import Label from './components/Label';
@@ -75,6 +73,20 @@ console.log(oceanConfig);
 
 
 export const PanelContext = React.createContext();
+
+//#endregion
+
+//#region On Application Open
+
+const modulesObject = modules;
+
+// Loop through all the modules to fire their onAppStart functions
+for (var i = 0; i < modulesObject.length; i++) {
+    if(modulesObject[i].onAppStart != null)
+    {
+        modulesObject[i].onAppStart();
+    }
+}
 
 //#endregion
 
@@ -151,7 +163,11 @@ const HomePanel = (props) => {
     let { insertSearchTerm } = useMarketPage();
     let { getFromLocal, storeToLocal } = useWebStorage();
     let [oceanSearchCheck, oceanSearchCheckSet] = useState(getFromLocal('searchOnOcean'));
-    if(oceanSearchCheck !== "" && oceanSearchCheck !== null && oceanSearchCheck !== undefined) {
+    const nextPanel = getFromLocal("switch_panel");
+
+    // Checks to see if there are instructions to go immediately to a certain panel.
+    // This first if statement is a special check for the search panel. (spaghetti code)
+    if (oceanSearchCheck !== "" && oceanSearchCheck !== null && oceanSearchCheck !== undefined) {
         goToPage("market", () => {
             // here you would go to the search page via hook and slap it in
             insertSearchTerm(oceanSearchCheck);
@@ -161,10 +177,15 @@ const HomePanel = (props) => {
         storeToLocal("searchOnOcean", "");
         oceanSearchCheckSet("");
     }
+    else if (nextPanel !== "" && nextPanel !== null && nextPanel != undefined) {
+        goToPage(nextPanel, () => { 
+            console.log("MoonJelly was instructed to immediately go to panel '" + nextPanel + "'.");
+            storeToLocal("switch_panel", "");
+        });
+    }
 
     console.log(useOcean());
-    let { ocean, accountId, connect, refreshBalance, status } = useOcean();
-
+    let { connect, status } = useOcean();
     let [oceanConnected, setOceanConnected] = useState(status > 0);
     useEffect(() => {
         setOceanConnected(status > 0);
