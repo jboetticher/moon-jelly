@@ -6,6 +6,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import * as PanelManager from './functionality/PanelManager.js';
 import { useWebStorage } from './functionality/WebStorageHooks.js';
 import { useMarketPage } from './functionality/MarketPageHooks.js';
+import modules from '../../modules';
 
 // Assets
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
@@ -14,9 +15,6 @@ import Jellyfish from './assets/ocean-jelly-placeholder.svg';
 import { OceanProvider, useOcean } from '@oceanprotocol/react';
 import Navbar from './components/Navbar';
 import Panel from './components/Panel';
-//import PublishForm from './components/PublishForm'
-//import Search from './components/Search'
-//import Footer from './components/Footer'
 import Button from './components/Button'
 import Header from './components/Header';
 import Label from './components/Label';
@@ -30,6 +28,7 @@ import Market from './components/complete/Market';
 // Styling
 import './styles/global.css';
 import './styles/App.css';
+
 
 
 //#region Provider Setups
@@ -73,6 +72,20 @@ console.log(oceanConfig);
 
 
 export const PanelContext = React.createContext();
+
+//#endregion
+
+//#region On Application Open
+
+const modulesObject = modules;
+
+// Loop through all the modules to fire their onAppStart functions
+for (var i = 0; i < modulesObject.length; i++) {
+    if(modulesObject[i].onAppStart != null)
+    {
+        modulesObject.onAppStart();
+    }
+}
 
 //#endregion
 
@@ -145,7 +158,7 @@ const HomePanel = (props) => {
     let { insertSearchTerm } = useMarketPage();
     let { getFromLocal, storeToLocal } = useWebStorage();
     let [oceanSearchCheck, oceanSearchCheckSet] = useState(getFromLocal('searchOnOcean'));
-    if(oceanSearchCheck !== "" && oceanSearchCheck !== null && oceanSearchCheck !== undefined) {
+    if (oceanSearchCheck !== "" && oceanSearchCheck !== null && oceanSearchCheck !== undefined) {
         goToPage("market", () => {
             // here you would go to the search page via hook and slap it in
             insertSearchTerm(oceanSearchCheck);

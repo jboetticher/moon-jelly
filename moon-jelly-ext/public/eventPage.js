@@ -2,7 +2,7 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if(request.todo === "createSlateButton") {
     chrome.tabs.query({active:true, currentWindow: true}, function(tabs) {});
-    alert("message recieved");
+    alert("message recieved (alert for testing purposes)");
   }
 });
 
@@ -16,8 +16,6 @@ chrome.contextMenus.create(contextMenuItem);
 
 chrome.contextMenus.onClicked.addListener(function (clickData) {
   if (clickData.menuItemId == "searchOnOcean" && clickData.selectionText) {
-    //alert("Context Menu Clicked! " + clickData.selectionText);
-
     //https://market.oceanprotocol.com/search?text=test
 
     chrome.tabs.create({

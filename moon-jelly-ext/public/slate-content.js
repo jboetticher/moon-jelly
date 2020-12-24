@@ -4,10 +4,9 @@ if (document.getElementById('aButton')) {
     alert("there's already an aButton");
 } else {
 
-    setInterval(function() {
-        if(document.getElementsByClassName("css-1mp54d2").length > 0) {
-            if(document.getElementById("slate-moonjelly-button") == null)
-            {
+    setInterval(function () {
+        if (document.getElementsByClassName("css-1mp54d2").length > 0) {
+            if (document.getElementById("slate-moonjelly-button") == null) {
                 var button = document.createElement("button");
                 button.innerHTML =
                     '<img src="https://raw.githubusercontent.com/jboetticher/moon-jelly/main/moon-jelly-ext/public/moonyjell.png" style="width:64px; height:64px;">';
@@ -15,16 +14,49 @@ if (document.getElementById('aButton')) {
                 button.id = "slate-moonjelly-button";
                 button.type = "button";
                 document.body.appendChild(button);
-            
+
                 button.onclick = (e) => {
+
+                    // get the name of the thing that's opened from class (css-uwdmx6)
+                    // query for all of your assets in slate and figure out what this one is?
+                    // put that data into the mint screen
+                    // maybe take the code from the slate screen and put it into a react hook?
+
+                    // so... get the name of the thing that's opened (css-uwdmx6)
+                    // then put that data into the localstorage
+                    // open up a new tab
+                    // new tab checks for thing (may have to make a framework for modules)
+
+                    chrome.tabs.create({
+                        url: chrome.extension.getURL('index.html'),
+                        active: false
+                    }, function (tab) {
+                        let title = document.getElementsByClassName("css-rgz80s")[0].nodeValue;
+                        localStorage["slateToOcean"] = title;
+                        alert(title);
+
+                        // after the tab has been created, open a window to inject the tab
+                        chrome.windows.create({
+                            tabId: tab.id,
+                            type: 'popup',
+                            focused: true,
+                            width: 365,
+                            height: 600
+                        }, function (w) {
+
+                        });
+                    });
+
                     alert("you clicked");
                 };
             }
         }
         else {
-            document.body.removeChild(
-                document.getElementById("slate-moonjelly-button")
-            );
+            if (document.getElementById("slate-moonjelly-button") != null) {
+                document.body.removeChild(
+                    document.getElementById("slate-moonjelly-button")
+                );
+            }
         }
     }, 1000);
 
