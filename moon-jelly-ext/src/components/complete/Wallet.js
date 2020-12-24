@@ -37,7 +37,7 @@ let Wallet = props => {
         }
 
         return (
-            assetResults != "" ? <div> <div>My Published Assets</div> <MarketAssetList results={assetResults}> </MarketAssetList> </div> : null
+            assetResults != "" ? <div> <MarketAssetList results={assetResults}> </MarketAssetList> </div> : null
         );
     }
 
@@ -45,9 +45,11 @@ let Wallet = props => {
         console.log(balance);
         return(
             <div>
-                Wallet Balance
-                <div className="tokenSymbol">{parseFloat(balance['ocean']).toFixed(3)} OCEAN</div>
-                <div className="tokenSymbol">{parseFloat(balance['eth']).toFixed(3)} ETH</div>
+                <div>My Published Assets</div> 
+                <div className="walletBalance mt-1">
+                    <div className="tokenSymbol">{parseFloat(balance['ocean']).toFixed(3)} OCEAN</div>
+                    <div className="tokenSymbol">{parseFloat(balance['eth']).toFixed(3)} ETH</div>
+                </div>
             </div>
         );
     }

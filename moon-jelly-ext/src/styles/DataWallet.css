@@ -15,3 +15,8 @@
     text-decoration: none;
     border: none;
 }
+
+.walletBalance {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
