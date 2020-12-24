@@ -10,10 +10,10 @@ let BookmarkButton = (props) => {
   const { config } = useOcean()
   const { getBookmarks, addBookmark, removeBookmark } = useBookmarks();
   let bookmarks = getBookmarks();
-  const isBookmarked =
-    bookmarks && bookmarks[config.network]?.includes(props.did)
+  const isBookmarked = bookmarks.includes(props.did + "");
 
   function handleBookmark() {
+    console.log("is bookmarked? ", isBookmarked);
     isBookmarked ? removeBookmark(props.did) : addBookmark(props.did)
   }
 
