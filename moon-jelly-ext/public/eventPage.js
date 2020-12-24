@@ -1,3 +1,12 @@
+// listen for events from content scripts
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if(request.todo === "createSlateButton") {
+    chrome.tabs.query({active:true, currentWindow: true}, function(tabs) {});
+    alert("message recieved");
+  }
+});
+
+// Context menu ocean search
 var contextMenuItem = {
   "id": "searchOnOcean",
   "title": "Search on Ocean",
@@ -30,25 +39,3 @@ chrome.contextMenus.onClicked.addListener(function (clickData) {
     });
   }
 });
-
-var slateButtonInterval = setInterval(function() { 
-  if(document.getElementById('aButton')) {
-      //  clearInterval(myVar);
-      return false;
-  } else {
-      if(document.getElementsByClassName("assignedToUsers")[0]) {
-          var button = document.createElement("button");
-          button.innerHTML = "Test Button AHHHHH";
-          button.style="position:absolute; left:10; bottom: 10;"
-          button.id = "aButton";
-          button.type = "button";
-          //document.getElementsByClassName("assignedToUsers")[0].appendChild(button);
-
-          var theButton = document.getElementById('aButton');
-          theButton.addEventListener('click', function() {
-              //console.log(document.getElementsByClassName("ms-TextField-field")[0].value);
-              console.log('glib glob');
-          });
-      }
-  }
-}, 500);
