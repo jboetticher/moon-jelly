@@ -46,7 +46,7 @@ let Market = props => {
                     // if the pageNumber == total pages, don't increment
                     setPageNumber(++pageNumber);
 
-                    fetchDataBySearchterm('rinkeby', searchTerms, pageNumber).then(jsonData => {
+                    fetchDataBySearchterm(/*'rinkeby',*/ searchTerms, pageNumber).then(jsonData => {
                         console.log(jsonData);
                         setSearchResults(jsonData);
                     });
@@ -76,7 +76,7 @@ let Market = props => {
 
                     setPageNumber(--pageNumber);
 
-                    fetchDataBySearchterm('rinkeby', searchTerms, pageNumber).then(jsonData => {
+                    fetchDataBySearchterm(/*'rinkeby',*/ searchTerms, pageNumber).then(jsonData => {
                         console.log(jsonData);
                         setSearchResults(jsonData);
                     });
@@ -122,9 +122,8 @@ let Market = props => {
             <Panel>
                 Browse the Ocean Market
                 <form id={"searchForm"} onSubmit={(e) => {
-                    console.log("HELLO");
                     e.preventDefault();
-                    fetchDataBySearchterm('rinkeby', searchTerms, '1').then(jsonData => {
+                    fetchDataBySearchterm(/*'rinkeby',*/ searchTerms, '1').then(jsonData => {
                         console.log(jsonData);
                         setPageNumber("1"); // resets page number to 1 if it was not 1
                         setSearchResults(jsonData);

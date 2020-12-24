@@ -1,29 +1,36 @@
 // listen for events from content scripts
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.todo === "createSlateButton") {
+  
+  if (request.todo === "getLocalStorage") {
+    sendResponse({data: localStorage[request.key]});
+  }
+  else if (request.todo === "createSlateButton") {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) { });
     alert("message recieved (alert for testing purposes)");
   }
   else if (request.todo === "publishSlateButton") {
-    chrome.tabs.create({
-      url: chrome.extension.getURL('index.html'),
-      active: false
-    }, function (tab) {
-      localStorage["slateToOcean"] = request.keyword;
-
-      // after the tab has been created, open a window to inject the tab
-      chrome.windows.create({
-        tabId: tab.id,
-        type: 'popup',
-        focused: true,
-        width: 365,
-        height: 600
-      }, function (w) {
-        alert("window open");
+    if(localStorage.getItem("slate_module") === "true")
+    {
+      chrome.tabs.create({
+        url: chrome.extension.getURL('index.html'),
+        active: false
+      }, function (tab) {
+        localStorage["slateToOcean"] = request.keyword;
+  
+        // after the tab has been created, open a window to inject the tab
+        chrome.windows.create({
+          tabId: tab.id,
+          type: 'popup',
+          focused: true,
+          width: 365,
+          height: 600
+        }, function (w) {
+          alert("window open");
+        });
+  
+        alert(title);
       });
-
-      alert(title);
-    });
+    }
   }
 });
 

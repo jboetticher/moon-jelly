@@ -33,11 +33,11 @@ let MarketAssetList = props => {
                     <div 
                         //label={datatokenSymbol}
                         label={assetName} 
-                        labelExtra={createLabelExtra(datatokenSymbol, datatokenPrice, pool)}
+                        labelExtra={createLabelExtra(datatokenSymbol, datatokenPrice, pool, did)}
                         key={i}
                         className="assetBody"
                     >   
-                        <a className="mt-1" href={"https://market.oceanprotocol.com/asset/" + did} target="_blank">View on Ocean Market</a>
+                        <div><a href={"https://market.oceanprotocol.com/asset/" + did} target="_blank">View on Ocean Market</a></div>
 
                         <BookmarkButton did={did}></BookmarkButton>
 
@@ -50,14 +50,23 @@ let MarketAssetList = props => {
         return resultEntries;
     }
 
-    function createLabelExtra(datatokenSymbol, price, pool){
+    function createLabelExtra(datatokenSymbol, price, pool, did){
         return(
             <div className="assetLabelPricing">
                 <div className="tokenSymbol"> {datatokenSymbol} </div>
                 <div className="assetPrice tokenSymbol"> 
-                    <span className="priceNumber">{price}</span>  
-                    <span>OCEAN</span>
-                    {pool.length > 0 ? <span className="poolSymbol">POOL</span> : null}
+                    {price != 0 ? 
+                        <div>
+                            <span className="priceNumber">{price}</span>  
+                            <span>OCEAN</span>
+                            {pool.length > 0 ? <span className="poolSymbol">POOL</span> : null}
+                        </div>
+                    :
+                        <div>
+                            No price data found
+                        </div>
+                    }
+
                 </div>              
             </div>
 
