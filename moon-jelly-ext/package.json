@@ -6,6 +6,7 @@
     "@oceanprotocol/art": "^3.0.0",
     "@oceanprotocol/lib": "^0.9.20",
     "@oceanprotocol/react": "^0.4.0",
+    "@pathofdev/react-tag-input": "^1.0.7",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.5.0",

@@ -8,22 +8,71 @@ import MarketAssetList from '../MarketAssetList';
 import '../../styles/Market.css';
 
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
-import { useBookmarks } from '../../functionality/BookmarkHooks.js';
+import { useWebStorage } from '../../functionality/WebStorageHooks.js'
+
+/* Uses tag input field from https://betterstack.dev/projects/react-tag-input/ */
+import ReactTagInput from "@pathofdev/react-tag-input";
+import "@pathofdev/react-tag-input/build/index.css";
 
 let Alerts = props => {
 
     //box to display keywords
     //form to set keywords
+    //save and load keywords to/from localstorage
+
     //function to fetch results given keyword
     //place to store fetched results
     //function to compare fetched results to stored results
     //system to re-query over time
     //function to display list of new results with what the keywords were
+    
 
-    return(
+    const { storeArrayToLocal, getArrayFromLocal } = useWebStorage();
+    const { fetchDataBySort } = useAquariusFetch();
+
+    // retrieve keywords from localStorage
+    // example keyword is only displayed if keywords does not exist in localStorage
+    let storedKeywords = getArrayFromLocal("keywords") != null ? getArrayFromLocal("keywords") : ['example keyword']; 
+
+    const [tags, setTags] = React.useState(storedKeywords);
+
+    // searches given keyword and returns the number of results
+    function searchKeyword(keyword){
+
+    }
+
+    function updateKeywordHistory(keyword){
+
+    }
+
+    function renderKeywordAssets(){
+
+    }
+
+    return (
         <Panel>
-            <div> Keyword Alerts </div>
+            <div> Can't find what you're looking for? </div>
+            <div> Get notified of new data assets on the market. </div>
+            <ReactTagInput
+                tags={tags}
+                placeholder="Enter a keyword or phrase"
+                onChange={(newTags) => {
+                    // update tags
+                    setTags(newTags);
 
+                    // save to localStorage
+                    storeArrayToLocal("keywords", newTags);
+                }}
+            /> 
+            <Button
+                onClick={() => {
+                    console.log("refreshed");
+                }}
+            >
+                <div className="mx-2">
+                    refresh
+                </div>
+            </Button> 
         </Panel>
     );
 }
