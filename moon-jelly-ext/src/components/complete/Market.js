@@ -156,6 +156,16 @@ let Market = props => {
                     </div>
                 </Button>
 
+                        
+                <Button
+                    /*TEMPORARY BUTTON FOR DEVELOPMENT/TESTING */
+                    onClick={() => setNextPanel('alerts')}
+                >
+                    <div className="mx-2">
+                        Alerts
+                    </div>
+                </Button>
+
                 {renderResults()}
 
             </Panel>
