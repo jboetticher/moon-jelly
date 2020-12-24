@@ -67,7 +67,15 @@ let SlateFetch = () => {
 
     //#endregion
 
+    //#region Check for Instructions
 
+    let val = getFromLocal("slateToOcean");
+    console.log("Slate to ocean value ", val);
+    storeToLocal("slateToOcean");
+
+    //#endregion
+
+    
     
     const { walletConnected: isWalletConnected } = useWalletReady();
     let slateComponent = <></>;

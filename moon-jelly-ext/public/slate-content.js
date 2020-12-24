@@ -1,5 +1,4 @@
-chrome.runtime.sendMessage({ method: "getLocalStorage", key: "slate_module" }, function (response) {
-    alert(response.data);
+chrome.runtime.sendMessage({ todo: "getLocalStorage", key: "slate_module" }, function (response) {
     if (response.data === "true") {
         chrome.runtime.sendMessage({ todo: "createSlateButton" });
 
