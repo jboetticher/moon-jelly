@@ -92,7 +92,27 @@ function useWebStorage() {
         }
     }
 
-    return { storageAvailable, storeToLocal, getFromLocal, removeFromLocal };
+    /**
+     * Stores provided key and array to the localStorage
+     * Array is a stringigy'd JSON
+     * @param {key for the value you want to store} key
+     * @param {array to be stored} array
+     */
+    function storeArrayToLocal(key, array){
+        storeToLocal(key, JSON.stringify(array));
+    }
+
+     /**
+     * Retrieves provided value given key
+     * Returns value as an array, after JSON.parse()
+     * @param {"key for the value you want to store"} key
+     * @returns {"value as an array"}
+     */
+    function getArrayFromLocal(key){
+        return JSON.parse(getFromLocal(key));
+    }
+
+    return { storageAvailable, storeToLocal, getFromLocal, removeFromLocal, storeArrayToLocal, getArrayFromLocal };
 }
 
 export { useWebStorage };
