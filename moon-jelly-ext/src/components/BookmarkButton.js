@@ -4,7 +4,7 @@ import { ConfigHelperConfig } from '@oceanprotocol/lib/dist/node/utils/ConfigHel
 import { useBookmarks } from '../functionality/BookmarkHooks.js';
 import { useOcean } from '@oceanprotocol/react'
 
-import BookmarkIcon from '../assets/Bookmark.svg';
+import BookmarkIcon from '../assets/bookmark.svg';
 
 let BookmarkButton = (props) => {
   const { config } = useOcean()
@@ -23,7 +23,7 @@ let BookmarkButton = (props) => {
       //className={`${styles.bookmark} ${isBookmarked ? styles.active : ''} `}
       title={isBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}
     >
-      <BookmarkIcon />
+      <svg src={BookmarkIcon}></svg>
     </button>
   )
 }

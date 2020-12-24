@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 
 import Input from '../Form/Input.js';
 import Button from '../Button.js';
@@ -8,6 +8,7 @@ import MarketAssetList from '../MarketAssetList';
 import '../../styles/Market.css';
 
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
+import { PanelContext } from '../../App.js';
 
 //import { useMarketPage } from '../../functionality/MarketPageHooks.js'
 
@@ -16,8 +17,6 @@ let Market = props => {
     const { fetchDataBySearchterm } = useAquariusFetch();
 
     //const { insertSearchTerm } = useMarketPage();
-
-    //const request = new Request("https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?=");
 
     // Keeps track of text in search box
     let [searchTerms, setSearchTerms] = useState("");
@@ -28,20 +27,7 @@ let Market = props => {
     // Keeps track of page number of results
     let [pageNumber, setPageNumber] = useState(1);
 
-    // Returns a Promise to evaluate for the data
-    // Data is based on the search terms and page number
-    /*async function getJsonData() {
-        try {
-            let data = await fetch('https://aquarius.rinkeby.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=' + searchTerms + '&page=' + pageNumber);
-            let jsonData = await data.json();
-            return jsonData;
-        }
-        catch (error) {
-            console.log(error);
-            return null;
-        }
-
-    }*/
+    let setNextPanel = useContext(PanelContext);
 
     // Creates a next page button
     function renderNextButton() {
@@ -107,7 +93,7 @@ let Market = props => {
         if (searchResults == "") return;
 
         // if search results has empty results
-        if (searchResults['total_pages'] == 0) return "No results found";
+        if (searchResults['total_pages'] == 0) return <div>No results found</div>;
 
         return (
             <div className="results">
@@ -117,7 +103,7 @@ let Market = props => {
                     <span>{pageNumber}</span>
                     {renderNextButton()}
                 </div>
-                
+
 
                 <MarketAssetList results={searchResults}> </MarketAssetList>
 
@@ -135,7 +121,7 @@ let Market = props => {
         <div id="marketPanel">
             <Panel>
                 Browse the Ocean Market
-            <form id={"searchForm"} onSubmit={(e) => {
+                <form id={"searchForm"} onSubmit={(e) => {
                     console.log("HELLO");
                     e.preventDefault();
                     fetchDataBySearchterm('rinkeby', searchTerms, '1').then(jsonData => {
@@ -163,13 +149,19 @@ let Market = props => {
                 </Button>
                 </form>
 
+                <Button
+                    onClick={() => setNextPanel('bookmarks')}
+                >
+                    <div className="mx-2">
+                        Bookmarks
+                    </div>
+                </Button>
+
                 {renderResults()}
 
             </Panel>
 
         </div>
-
-
     );
 }
 

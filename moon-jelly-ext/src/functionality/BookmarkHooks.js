@@ -6,11 +6,13 @@ function useBookmarks() {
     let { network } = useOcean();
     const { storeToLocal, getFromLocal } = useWebStorage();
     let storedBookmarks = getFromLocal("bookmarks");
-    const [bookmarks, setBookmarks] = useState(storedBookmarks != null ? storedBookmarks : {});
+    console.log("storedbookmarks", storedBookmarks);
+    const [bookmarks, setBookmarks] = useState(storedBookmarks != null ? storedBookmarks : []);
 
     // stores to web data whenever the state changes
     useEffect(() => {
         storeToLocal("bookmarks", bookmarks);
+        console.log("bookmark useeffect 1", getFromLocal("bookmarks"));
     }, bookmarks);
 
     /**
@@ -22,7 +24,8 @@ function useBookmarks() {
             ...bookmarks,
             [network]: [didToAdd].concat(bookmarks[network])
         }
-        setBookmarks(newPinned)
+        setBookmarks(newPinned);
+        console.log("bookmark added");
     }
 
     /**
@@ -36,10 +39,13 @@ function useBookmarks() {
                 (did) => did !== didToAdd
             )
         }
-        setBookmarks(newPinned)
+        setBookmarks(newPinned);
+        console.log("bookmark removed");
     }
 
     function getBookmarks() {
+        console.log("bookmark getted", bookmarks);
+        console.log("bookmark getted 2", typeof bookmarks);
         return bookmarks;
     }
 

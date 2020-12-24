@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Input from './Form/Input.js';
 import Button from './Button.js';
 import Panel from './Panel.js';
-
+import BookmarkButton from './BookmarkButton.js';
 import Accordion from './Accordion';
 
 import './../styles/Market.css';
+
 
 let MarketAssetList = props => {
 
@@ -38,6 +39,8 @@ let MarketAssetList = props => {
                     >   
                         <a className="mt-1" href={"https://market.oceanprotocol.com/asset/" + did} target="_blank">View on Ocean Market</a>
 
+                        <BookmarkButton did={did}></BookmarkButton>
+
                         {/*<div className="assetDesc mt-1">{assetDesc}</div> */} 
                     </div>;
 
@@ -50,8 +53,6 @@ let MarketAssetList = props => {
     function createLabelExtra(datatokenSymbol, price, pool){
         return(
             <div className="assetLabelPricing">
-                {/*<div className="assetName">{name}</div>
-                <div className="assetAuthor">{author}</div> */}
                 <div className="tokenSymbol"> {datatokenSymbol} </div>
                 <div className="assetPrice tokenSymbol"> 
                     <span className="priceNumber">{price}</span>  
