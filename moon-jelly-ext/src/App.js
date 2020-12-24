@@ -13,7 +13,7 @@ import Jellyfish from './assets/ocean-jelly-placeholder.svg';
 
 // Components
 import { OceanProvider, useOcean } from '@oceanprotocol/react';
-import Navbar from './components/Navbar';
+import Navbar from './components/MainNavbar';
 import Panel from './components/Panel';
 import Button from './components/Button'
 import Header from './components/Header';
@@ -24,6 +24,7 @@ import Wallet from './components/complete/Wallet';
 import Mint from './components/complete/Mint';
 import ModuleMenu from './components/complete/ModuleMenu';
 import Market from './components/complete/Market';
+import Bookmarks from './components/complete/Bookmarks.js';
 
 // Styling
 import './styles/global.css';
@@ -115,6 +116,8 @@ class App extends Component {
                     return <Panel><ModuleMenu selected={this.state.nextToDisplay} setNextPanel={this.setNextPanel.bind(this)} /></Panel>;
                 case 'home':
                     return <HomePanel />
+                case 'bookmarks':
+                    return <Bookmarks />
                 default:
                     return <HomePanel />
             }
