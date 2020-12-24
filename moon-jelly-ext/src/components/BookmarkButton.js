@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import { ConfigHelperConfig } from '@oceanprotocol/lib/dist/node/utils/ConfigHelper'
 import { useBookmarks } from '../functionality/BookmarkHooks.js';
@@ -7,24 +7,40 @@ import { useOcean } from '@oceanprotocol/react'
 import BookmarkIcon from '../assets/bookmark.svg';
 
 let BookmarkButton = (props) => {
-  const { config } = useOcean()
   const { getBookmarks, addBookmark, removeBookmark } = useBookmarks();
+
   let bookmarks = getBookmarks();
-  const isBookmarked = bookmarks.includes(props.did + "");
+  //console.log("the bookmarks", bookmarks);
+
+  let [isBookmarked, setIsBookmarked] = useState(bookmarks.includes(props.did));
 
   function handleBookmark() {
-    console.log("is bookmarked? ", isBookmarked);
-    isBookmarked ? removeBookmark(props.did) : addBookmark(props.did)
+    if(isBookmarked){
+      setIsBookmarked(false);
+      removeBookmark(props.did);
+    }
+    else {
+      setIsBookmarked(true);
+      addBookmark(props.did);
+    }
   }
 
   return (
-    <button
+    /*{<button
       onClick={handleBookmark}
       //className={`${styles.bookmark} ${isBookmarked ? styles.active : ''} `}
       title={isBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}
     >
-      <svg src={BookmarkIcon}></svg>
-    </button>
+      {isBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}
+    </button>}*/
+    <div>
+      <a 
+        onClick={handleBookmark}
+        style={{ cursor: "pointer" }}
+      >
+        {isBookmarked ? 'Remove Bookmark' : 'Add Bookmark'}
+      </a>
+    </div>
   )
 }
 

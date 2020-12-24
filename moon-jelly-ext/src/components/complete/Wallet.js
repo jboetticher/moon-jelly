@@ -30,8 +30,8 @@ let Wallet = props => {
 
         // if asset results is empty, fetch it
         if (assetResults == "") {
-            fetchDataByWallet("rinkeby", accountId).then(res => {
-                console.log("wallet stuff", res);
+            fetchDataByWallet(/*"rinkeby",*/ accountId).then(res => {
+                //console.log("wallet stuff", res);
                 setAssetResults(res);
             });
         }
