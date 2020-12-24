@@ -161,6 +161,10 @@ const HomePanel = (props) => {
     let { insertSearchTerm } = useMarketPage();
     let { getFromLocal, storeToLocal } = useWebStorage();
     let [oceanSearchCheck, oceanSearchCheckSet] = useState(getFromLocal('searchOnOcean'));
+    const nextPanel = getFromLocal("switch_panel");
+
+    // Checks to see if there are instructions to go immediately to a certain panel.
+    // This first if statement is a special check for the search panel. (spaghetti code)
     if (oceanSearchCheck !== "" && oceanSearchCheck !== null && oceanSearchCheck !== undefined) {
         goToPage("market", () => {
             // here you would go to the search page via hook and slap it in
@@ -171,10 +175,15 @@ const HomePanel = (props) => {
         storeToLocal("searchOnOcean", "");
         oceanSearchCheckSet("");
     }
+    else if (nextPanel !== "" && nextPanel !== null && nextPanel != undefined) {
+        goToPage(nextPanel, () => { 
+            console.log("MoonJelly was instructed to immediately go to panel '" + nextPanel + "'.");
+            storeToLocal("switch_panel", "");
+        });
+    }
 
     console.log(useOcean());
-    let { ocean, accountId, connect, refreshBalance, status } = useOcean();
-
+    let { connect, status } = useOcean();
     let [oceanConnected, setOceanConnected] = useState(status > 0);
     useEffect(() => {
         setOceanConnected(status > 0);

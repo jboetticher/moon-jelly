@@ -1,8 +1,10 @@
 // slate integration
-import React from 'react';
+import React, {useContext} from 'react';
 import SlateFetch from './SlateFetch.js';
 import Panel from '../../components/Panel.js';
-import useWebStorage from '../../functionality/WebStorageHooks.js';
+import {PanelContext} from '../../App.js';
+
+const MODULE_NAME = "slate_module";
 
 const slate_module = () => (
     <Panel>
@@ -15,18 +17,13 @@ function slateOnAppStart() {
     if(val != null && val !== "")
     {
         console.log("slateToOcean value: ", val);
-
-        
-
-        localStorage.setItem("slateToOcean", "");
+        localStorage.setItem("switch_panel", MODULE_NAME);
     }
 }
 
-
-
 export default {
     title: "Slate",
-    name: 'slate_module',
+    name: MODULE_NAME,
     properties: {
         hasPanel: true
     },
