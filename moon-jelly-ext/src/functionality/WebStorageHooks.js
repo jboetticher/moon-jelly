@@ -48,7 +48,7 @@ function useWebStorage() {
             //console.log("stored", localStorage.getItem(key));
         }
         else {
-            Logger.log("gtoreToLocal could not access localStorage");
+            Logger.log("storeToLocal could not access localStorage");
         }
     }
 

@@ -26,28 +26,10 @@ if (document.getElementById('aButton')) {
                     // then put that data into the localstorage
                     // open up a new tab
                     // new tab checks for thing (may have to make a framework for modules)
-
-                    chrome.tabs.create({
-                        url: chrome.extension.getURL('index.html'),
-                        active: false
-                    }, function (tab) {
-                        let title = document.getElementsByClassName("css-rgz80s")[0].nodeValue;
-                        localStorage["slateToOcean"] = title;
-                        alert(title);
-
-                        // after the tab has been created, open a window to inject the tab
-                        chrome.windows.create({
-                            tabId: tab.id,
-                            type: 'popup',
-                            focused: true,
-                            width: 365,
-                            height: 600
-                        }, function (w) {
-
-                        });
+                    chrome.runtime.sendMessage({ 
+                        todo: "publishSlateButton", 
+                        keyword: document.getElementsByClassName("css-uwdmx6")[0].innerHTML
                     });
-
-                    alert("you clicked");
                 };
             }
         }

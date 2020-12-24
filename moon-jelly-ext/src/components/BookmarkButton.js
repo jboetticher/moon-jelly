@@ -7,7 +7,7 @@ import { useOcean } from '@oceanprotocol/react'
 import BookmarkIcon from '../assets/Bookmark.svg';
 
 let BookmarkButton = (props) => {
-  const { config } = useOcean()
+  const { config } = useOcean();
   const { getBookmarks, addBookmark, removeBookmark } = useBookmarks();
   let bookmarks = getBookmarks();
   const isBookmarked =

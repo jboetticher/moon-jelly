@@ -6,7 +6,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import * as PanelManager from './functionality/PanelManager.js';
 import { useWebStorage } from './functionality/WebStorageHooks.js';
 import { useMarketPage } from './functionality/MarketPageHooks.js';
-import modules from '../../modules';
+import modules from './modules';
 
 // Assets
 import Jellyfish from './assets/ocean-jelly-placeholder.svg';
@@ -83,7 +83,7 @@ const modulesObject = modules;
 for (var i = 0; i < modulesObject.length; i++) {
     if(modulesObject[i].onAppStart != null)
     {
-        modulesObject.onAppStart();
+        modulesObject[i].onAppStart();
     }
 }
 
