@@ -11,10 +11,10 @@ let BookmarkButton = (props) => {
   const { getBookmarks, addBookmark, removeBookmark } = useBookmarks();
   let bookmarks = getBookmarks();
   const isBookmarked =
-    bookmarks && bookmarks[config.network]?.includes(did)
+    bookmarks && bookmarks[config.network]?.includes(props.did)
 
   function handleBookmark() {
-    isBookmarked ? removeBookmark(did) : addBookmark(did)
+    isBookmarked ? removeBookmark(props.did) : addBookmark(props.did)
   }
 
   return (
