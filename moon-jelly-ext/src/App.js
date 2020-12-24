@@ -27,11 +27,11 @@ import Mint from './components/complete/Mint';
 import ModuleMenu from './components/complete/ModuleMenu';
 import Market from './components/complete/Market';
 import Bookmarks from './components/complete/Bookmarks.js';
+import Alerts from './components/complete/Alerts.js';
 
 // Styling
 import './styles/global.css';
 import './styles/App.css';
-
 
 
 //#region Provider Setups
@@ -106,6 +106,8 @@ class App extends Component {
                     return <HomePanel />
                 case 'bookmarks':
                     return <Bookmarks />
+                case 'alerts':
+                    return <Alerts />
                 default:
                     return <HomePanel />
             }
