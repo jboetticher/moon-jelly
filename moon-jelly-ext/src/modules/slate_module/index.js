@@ -2,7 +2,6 @@
 import React, {useContext} from 'react';
 import SlateFetch from './SlateFetch.js';
 import Panel from '../../components/Panel.js';
-import {PanelContext} from '../../App.js';
 
 const MODULE_NAME = "slate_module";
 
@@ -13,6 +12,9 @@ const slate_module = () => (
 );
 
 function slateOnAppStart() {
+    // checks if a certain value is not null.
+    // If that is the case, then there must be something to do. 
+    // will reset this value to null in the module page so that this doesn't happen over and over
     let val = localStorage.getItem("slateToOcean");
     if(val != null && val !== "")
     {
@@ -22,11 +24,11 @@ function slateOnAppStart() {
 }
 
 export default {
-    title: "Slate",
-    name: MODULE_NAME,
-    properties: {
-        hasPanel: true
+    title: "Slate", // (string) name to display in menus. If left blank, defaults to name
+    name: MODULE_NAME, // (string) key of the module
+    properties: { // container of various properties for code to reference
+        hasPanel: true // (boolean) whether or not the module has a panel to display
     },
-    panel: slate_module,
-    onAppStart: slateOnAppStart
+    panel: slate_module, // (function) react function to display as a panel
+    onAppStart: slateOnAppStart // (function) function that gets called when the app starts
 }

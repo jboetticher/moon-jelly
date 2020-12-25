@@ -5,6 +5,7 @@ import AccordionSection from '../../components/AccordionSection.js';
 import ConnectPanel from '../../components/ConnectPanel.js';
 import Accordion from '../../components/Accordion.js';
 import Input from '../../components/Form/Input.js';
+import Correct from '../../components/Correct.js';
 import Button from '../../components/Button.js';
 import { PanelContext } from '../../App.js';
 
@@ -58,6 +59,46 @@ let SlateFetch = () => {
         });
         const json = await response.json();
         setSlateData(json);
+
+        // does check for external instructions
+        function findObjectByTitle(title) {
+            let objToReturn = null;
+
+            json.slates.forEach(slate => {
+                slate.data.objects.forEach(slateObject => {
+                    if (slateObject.name === title) {
+                        objToReturn = slateObject;
+                    }
+                });
+            });
+
+            console.log("object to return", objToReturn);
+            return objToReturn;
+        }
+
+        let slateToOceanValue = getFromLocal("slateToOcean");
+        console.log("Slate to ocean value (SlateFetch)", slateToOceanValue);
+        if (slateToOceanValue !== "" && slateToOceanValue !== null && slateToOceanValue !== undefined) {
+            console.log(json);
+            // loops through the retrieved json to find the data that matches up with the slate
+            const queriedSlateData = findObjectByTitle(slateToOceanValue);
+
+            console.log("the right query", queriedSlateData);
+
+            // once it finds the right data, it immediately goes to the mint page (see lines )
+            if (queriedSlateData !== null) {
+                exportToMintPage(
+                    queriedSlateData.type,
+                    queriedSlateData.url,
+                    queriedSlateData.title,
+                    queriedSlateData.author,
+                    queriedSlateData.body
+                );
+            }
+
+            // resets command
+            storeToLocal("slateToOcean", "");
+        }
     }
 
     function knowsSlateAPIKey() {
@@ -65,18 +106,26 @@ let SlateFetch = () => {
         return locAPIKEY !== null && locAPIKEY !== undefined && locAPIKEY !== '';
     }
 
+    function exportToMintPage(type, url, title, author, body) {
+        goToPage("mint", () => {
+            insertMetaData(JSON.stringify({
+                checksum: "",
+                contentLength: undefined,//x.size, 
+                contentType: type,
+                encoding: "",
+                compression: ""
+            }));
+            insertURL(url);
+            insertAssetName(title);
+            insertAuthorName(author);
+            insertDescription(body);
+        });
+    }
+
     //#endregion
 
-    //#region Check for Instructions
 
-    let val = getFromLocal("slateToOcean");
-    console.log("Slate to ocean value ", val);
-    storeToLocal("slateToOcean");
 
-    //#endregion
-
-    
-    
     const { walletConnected: isWalletConnected } = useWalletReady();
     let slateComponent = <></>;
     if (!isWalletConnected) {
@@ -113,22 +162,25 @@ let SlateFetch = () => {
                     <img src={SlateIcon} className={"mb-1"} />
                     Slates You Own
                 </div>
-                <Accordion className="mt-2">{
-                    slateData?.slates?.map((x, i) => {
-                        { console.log(x); }
-                        return (
-                            <AccordionSection key={i} label={x.slatename}>
-                                <div className="assetBody">
-                                    <div className="assetDesc mt-1">{x.data.body}</div>
-                                    <div className="slate-button-container">
-                                        <Button paddingx onClick={(e) => setSlateState(i)}>View Items</Button>
-                                        <Button paddingx>Go to Slate</Button>
-                                    </div>
-                                </div>
-                            </AccordionSection>
-                        );
-                    })
-                }</Accordion>
+                {
+                    slateData?.slates == null ? <Correct /> :
+                        <Accordion className="mt-2">{
+                            slateData?.slates?.map((x, i) => {
+                                { console.log(x); }
+                                return (
+                                    <AccordionSection key={i} label={x.slatename}>
+                                        <div className="assetBody">
+                                            <div className="assetDesc mt-1">{x.data.body}</div>
+                                            <div className="slate-button-container">
+                                                <Button paddingx onClick={(e) => setSlateState(i)}>View Items</Button>
+                                                <Button paddingx>Go to Slate</Button>
+                                            </div>
+                                        </div>
+                                    </AccordionSection>
+                                );
+                            })
+                        }</Accordion>
+                }
             </>
             :
             <>
@@ -144,6 +196,8 @@ let SlateFetch = () => {
                                     {x.name}
                                 </h6>
                                 <Button onClick={() => {
+                                    exportToMintPage(x.type, x.url, x.title, x.author, x.body);
+                                    /*
                                     // do mint stuff
                                     goToPage("mint", () => {
                                         insertMetaData(JSON.stringify({
@@ -158,6 +212,7 @@ let SlateFetch = () => {
                                         insertAuthorName(x.author);
                                         insertDescription(x.body);
                                     });
+                                    */
                                 }}
                                     paddingx style={{ maxHeight: "35px" }}>
                                     Mint
