@@ -18,7 +18,7 @@ import "@pathofdev/react-tag-input/build/index.css";
 let Alerts = props => {    
 
     const network = useOcean()['config']['network'];
-    const { storeArrayToLocal, getArrayFromLocal } = useWebStorage();
+    const { storeToLocal, storeArrayToLocal, getArrayFromLocal } = useWebStorage();
     const { fetchDataBySort } = useAquariusFetch();
 
     // retrieve keywords from localStorage
@@ -26,15 +26,6 @@ let Alerts = props => {
     let storedKeywords = getArrayFromLocal("keywords_" + network) != null ? getArrayFromLocal("keywords_" + network) : ['example keyword']; 
 
     const [tags, setTags] = React.useState(storedKeywords);
-
-    // searches given keyword and returns the number of results
-    function searchKeyword(keyword){
-
-    }
-
-    function updateKeywordHistory(keyword){
-
-    }
 
     function renderKeywordAssets(){
 
@@ -51,8 +42,11 @@ let Alerts = props => {
                     // update tags
                     setTags(newTags);
 
-                    // save to localStorage
-                    storeArrayToLocal("keywords", newTags);
+                    // save keywords to localStorage
+                    storeArrayToLocal("keywords_" + network, newTags);
+
+                    // save current date to localStorage
+                    storeToLocal("keywordDate_" + network, new Date().toISOString());
                 }}
             /> 
             <Button
