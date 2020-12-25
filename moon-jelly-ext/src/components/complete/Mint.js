@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { usePublish, usePricing } from '@oceanprotocol/react';
 import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
+import {PanelContext} from '../../App.js';
 
 import Panel from '../Panel.js';
 import Label from '../Label.js';
@@ -202,6 +203,9 @@ let Mint = props => {
                         {detailsText}
                     </Label>
                     <Correct loadComplete={false} />
+                    <Label>
+                        Please keep this panel open, otherwise the process will stop.
+                    </Label>
                 </Panel>
         }
         else {
@@ -316,6 +320,7 @@ let PricingMenu = props => {
     // Pricing helpers
     let [price, setPrice] = useState(1);
     let [dtAmount, setDTAmount] = useState(500);
+    let switchPanel = useContext(PanelContext);
 
     // Pricing helpers
     let [pricingData, setPricingData] = useState([false, "Waiting for Pricing...", 0, undefined]);
@@ -354,6 +359,10 @@ let PricingMenu = props => {
         console.log("pricingStep", pricingStep);
         console.log("pricingStepText", pricingStepText);
         console.log("pricingError", pricingError);
+
+        if(pricingData[0] && !pricingIsLoading) {
+            switchPanel("wallet");
+        }
     }, [pricingIsLoading, pricingStep, pricingStepText]);
 
     // notification text logic
@@ -371,6 +380,9 @@ let PricingMenu = props => {
                     {detailsText}
                 </Label>
                 <Correct loadComplete={false} />
+                <Label>
+                    Please keep this panel open, otherwise the process will stop.
+                </Label>
             </Panel>
     }
     else {
