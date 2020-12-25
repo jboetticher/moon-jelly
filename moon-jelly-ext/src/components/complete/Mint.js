@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { usePublish, usePricing } from '@oceanprotocol/react';
 import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
-import {PanelContext} from '../../App.js';
+import { PanelContext } from '../../App.js';
 
 import Panel from '../Panel.js';
 import Label from '../Label.js';
@@ -238,25 +238,24 @@ let Mint = props => {
                                 // this is so that the metadata can be inputted easily from other apis.
                                 // make the hidden input field accessible from the mint page hooks
                                 const hiddenData = document.getElementById("hiddenMetadata")?.value;
-                                if(hiddenData === "")
-                                {
+                                if (hiddenData === "") {
                                     parseURLData(value);
                                 }
                                 else {
                                     try {
                                         const parsedMetaData = JSON.parse(hiddenData);
-                                        let recievedURLData = 
-                                        { 
-                                            checksum: parsedMetaData.checksum ? parsedMetaData.checksum : "", 
-                                            contentLength: parsedMetaData.contentLength ? parsedMetaData.contentLength : "", 
-                                            contentType: parsedMetaData.contentType ? parsedMetaData.contentType : "", 
-                                            encoding: parsedMetaData.encoding ? parsedMetaData.encoding : "", 
-                                            compression: parsedMetaData.compression ? parsedMetaData.compression : "" 
+                                        let recievedURLData =
+                                        {
+                                            checksum: parsedMetaData.checksum ? parsedMetaData.checksum : "",
+                                            contentLength: parsedMetaData.contentLength ? parsedMetaData.contentLength : "",
+                                            contentType: parsedMetaData.contentType ? parsedMetaData.contentType : "",
+                                            encoding: parsedMetaData.encoding ? parsedMetaData.encoding : "",
+                                            compression: parsedMetaData.compression ? parsedMetaData.compression : ""
                                         };
                                         setURLData(recievedURLData);
                                         console.log("hook set url data: ", recievedURLData);
                                     }
-                                    catch(e) {
+                                    catch (e) {
                                         console.log("An issue was detected with parsing the outgoing metadata. ", hiddenData);
                                         parseURLData(value);
                                     }
@@ -274,23 +273,27 @@ let Mint = props => {
                                 setAuthor(value)
                             }}
                         />
-                        <Input
-                            name="dataDescription"
-                            placeholder={description ? description : "Data Description"}
-                            value={description}
-                            help="Enter the description of the data set."
-                            onChange={(e) => {
-                                const { name, value } = e.target;
-                                setDescription(value)
-                            }}
-                        />
-                        <input 
+                        <div class="inputWrap">
+                            <textarea
+                                name="dataDescription"
+                                placeholder={description ? description : "Data Description"}
+                                style={{height: "150px"}}
+                                value={description}
+                                onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    setDescription(value)
+                                    console.log('descriptionooooo', value);
+                                }}
+                            />
+                        </div>
+                        <div class="help mb-2">Enter the description of the data set.</div>
+                        <input
                             type="hidden"
                             name="hiddenMetadata"
                             id="hiddenMetadata"
                             value={""}
                             onChange={(e) => console.log("hidden value changed")}
-                            />
+                        />
                         <Label htmlFor="publishButton">
                             Press the button to start minting!
                         </Label>
@@ -360,7 +363,7 @@ let PricingMenu = props => {
         console.log("pricingStepText", pricingStepText);
         console.log("pricingError", pricingError);
 
-        if(pricingData[0] && !pricingIsLoading) {
+        if (pricingData[0] && !pricingIsLoading) {
             switchPanel("wallet");
         }
     }, [pricingIsLoading, pricingStep, pricingStepText]);

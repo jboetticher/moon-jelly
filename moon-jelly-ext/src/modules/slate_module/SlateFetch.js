@@ -192,27 +192,11 @@ let SlateFetch = () => {
                     slateData?.slates[slateState].data.objects.map((x, i) => {
                         return (
                             <div key={i} className={"module-menu-entry my-1"}>
-                                <h6 className={"module-entry-title"} style={{ margin: "0px" }}>
+                                <h6 className={"module-entry-title"} style={{ margin: "0px", marginRight: "16px" }}>
                                     {x.name}
                                 </h6>
                                 <Button onClick={() => {
                                     exportToMintPage(x.type, x.url, x.title, x.author, x.body);
-                                    /*
-                                    // do mint stuff
-                                    goToPage("mint", () => {
-                                        insertMetaData(JSON.stringify({
-                                            checksum: "", 
-                                            contentLength: undefined,//x.size, 
-                                            contentType: x.type, 
-                                            encoding: "", 
-                                            compression: "" 
-                                        }));
-                                        insertURL(x.url);
-                                        insertAssetName(x.title);
-                                        insertAuthorName(x.author);
-                                        insertDescription(x.body);
-                                    });
-                                    */
                                 }}
                                     paddingx style={{ maxHeight: "35px" }}>
                                     Mint
