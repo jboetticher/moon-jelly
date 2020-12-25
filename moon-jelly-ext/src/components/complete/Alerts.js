@@ -14,18 +14,7 @@ import { useWebStorage } from '../../functionality/WebStorageHooks.js'
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
 
-let Alerts = props => {
-
-    //box to display keywords
-    //form to set keywords
-    //save and load keywords to/from localstorage
-
-    //function to fetch results given keyword
-    //place to store fetched results
-    //function to compare fetched results to stored results
-    //system to re-query over time
-    //function to display list of new results with what the keywords were
-    
+let Alerts = props => {    
 
     const { storeArrayToLocal, getArrayFromLocal } = useWebStorage();
     const { fetchDataBySort } = useAquariusFetch();
