@@ -6,7 +6,7 @@
   "version": "0.0.1",
 
   "background": {
-    "scripts": ["eventPage.js"],
+    "scripts": ["eventPage.js", "alertsPage.js"],
     "persistent": false
   },
   "content_scripts": [
@@ -30,6 +30,7 @@
     "storage",
     "notifications",
     "contextMenus",
+    "alarms",
     "http://*/",
     "https://*/"
   ],
