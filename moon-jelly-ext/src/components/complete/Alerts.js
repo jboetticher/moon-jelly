@@ -9,6 +9,7 @@ import '../../styles/Market.css';
 
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 import { useWebStorage } from '../../functionality/WebStorageHooks.js'
+import { useOcean } from '@oceanprotocol/react';
 
 /* Uses tag input field from https://betterstack.dev/projects/react-tag-input/ */
 import ReactTagInput from "@pathofdev/react-tag-input";
@@ -16,12 +17,13 @@ import "@pathofdev/react-tag-input/build/index.css";
 
 let Alerts = props => {    
 
+    const network = useOcean()['config']['network'];
     const { storeArrayToLocal, getArrayFromLocal } = useWebStorage();
     const { fetchDataBySort } = useAquariusFetch();
 
     // retrieve keywords from localStorage
     // example keyword is only displayed if keywords does not exist in localStorage
-    let storedKeywords = getArrayFromLocal("keywords") != null ? getArrayFromLocal("keywords") : ['example keyword']; 
+    let storedKeywords = getArrayFromLocal("keywords_" + network) != null ? getArrayFromLocal("keywords_" + network) : ['example keyword']; 
 
     const [tags, setTags] = React.useState(storedKeywords);
 
