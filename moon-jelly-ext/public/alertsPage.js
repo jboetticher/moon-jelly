@@ -1,6 +1,8 @@
 chrome.runtime.onInstalled.addListener(function () {
     //alert("sick im installed");
     console.log("sick im installed");
+    /*chrome.browserAction.setBadgeText({text: '33'});
+    chrome.browserAction.setBadgeBackgroundColor({ color: '#8b98a9' });*/
     startAlarm();
 });
 
@@ -50,6 +52,12 @@ function startAlarm() {
         }
     })
 }
+
+/*chrome.browserAction.onClicked.addListener(function(){
+    // clear badge on icon
+    console.log("icon clicked");
+    chrome.browserAction.setBadgeText({text: ''});
+})*/
 
 function filterNewAssets() {
 
@@ -130,6 +138,10 @@ function filterNewAssets() {
                 iconUrl: '/moonyjell.png',
                 type: 'basic'
             });
+
+            // slap a badge on the icon 
+           /* chrome.browserAction.setBadgeText({text: filteredAssets.size + ''});
+            chrome.browserAction.setBadgeBackgroundColor({ color: '#8b98a9' });*/
         }
 
     });
@@ -137,6 +149,7 @@ function filterNewAssets() {
     //fetchRecentOceanData("test", 1).then(res => console.log(res));    
 
 }
+
 
 async function fetchRecentOceanData(keyword, page) {
     let network = 'rinkeby';
