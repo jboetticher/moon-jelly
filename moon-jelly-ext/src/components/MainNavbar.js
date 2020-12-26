@@ -6,7 +6,7 @@ import "../styles/Navbar.css";
 let Navbar = props => {
 
     let context = useContext(PanelContext);
-
+    console.log(props.selected);
     return (
         <header className={"container navcontainer"} id={"main-navbar"}>
             <Button
@@ -16,7 +16,7 @@ let Navbar = props => {
                 Mint
             </Button>
             <Button
-                primary={props.selected == "market"} noRound
+                primary={props.selected == "market" || props.selected == "bookmarks" || props.selected == "wallet" } noRound
                 onClick={() => context("market")}
             >
                 Market

@@ -89,10 +89,15 @@
     padding-bottom: 2px;
 }
 
-.navButtons{
+.navButtons {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     margin-bottom: 5px;   
+}
+
+.subNav {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 #tokenSearchButton {

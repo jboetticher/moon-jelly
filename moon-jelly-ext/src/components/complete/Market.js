@@ -9,6 +9,7 @@ import '../../styles/Market.css';
 
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 import { PanelContext } from '../../App.js';
+import MarketNavbar from '../MarketNavbar.js';
 
 //import { useMarketPage } from '../../functionality/MarketPageHooks.js'
 
@@ -120,7 +121,8 @@ let Market = props => {
     return (
         <div id="marketPanel">
             <Panel>
-                Browse the Ocean Market
+                <MarketNavbar selected="market"/>
+                <div className="mt-2">Browse the Ocean Market</div>
                 <form id={"searchForm"} onSubmit={(e) => {
                     e.preventDefault();
                     fetchDataBySearchterm(/*'rinkeby',*/ searchTerms, '1').then(jsonData => {
@@ -148,23 +150,7 @@ let Market = props => {
                 </Button>
                 </form>
 
-                <Button
-                    onClick={() => setNextPanel('bookmarks')}
-                >
-                    <div className="mx-2">
-                        Bookmarks
-                    </div>
-                </Button>
 
-                        
-                <Button
-                    /*TEMPORARY BUTTON FOR DEVELOPMENT/TESTING */
-                    onClick={() => setNextPanel('wallet')}
-                >
-                    <div className="mx-2">
-                        wallet
-                    </div>
-                </Button>
 
                 {renderResults()}
 

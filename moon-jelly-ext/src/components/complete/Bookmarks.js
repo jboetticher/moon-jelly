@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import Input from '../Form/Input.js';
-import Button from '../Button.js';
 import Panel from '../Panel.js';
+import MarketNavbar from '../MarketNavbar.js';
 
 import MarketAssetList from '../MarketAssetList';
 import '../../styles/Market.css';
 
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 import { useBookmarks } from '../../functionality/BookmarkHooks.js';
+
 
 let Bookmarks = props => {
     const { getBookmarks, addBookmark, removeBookmark } = useBookmarks();
@@ -30,7 +30,7 @@ let Bookmarks = props => {
 
         // Once all promises are done, update assetResults with the data
         Promise.all(promiseArray).then((values) => {
-            console.log(values);
+            //console.log(values);
             setAssetResults({results: values});
         });
     }
@@ -39,7 +39,7 @@ let Bookmarks = props => {
         // if asset results is empty, fetch it
         if (assetResults == "") {
             getBookmarkDDOs();
-            console.log("rendering");
+            console.log("rendering bookmarks");
         }
         return (
             assetResults != "" ? <MarketAssetList results={assetResults}> </MarketAssetList> : null
@@ -48,7 +48,8 @@ let Bookmarks = props => {
     
     return(
         <Panel>
-            <div> Bookmarks </div>
+            <MarketNavbar selected="bookmarks"/>
+            <div className="mt-2"> Saved Bookmarks </div>
             
             {renderBookmarks()}
 

@@ -1,21 +1,16 @@
 import React, { useState } from 'react'
 import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
-import { useWebStorage } from '../../functionality/WebStorageHooks.js';
 
-import Correct from '../Correct'
-import Incorrect from '../Incorrect'
-import Button from '../Button'
-import Input from '../../components/Form/Input'
-import Form from '../../components/Form/Form'
-import * as ethereumAddress from 'ethereum-address'
 import '../../styles/DataWallet.css';
 import ConnectPanel from '../ConnectPanel.js';
 import Panel from '../Panel.js';
+import MarketNavbar from '../MarketNavbar.js';
 
 import MarketAssetList from '../MarketAssetList';
 
 import { useOcean } from '@oceanprotocol/react';
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
+
 
 let Wallet = props => {
 
@@ -67,6 +62,7 @@ let Wallet = props => {
     return (
         <div id="walletPanel">
             <Panel>
+                <MarketNavbar selected="wallet"/>
                 {walletPanel}        
             </Panel>
         </div>
