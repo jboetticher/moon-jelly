@@ -16,6 +16,8 @@ import { useOcean } from '@oceanprotocol/react';
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "../../styles/TagInput.css";
 
+import "../../styles/Alerts.css";
+
 let Alerts = props => {
 
     const network = useOcean()['config']['network'];
@@ -77,9 +79,8 @@ let Alerts = props => {
 
     return (
         <Panel>
-            <div> Can't find what you're looking for? </div>
-            <div> Get notified of new data assets on the market. </div>
-            <div className="gradient-border-wrap">
+            <div> Track new data assets on the market with keywords. </div>
+            <div className="gradient-border-wrap mt-1">
                 <ReactTagInput
                     tags={tags}
                     placeholder="Enter a keyword or phrase"
@@ -95,16 +96,19 @@ let Alerts = props => {
                     }}
                 />
             </div>
-            <div> Notify me of new assets </div>
-            <Switch
-                className="react-switch mr-1 v-center"
-                onChange={(checked, e, id) => {
-                    console.log("check change ", checked);
-                    setEnabled(checked);
-                }}
-                checked={enabled}
-                onColor="#ff4092"
-            />
+            <div className="notify-bar mt-1">
+                <div> Send me notifications </div>
+                <Switch
+                    className="react-switch mr-1 v-center"
+                    onChange={(checked, e, id) => {
+                        console.log("check change ", checked);
+                        setEnabled(checked);
+                    }}
+                    checked={enabled}
+                    onColor=
+                    "#ff4092"
+                />
+            </div>
             {renderKeywordAssets()}
         </Panel>
     );

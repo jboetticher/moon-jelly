@@ -17,7 +17,8 @@
     background: #fff;
     color: #333;
     border: 1px solid #e1e1e1;
-    border-radius: 3px
+    /*border-radius: 3px*/
+    border-radius: var(--border-radius);
 }
 
 .react-tag-input * {
@@ -43,7 +44,8 @@
     background: transparent;
     color: #333;
     border: none;
-    border-radius: 3px;
+    /*border-radius: 3px;*/
+    border-radius: var(--border-radius);
     outline: 0;
     box-shadow: none;
     -webkit-appearance: none
@@ -70,7 +72,9 @@
     font-family: var(--font-family-base);
     /*font-weight: var(--font-weight-base);*/
 
-    border-radius: 3px
+    /*border-radius: 3px;*/
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 17px 0 rgba(0, 0, 0, 0.2);
 }
 
 .react-tag-input__tag__content {
