@@ -64,7 +64,7 @@ function useAquariusFetch() {
     }
 
     /**
-     * Fetches from metadat of did from aquarius and returns a promise to evaluate with the results
+     * Fetches from metadata of did from aquarius and returns a promise to evaluate with the results
      * @param {The network for aquarius to query, ie 'mainnet', 'rinkeby'} network
      * @param {did of asset to get ddo of} did
      */
