@@ -38,14 +38,15 @@ function startAlarm() {
 }
 
 function filterNewAssets() {
+    let network = 'rinkeby';
     // get the filter date created by the the alerts panel
-    let filterDate = window.localStorage.getItem("keywordDate_rinkeby");
+    let filterDate = window.localStorage.getItem("keywordDate_" + network);
 
     // if no date, nothing to process
     if (filterDate == null) return;
 
     // get the keywords created by alerts panel (should be an array after parsing)
-    let keywords = JSON.parse(window.localStorage.getItem("keywords_rinkeby"));
+    let keywords = JSON.parse(window.localStorage.getItem("keywords_" + network));
 
     // if no keywords, nothing to process
     if (keywords == null) return;
@@ -70,7 +71,7 @@ function filterNewAssets() {
 
                 // Compare the creation date with the filter date
                 // If the creation date is greater, it is a new asset
-                if(asset['created'] >= filterDate){
+                if (asset['created'] >= filterDate) {
                     console.log("NEW ASSET FOUND", asset);
 
                     // add the asset DID into the set
@@ -79,17 +80,37 @@ function filterNewAssets() {
             })
         });
 
-        // grab the old array
-        let keywordAssets = window.localStorage.getItem("keywordAssets_rinkeby");
 
-        // merge the old array with the newly found new assets
-        let merged = keywordAssets.concat(Array.from(filteredAssets));
+        // if there are any new assets
+        if (filteredAssets.size > 0) {
+            // grab the old array
+            let keywordAssets = JSON.parse(window.localStorage.getItem("keywordAssets_" + network));
 
-        // Store the merged assets in local storage (Stringify an array) 
-        window.localStorage.setItem("keywordAssets_rinkeby", JSON.stringify(merged));
+            let merged;
+            if (keywordAssets == null) {
+                // if keywordAssets is empty/nonexistant, just use our arrau
+                merged = Array.from(filteredAssets);
+            }
+            else {
+                // merge the old array with the newly found new assets
+                merged = keywordAssets.concat(Array.from(filteredAssets));
+            }
 
-        // Update date to current date (don't want to get new assets again)
-        window.localStorage.setItem("keywordDate_rinkeby", new Date().toISOString());
+            // Store the merged assets in local storage (Stringify an array) 
+            window.localStorage.setItem("keywordAssets_" + network, JSON.stringify(merged));
+
+            // Update date to current date (don't want to get new assets again)
+            window.localStorage.setItem("keywordDate_" + network, new Date().toISOString());
+
+            // send a notification
+            chrome.notifications.create('', {
+                title: 'New assets availiable on the Ocean Market',
+                message: filteredAssets.size + ' new assets found that match your keywords',
+                iconUrl: '/moonyjell.png',
+                type: 'basic'
+            });
+        }
+
     });
 
     //fetchRecentOceanData("test", 1).then(res => console.log(res));    
@@ -124,5 +145,5 @@ async function fetchRecentOceanData(keyword, page) {
     .then(res => res.json());*/
 
     return fetch('https://aquarius.' + network + '.oceanprotocol.com/api/v1/aquarius/assets/ddo/query?text=' + keyword + '&page=' + page + '&sort={"created": -1}')
-            .then(data => data.json());
+        .then(data => data.json());
 }

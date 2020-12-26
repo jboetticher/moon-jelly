@@ -35,6 +35,9 @@ let Alerts = props => {
     function getKeywordAssetsDDOs() {
         let assetDids = getArrayFromLocal("keywordAssets_" + network);
 
+        // If it does not exist in storage, return
+        if(assetDids == null) return;
+
         // Create an array of promises to evaluate
         let promiseArray = [];
         assetDids.forEach((did) => {
