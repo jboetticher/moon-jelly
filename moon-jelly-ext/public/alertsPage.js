@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(function () {
-    alert("sick im installed");
-    console.log("bro");
+    //alert("sick im installed");
+    console.log("sick im installed");
     startAlarm();
 });
 
@@ -12,15 +12,19 @@ chrome.runtime.onStartup.addListener(() => {
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
     console.log("alram");
-
+    chrome.alarms.getAll((larms) => console.log(larms));
     //console.log(window.localStorage.getItem("keywordDate_rinkeby"));    
     //console.log("this one is: ", window.localStorage.getItem("lol no exist")); 
 
     if (alarm.name === "refetch") {
         //alert("yo 1 min");
-        console.log("1 min pass yay");
+        console.log("60 min pass yay");
         //fetchOceanData("test", 1).then(res => console.log(res));
         filterNewAssets();
+    } 
+    else{
+        chrome.alarms.clear(alarm.name);
+        console.log("killed a non-refetch alarm ", alarm);
     }
 });
 
@@ -31,8 +35,8 @@ function startAlarm() {
         } else {
             // start the alarm since it doesn't exist
             chrome.alarms.create("refetch", {
-                delayInMinutes: 1,
-                periodInMinutes: 1
+                delayInMinutes: 60,
+                periodInMinutes: 60
             });
         }
     })
@@ -41,7 +45,10 @@ function startAlarm() {
 function filterNewAssets() {
 
     // if notifications disabled, don't fetch
-    if(window.localStorage.getItem("keywordAlerts") == ("false" || null)) return;
+    if(window.localStorage.getItem("keywordAlerts") == ("false" || null)){
+        console.log("notifs off");
+        return;
+    } 
 
     let network = 'rinkeby';
     // get the filter date created by the the alerts panel
