@@ -39,7 +39,7 @@ let Wallet = props => {
     function renderWalletBalance(){
         console.log(balance);
         return(
-            <div>
+            <div className="mt-2">
                 <div>My Published Assets</div> 
                 <div className="walletBalance mt-1">
                     <div className="tokenSymbol">{parseFloat(balance['ocean']).toFixed(3)} OCEAN</div>
