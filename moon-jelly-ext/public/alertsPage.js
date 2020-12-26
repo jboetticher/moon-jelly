@@ -6,6 +6,7 @@ chrome.runtime.onInstalled.addListener(function () {
 
 chrome.runtime.onStartup.addListener(() => {
     console.log('onStartup....');
+    filterNewAssets();
     startAlarm();
 });
 
@@ -38,6 +39,10 @@ function startAlarm() {
 }
 
 function filterNewAssets() {
+
+    // if notifications disabled, don't fetch
+    if(window.localStorage.getItem("keywordAlerts") == ("false" || null)) return;
+
     let network = 'rinkeby';
     // get the filter date created by the the alerts panel
     let filterDate = window.localStorage.getItem("keywordDate_" + network);

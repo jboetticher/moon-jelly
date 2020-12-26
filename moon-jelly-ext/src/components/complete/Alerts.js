@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Input from '../Form/Input.js';
 import Button from '../Button.js';
 import Panel from '../Panel.js';
+import Switch from 'react-switch';
 
 import MarketAssetList from '../MarketAssetList';
 import '../../styles/Market.css';
@@ -18,7 +19,7 @@ import "@pathofdev/react-tag-input/build/index.css";
 let Alerts = props => {
 
     const network = useOcean()['config']['network'];
-    const { storeToLocal, storeArrayToLocal, getArrayFromLocal } = useWebStorage();
+    const { storeToLocal, storeArrayToLocal, getArrayFromLocal, getFromLocal } = useWebStorage();
     const { fetchDDO } = useAquariusFetch();
 
     // retrieve keywords from localStorage
@@ -26,6 +27,15 @@ let Alerts = props => {
     let storedKeywords = getArrayFromLocal("keywords_" + network) != null ? getArrayFromLocal("keywords_" + network) : ['example keyword'];
 
     const [tags, setTags] = React.useState(storedKeywords);
+
+    // keeps track of state of checkbox (when this changes, checkbox visually updates)
+    let [enabled, setEnabled] = useState(getFromLocal("keywordAlerts") == 'true' ? true : false);
+
+    // updates in local storage
+    useEffect(() => {
+        storeToLocal("keywordAlerts", enabled);
+        //console.log(props.name, getFromLocal(props.name));
+    }, [enabled]);
 
     //#region Basically does the same thing in Bookmarks.js to get the bookmarks from storage and render them
 
@@ -36,7 +46,7 @@ let Alerts = props => {
         let assetDids = getArrayFromLocal("keywordAssets_" + network);
 
         // If it does not exist in storage, return
-        if(assetDids == null) return;
+        if (assetDids == null) return;
 
         // Create an array of promises to evaluate
         let promiseArray = [];
@@ -51,7 +61,7 @@ let Alerts = props => {
         });
     }
 
-    function renderKeywordAssets(){
+    function renderKeywordAssets() {
         // if asset results is empty, fetch it
         if (assetResults == "") {
             getKeywordAssetsDDOs();
@@ -82,6 +92,16 @@ let Alerts = props => {
                     // save current date to localStorage
                     storeToLocal("keywordDate_" + network, new Date().toISOString());
                 }}
+            />
+            <div> Notify me of new assets </div>
+            <Switch
+                className="react-switch mr-1 v-center"
+                onChange={(checked, e, id) => {
+                    console.log("check change ", checked);
+                    setEnabled(checked);
+                }}
+                checked={enabled}
+                onColor="#ff4092"
             />
             {renderKeywordAssets()}
         </Panel>
