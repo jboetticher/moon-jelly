@@ -159,10 +159,10 @@ let Market = props => {
                         
                 <Button
                     /*TEMPORARY BUTTON FOR DEVELOPMENT/TESTING */
-                    onClick={() => setNextPanel('alerts')}
+                    onClick={() => setNextPanel('wallet')}
                 >
                     <div className="mx-2">
-                        Alerts
+                        wallet
                     </div>
                 </Button>
 

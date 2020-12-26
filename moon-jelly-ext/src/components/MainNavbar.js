@@ -22,10 +22,10 @@ let Navbar = props => {
                 Market
             </Button>
             <Button
-                primary={props.selected == "wallet"} noRound
-                onClick={() => context("wallet")}
+                primary={props.selected == "alerts"} noRound
+                onClick={() => context("alerts")}
             >
-                Wallet
+                Alerts
             </Button>
             <Button
                 primary={props.selected == "more"} noRound
