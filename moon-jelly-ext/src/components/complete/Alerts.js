@@ -14,7 +14,7 @@ import { useOcean } from '@oceanprotocol/react';
 
 /* Uses tag input field from https://betterstack.dev/projects/react-tag-input/ */
 import ReactTagInput from "@pathofdev/react-tag-input";
-import "@pathofdev/react-tag-input/build/index.css";
+import "../../styles/TagInput.css";
 
 let Alerts = props => {
 
@@ -79,20 +79,22 @@ let Alerts = props => {
         <Panel>
             <div> Can't find what you're looking for? </div>
             <div> Get notified of new data assets on the market. </div>
-            <ReactTagInput
-                tags={tags}
-                placeholder="Enter a keyword or phrase"
-                onChange={(newTags) => {
-                    // update tags
-                    setTags(newTags);
+            <div className="gradient-border-wrap">
+                <ReactTagInput
+                    tags={tags}
+                    placeholder="Enter a keyword or phrase"
+                    onChange={(newTags) => {
+                        // update tags
+                        setTags(newTags);
 
-                    // save keywords to localStorage
-                    storeArrayToLocal("keywords_" + network, newTags);
+                        // save keywords to localStorage
+                        storeArrayToLocal("keywords_" + network, newTags);
 
-                    // save current date to localStorage
-                    storeToLocal("keywordDate_" + network, new Date().toISOString());
-                }}
-            />
+                        // save current date to localStorage
+                        storeToLocal("keywordDate_" + network, new Date().toISOString());
+                    }}
+                />
+            </div>
             <div> Notify me of new assets </div>
             <Switch
                 className="react-switch mr-1 v-center"
