@@ -27,7 +27,7 @@ let Alerts = props => {
 
     const [tags, setTags] = React.useState(storedKeywords);
 
-    /* Basically does the same thing in Bookmarks.js to get the bookmarks from storage and render them */
+    //#region Basically does the same thing in Bookmarks.js to get the bookmarks from storage and render them
 
     // Keeps track of fetched new asset data 
     let [assetResults, setAssetResults] = useState("");
@@ -58,11 +58,12 @@ let Alerts = props => {
             console.log("rendering keyword assets");
         }
         return (
-            assetResults != "" ? <MarketAssetList results={assetResults}> </MarketAssetList> : null
+            assetResults != "" ? <MarketAssetList results={assetResults} showDismiss={true}> </MarketAssetList> : null
         );
     }
 
     /* -------- */
+    //#endregion
 
     return (
         <Panel>

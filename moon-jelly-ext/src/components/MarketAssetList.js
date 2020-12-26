@@ -5,8 +5,10 @@ import Button from './Button.js';
 import Panel from './Panel.js';
 import BookmarkButton from './BookmarkButton.js';
 import Accordion from './Accordion';
+import DismissButton from './DismissButton.js';
 
 import './../styles/Market.css';
+
 
 
 let MarketAssetList = props => {
@@ -40,8 +42,11 @@ let MarketAssetList = props => {
                         <div><a href={"https://market.oceanprotocol.com/asset/" + did} target="_blank">View on Ocean Market</a></div>
 
                         <BookmarkButton did={did}></BookmarkButton>
-
+                        
+                        {props.showDismiss ? <DismissButton dismiss={true} did={did}/> : null}
+                        
                         {/*<div className="assetDesc mt-1">{assetDesc}</div> */} 
+
                     </div>;
 
             resultEntries.push(resultEntry);
