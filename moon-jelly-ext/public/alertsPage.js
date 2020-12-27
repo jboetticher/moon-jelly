@@ -1,3 +1,6 @@
+// CONTROLS THE NETWORK THE ALERT SYSTEM IS ON
+const network = 'mainnet';
+
 chrome.runtime.onInstalled.addListener(function () {
     //alert("sick im installed");
     console.log("sick im installed");
@@ -67,7 +70,7 @@ function filterNewAssets() {
         return;
     } 
 
-    let network = 'rinkeby';
+    //let network = 'mainnet';
     // get the filter date created by the the alerts panel
     let filterDate = window.localStorage.getItem("keywordDate_" + network);
 
@@ -152,7 +155,7 @@ function filterNewAssets() {
 
 
 async function fetchRecentOceanData(keyword, page) {
-    let network = 'rinkeby';
+    //let network = 'mainnet';
 
     // post method stopped working for some reason
     /*return fetch('https://aquarius.' + network + '.oceanprotocol.com/api/v1/aquarius/assets/ddo/query', {

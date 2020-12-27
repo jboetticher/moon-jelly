@@ -6,10 +6,9 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
     color: var(--brand-white);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+
+    display: grid;
+    grid-template-columns: 1fr 3fr;
     background: var(--brand-black)
         url('../../node_modules/@oceanprotocol/art/creatures/jellyfish/jellyfish-grid.svg')
         no-repeat center -6rem;
@@ -26,12 +25,6 @@
     height: 50px;
     margin-top: -(var(--spacer) / 4);
 
-    /*
-    @media (min-width: var(--break-point--medium) {
-        width: 60px;
-        height: 60px;
-    }
-    */
 }
 
 .topLinks {
@@ -48,55 +41,14 @@
     margin-top: -0.3rem;
     margin-right: -(var(--spacer) / 1.5);
     padding-right: var(--spacer);
-
-    /*
-    @media (min-width: var(--break-point--medium) {
-        padding-right: 0;
-        margin-right: var(--spacer / 2;
-    }
-    &::-webkit-scrollbar {
-        width: 3px;
-        height: 3px;
-        transition: opacity 0.2s ease-out;
-    }
-    */
+    font-family: var(--font-family-title);
 }
 
-.topLinks > li {
-    display: inline-block;
-    margin-left: var(--spacer);
 
-    /*
-    @media (min-width: var(--break-point--medium) {
-        margin-left: var(--spacer * 2;
-    }
-    
-    &:first-child {
-        margin-left: 0;
-    }
-    */
+.headerTitle {  
+    font-size: var(--font-size-large);
 }
 
-.topLinks > a {
-    display: block;
-    text-decoration: none;
-    color: rgba(var(--brand-white), 0.7);
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
+.networkTitle {
     font-size: var(--font-size-small);
-
-    /*
-    @media (min-width: var(--break-point--medium)) {
-        font-size: var(--font-size-base);
-    }
-    */
-}
-
-.topLinks > a :hover, focus, active {
-    color: var(--brand-white);
-    transform: none;
-}
-
-.topLinks ::-webkit-scrollbar::-moz-scrollbar {
-    display: none;
 }
