@@ -43,6 +43,8 @@ let ModuleMenuEntry = props => {
             {viewButton}
             <Switch
                 className="react-switch mr-1 v-center"
+                uncheckedIcon={false}
+                checkedIcon={false}
                 onChange={(checked, e, id) =>  {
                     console.log("check change ", checked);
                     setEnabled(checked);
