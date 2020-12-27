@@ -16,6 +16,11 @@
     margin-top: 4rem;
     padding: 0 calc(var(--spacer) / 1.5);
     flex: 1;
+    /*background-color: aqua;
+    background-image: url('../assets/waves_crop_again.png');
+    background-size: contain;
+    background-position: bottom;
+    background-repeat: no-repeat;*/
 }
 .container {
     display: flex;
