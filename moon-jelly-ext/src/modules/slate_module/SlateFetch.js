@@ -11,6 +11,7 @@ import { PanelContext } from '../../App.js';
 
 // hooks
 import { useWalletReady } from '../../functionality/CustomOceanHooks.js';
+import { useForceUpdate } from "../../functionality/ForceRenderHook.js";
 import { useWebStorage } from '../../functionality/WebStorageHooks.js';
 import { useMintPage } from "../../functionality/MintPageHooks.js";
 
@@ -146,8 +147,9 @@ let SlateFetch = () => {
                     }}
                 />
                 <Button primary padding onClick={(e) => {
-                    e.preventDefault();
+                    //e.preventDefault();
                     storeToLocal(SLATE_API_SECRET_KEY, apiKey);
+                    storeToLocal("switch_panel", "slate_module");
                 }}>
                     Store Slate API Key
                 </Button>

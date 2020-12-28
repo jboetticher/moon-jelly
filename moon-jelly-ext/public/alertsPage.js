@@ -1,5 +1,6 @@
 // CONTROLS THE NETWORK THE ALERT SYSTEM IS ON
-const network = 'mainnet';
+//const network = 'mainnet';
+const network = 'rinkeby';
 
 chrome.runtime.onInstalled.addListener(function () {
     //alert("sick im installed");
@@ -16,14 +17,14 @@ chrome.runtime.onStartup.addListener(() => {
 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
-    console.log("alram");
+    //console.log("alram");
     chrome.alarms.getAll((larms) => console.log(larms));
     //console.log(window.localStorage.getItem("keywordDate_rinkeby"));    
     //console.log("this one is: ", window.localStorage.getItem("lol no exist")); 
 
     if (alarm.name === "refetch") {
         //alert("yo 1 min");
-        console.log("60 min pass yay");
+        //console.log("60 min pass yay");
         //fetchOceanData("test", 1).then(res => console.log(res));
         filterNewAssets();
     } 
