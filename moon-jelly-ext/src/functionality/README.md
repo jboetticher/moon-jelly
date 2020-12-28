@@ -3,43 +3,42 @@ Moon Jelly comes with a variety of React Hooks for developers to use when adding
 
 If you find that a hook works improperly or inefficiently, please feel free to open an issue or contribute a fix.
 
-- [Bookmark Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#bookmarkhooksjs)
-    - [useBookmarks](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usebookmarks)
-        - [addBookmark(didToAdd)](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#addbookmarkdidtoadd)  
-        - [removeBookmark(didToRemove)](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#removebookmarkdidtoremove)  
-        - [getBookmarks()](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#getbookmarks)  
+[Bookmark Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#bookmarkhooksjs)
+- [useBookmarks](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usebookmarks)
+    - [addBookmark(didToAdd)](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#addbookmarkdidtoadd)  
+    - [removeBookmark(didToRemove)](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#removebookmarkdidtoremove)  
+    - [getBookmarks()](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#getbookmarks) 
+
+[Custom Ocean Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#customoceanhooksjs)
+- [useWalletReady](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usewalletready)  
+- [useAquariusFetch](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useaquariusfetch)
+    - [fetchDataBySearchterm(searchterm, page)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabysearchtermsearchterm-page)
+    - [fetchDataByWallet(walletid)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabywalletwalletid)
+    - [fetchDataBySort(sortParams)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabysortsortparams)
+    - [fetchDDO(did)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchddodid)
     
-- [Custom Ocean Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#customoceanhooksjs)
-    - [useWalletReady](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usewalletready)    
+[Market Page Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#marketpagehooksjs)
+- [useMarketPage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useMarketPage)
+    - [isMarketPageOpen()](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#ismarketpageopen)
+    - [insertSearchTerm(term)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertsearchtermterm)
     
-    - [useAquariusFetch](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useaquariusfetch)
-        - [fetchDataBySearchterm(searchterm, page)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabysearchtermsearchterm-page)
-        - [fetchDataByWallet(walletid)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabywalletwalletid)
-        - [fetchDataBySort(sortParams)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabysortsortparams)
-        - [fetchDDO(did)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchddodid)
+[Mint Page Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#mintpagehooksjs)
+- [useMintPage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useMintPage)
+    - [isMintPageOpen()](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertsearchterm)
+    - [insertAssetName(name)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertassetnamename)
+    - [insertURL(url)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#inserturlurl)
+    - [insertAuthorName(authorName)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertauthornameauthorname)
+    - [insertDescription(description)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertdescriptiondescription)
+    - [insertMetaData(metadata)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertmetadatametadata)
     
-- [Market Page Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#marketpagehooksjs)
-    - [useMarketPage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useMarketPage)
-        - [isMarketPageOpen()](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#ismarketpageopen)
-        - [insertSearchTerm(term)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertsearchtermterm)
-    
-- [Mint Page Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#mintpagehooksjs)
-    - [useMintPage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useMintPage)
-        - [isMintPageOpen()](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertsearchterm)
-        - [insertAssetName(name)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertassetnamename)
-        - [insertURL(url)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#inserturlurl)
-        - [insertAuthorName(authorName)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertauthornameauthorname)
-        - [insertDescription(description)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertdescriptiondescription)
-        - [insertMetaData(metadata)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertmetadatametadata)
-    
-- [Web Storage Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#webstoragehooksjs)
-    - [useWebStorage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useWebStorage)
-        - [storageAvailable(type)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storageavailabletype)
-        - [storeToLocal(key, value)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storetolocalkey-value)
-        - [getFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#getfromlocalkey) 
-        - [removeFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#removefromlocalkey)
-        - [storeArrayToLocal(key, array)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storearraytolocalkey-array)
-        - [getArrayFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#getarrayfromlocalkey)
+[Web Storage Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#webstoragehooksjs)
+- [useWebStorage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useWebStorage)
+    - [storageAvailable(type)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storageavailabletype)
+    - [storeToLocal(key, value)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storetolocalkey-value)
+    - [getFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#getfromlocalkey) 
+    - [removeFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#removefromlocalkey)
+    - [storeArrayToLocal(key, array)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storearraytolocalkey-array)
+    - [getArrayFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#getarrayfromlocalkey)
 
 # BookmarkHooks.js
 Add, remove, and get bookmarks from Window.localStorage.
@@ -83,8 +82,44 @@ export myComponent;
 
 # CustomOceanHooks.js
 ## useWalletReady
+Determines whether or not a wallet has been connected.
+
+### walletConnected
+- `true` if wallet is connected
+- `false` if wallet is not connected
 
 ## useWalletReady Example Implementation
+See `src/components/complete/Mint.js` for a working usage of the useWalletReady hook
+```JSX
+// Import the hook
+import { useWalletReady } from '.../functionality/CustomOceanHooks.js';
+
+let myComponent = props => {
+
+    // Declare whatever functions you want to use from the hook
+    const { walletConnected } = useWalletReady();
+    
+    // Now you can use walletConnected within the component
+    
+    function checkWalletTest(){
+        if(walletConnected){
+            console.log("The wallet is connected!");
+        }
+        else {
+            console.log("No wallet connected");
+        }
+    }
+    
+    return(
+        <Button
+            onClick={checkWalletTest()}
+        >
+        </Button>
+    );
+}
+
+export myComponent;
+```
 
 ## useAquariusFetch
 Functions to help query the Ocean Market via aquarius more conveniently.  
@@ -348,3 +383,39 @@ export myComponent;
 
 # Additional Functionality
 # PanelManager.js
+This is used within `App.js` to manage the swapping of different panels.  
+Relevant snippet from `App.js`
+```JSX
+...
+    /**
+     * 
+     * @param {the id of the display to show} nextToDisplay 
+     */
+    chooseDisplay(nextToDisplay) {
+        if (PanelManager.HasPanel(nextToDisplay)) {
+            return PanelManager.GetPanel(nextToDisplay);
+        }
+        else {
+            switch (nextToDisplay) {
+                case 'mint':
+                    return <Mint />;
+                case 'market':
+                    return <Market />;
+                case 'wallet':
+                    return <Wallet />;
+                case 'more':
+                    return <Panel><ModuleMenu selected={this.state.nextToDisplay} setNextPanel={this.setNextPanel.bind(this)} /></Panel>;
+                case 'home':
+                    return <HomePanel />
+                case 'bookmarks':
+                    return <Bookmarks />
+                case 'alerts':
+                    return <Alerts />
+                default:
+                    return <HomePanel />
+            }
+        }
+    }
+...
+```
+
