@@ -19,6 +19,7 @@ To start up the developer instance, run:
 ## Modules
 The extension popup of the project is built with React whereas the rest of the chrome functionality is (currently) in vanilla javascript. While React is here to stay, other libraries may be added over time.
 Open source contributors are encouraged to add React components, fix styling issues, add useful hooks, and improve the flow of the current primary panels. However, if you desire to add your own functionality, then you should create your own module.
+Go to the [modules folder](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/modules) if you want to see the workflow and an example.
 
 ## Helping Out
 There are many ideas that are thrown out simply because there isn't enough time or because some contributors may not have the technical know-how to do it effectively. If you want to help tackle any issues or even add your own ideas, the Projects tab of github is a nice place to start.

@@ -1,3 +1,5 @@
+We have left this README here in case you are not familiar with working on React projects. This is the default message that all react projects start with.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
