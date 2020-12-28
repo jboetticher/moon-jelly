@@ -1,5 +1,42 @@
 # React Hooks
 Moon Jelly comes with a variety of React Hooks for developers to use when adding on to the main extension or your own module.
+- Bookmark Hooks
+    - useBookmarks  
+        - addBookmark
+        - removeBookmark
+        - getBookmarks
+    
+- Custom Ocean Hooks
+    - useWalletReady  
+    
+    - useAquariusFetch  
+        - fetchDataBySearchterm
+        - fetchDataByWallet
+        - fetchDataBySort
+        - fetchDDO
+    
+- Market Page Hooks
+    - useMarketPage  
+        - isMarketPageOpen
+        - insertSearchTerm
+    
+- Mint Page Hooks
+    - useMintPage  
+        - isMintPageOpen
+        - insertAssetName
+        - insertURL
+        - insertAuthorName
+        - insertDescription
+        - insertMetaData
+    
+- Web Storage Hooks
+    - useWebStorage  
+        - storageAvailable
+        - storeToLocal
+        - getFromLocal 
+        - removeFromLocal
+        - storeArrayToLocal
+        - getArrayFromLocal
 
 # BookmarkHooks.js
 Add, remove, and get bookmarks from Window.localStorage.
@@ -120,26 +157,92 @@ export myComponent;
 
 # MarketPageHooks.js
 ## useMarketPage
+Functions to help interact and send data to the Market search page
+
 ### isMarketPageOpen
+Checks if the Market search page is open  
+Returns `true` or `false`
+
 ### insertSearchTerm
+Inserts the the search term into the search input of the market page, then searches and displays results  
+*User must be on the search page for insertSearchTerm to work  
+
+The implementation of this function uses a setTimeout() currently as a workaround, and fixes to it would be appreciated 
+- term - `string` text what the search bar should have
+
+## useMarketPage Example Implementation
 
 # MintPageHooks.js
 ## useMintPage
+Functions to help interact and send data to the Mint page.
+
 ### isMintPageOpen
-### insertAssetName
-### insertURL
-### insertAuthorName
-### insertDescription
-### insertMetaData
+Checks if the Mint page is open  
+Returns `true` or `false`
+
+### insertAssetName(name)
+Inserts the name into the asset name input of the mint page, if the user is on the mint page. Throws an error otherwise.
+- name - `string` the name of the data to be displayed on the ocean market
+
+### insertURL(url)
+Inserts a value into the asset name input of the mint page, if the user is on the mint page. Throws an error otherwise.
+- url - `string` the url of the data to be displayed on the ocean market
+
+### insertAuthorName(authorName)
+Inserts a value into the author input of the mint page, if the user is on the mint page. Throws an error otherwise.
+- authorName - `string` the name of the author to be displayed on the ocean market
+
+### insertDescription(description)
+Inserts a value into the descrption input of the mint page, if the user is on the mint page. Throws an error otherwise.
+- description - the description of the data to be displayed on the ocean market
+
+### insertMetaData(metadata)
+Inserts metadata into the mint page to be published (instead of parsing the url). This step MUST be done BEFORE the insertion of the URL.
+- metadata - json of metadata (as `string`) to be sent to the ocean market
+
+## useMintPage Example Implementation
 
 # WebStorageHooks.js
+The storage of the extension is completely in Window.localStorage. This could be changed to utilize the chrome extension API's storage system, which may work better than our current implementation.  
+
+Based off of https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API  
+
+Important note: All key/value pairs are stored as pure strings within localStorage. We use JSON.stringify() to store arrays as strings, and JSON.parse() to retrieve those arrays.
+
 ## useWebStorage
-### storageAvailable
-### storeToLocal
-### getFromLocal 
-### removeFromLocal
-### storeArrayToLocal
-### getArrayFromLocal
+### storageAvailable(type)
+Function to check if a certain webstorage type is availiable
+- type - type of webstorage to access, typically 'localStorage'
+
+### storeToLocal(key, value)
+Stores provided key and value to the localStorage  
+You can update key/value content by storing again with the same key
+- key - `string` key for the value you want to store
+- value - value to be stored as `string`
+
+### getFromLocal(key)
+Retrieves value from provided key from the localStorage  
+Returns the value as a `string`
+- key - `string` key of the value you want to retrieve
+
+### removeFromLocal(key)
+Removes provided key and associated value from localStorage  
+You can update key/value content by storing again with the same key, so removal is not neccessary for updating stored values
+- key - `string` key of the value you want to remove
+
+### storeArrayToLocal(key, array)
+Stores provided key and array to the localStorage  
+The array is stored after undergoing JSON.stringify()
+- key - `string` key for array you want to store
+- array - `array` to store
+
+### getArrayFromLocal(key)
+Retrives array from storage from provided key  
+Use only when you know the value was stored as an array that underwent JSON.stringify() 
+Returns value as an `array`, after an internal JSON.parse()
+- key - `string` key for array you want to store
+
+## useWebStorage Example Implementation
 
 # Additional Functionality
 # PanelManager.js
