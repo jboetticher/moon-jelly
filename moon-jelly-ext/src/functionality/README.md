@@ -4,42 +4,42 @@ Moon Jelly comes with a variety of React Hooks for developers to use when adding
 If you find that a hook works improperly or inefficiently, please feel free to open an issue or contribute a fix.
 
 - Bookmark Hooks
-    - useBookmarks  
-        - addBookmark
-        - removeBookmark
-        - getBookmarks
+    - [useBookmarks](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usebookmarks)  
+        - [addBookmark](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#addbookmarks)  
+        - [removeBookmark]
+        - [getBookmarks]
     
 - Custom Ocean Hooks
-    - useWalletReady  
+    - [useWalletReady]  
     
-    - useAquariusFetch  
-        - fetchDataBySearchterm
-        - fetchDataByWallet
-        - fetchDataBySort
-        - fetchDDO
+    - [useAquariusFetch]  
+        - [fetchDataBySearchterm]
+        - [fetchDataByWallet]
+        - [fetchDataBySort]
+        - [fetchDDO]
     
 - Market Page Hooks
-    - useMarketPage  
-        - isMarketPageOpen
-        - insertSearchTerm
+    - [useMarketPage]  
+        - [isMarketPageOpen]
+        - [insertSearchTerm]
     
 - Mint Page Hooks
-    - useMintPage  
-        - isMintPageOpen
-        - insertAssetName
-        - insertURL
-        - insertAuthorName
-        - insertDescription
-        - insertMetaData
+    - [useMintPage]  
+        - [isMintPageOpen]
+        - [insertAssetName]
+        - [insertURL]
+        - [insertAuthorName]
+        - [insertDescription]
+        - [insertMetaData]
     
 - Web Storage Hooks
-    - useWebStorage  
-        - storageAvailable
-        - storeToLocal
-        - getFromLocal 
-        - removeFromLocal
-        - storeArrayToLocal
-        - getArrayFromLocal
+    - [useWebStorage]  
+        - [storageAvailable]
+        - [storeToLocal]
+        - [getFromLocal] 
+        - [removeFromLocal]
+        - [storeArrayToLocal]
+        - [getArrayFromLocal]
 
 # BookmarkHooks.js
 Add, remove, and get bookmarks from Window.localStorage.
