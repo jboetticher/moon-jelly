@@ -3,43 +3,43 @@ Moon Jelly comes with a variety of React Hooks for developers to use when adding
 
 If you find that a hook works improperly or inefficiently, please feel free to open an issue or contribute a fix.
 
-- Bookmark Hooks
+- [Bookmark Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#bookmarkhooksjs)
     - [useBookmarks](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usebookmarks)  
-        - [addBookmark](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#addbookmarkdidtoadd)  
-        - [removeBookmark](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#removebookmarkdidtoremove)  
-        - [getBookmarks](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#getbookmarks)  
+        - [addBookmark(didToAdd)](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#addbookmarkdidtoadd)  
+        - [removeBookmark(didToRemove)](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#removebookmarkdidtoremove)  
+        - [getBookmarks()](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#getbookmarks)  
     
-- Custom Ocean Hooks
+- [Custom Ocean Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#customoceanhooksjs)
     - [useWalletReady](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usewalletready)    
     
     - [useAquariusFetch](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useaquariusfetch)    
-        - [fetchDataBySearchterm]
-        - [fetchDataByWallet]
-        - [fetchDataBySort]
-        - [fetchDDO]
+        - [fetchDataBySearchterm(searchterm, page)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabysearchtermsearchterm-page)
+        - [fetchDataByWallet(walletid)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabywalletwalletid)
+        - [fetchDataBySort(sortParams)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabysortsortparams)
+        - [fetchDDO(did)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchddodid)
     
-- Market Page Hooks
+- [Market Page Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#marketpagehooksjs)
     - [useMarketPage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useMarketPage)  
-        - [isMarketPageOpen]
-        - [insertSearchTerm]
+        - [isMarketPageOpen()](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#ismarketpageopen)
+        - [insertSearchTerm(term)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertsearchtermterm)
     
-- Mint Page Hooks
+- [Mint Page Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#mintpagehooksjs)
     - [useMintPage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useMintPage)  
-        - [isMintPageOpen]
-        - [insertAssetName]
-        - [insertURL]
-        - [insertAuthorName]
-        - [insertDescription]
-        - [insertMetaData]
+        - [isMintPageOpen()](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertsearchterm)
+        - [insertAssetName(name)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertassetnamename)
+        - [insertURL(url)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#inserturlurl)
+        - [insertAuthorName(authorName)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertauthornameauthorname)
+        - [insertDescription(description)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertdescriptiondescription)
+        - [insertMetaData(metadata)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#insertmetadatametadata)
     
-- Web Storage Hooks
+- [Web Storage Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#webstoragehooksjs)
     - [useWebStorage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useWebStorage)  
-        - [storageAvailable]
-        - [storeToLocal]
-        - [getFromLocal] 
-        - [removeFromLocal]
-        - [storeArrayToLocal]
-        - [getArrayFromLocal]
+        - [storageAvailable(type)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storageavailabletype)
+        - [storeToLocal(key, value)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storetolocalkey-value)
+        - [getFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#getfromlocalkey) 
+        - [removeFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#removefromlocalkey)
+        - [storeArrayToLocal(key, array)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storearraytolocalkey-array)
+        - [getArrayFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#getarrayfromlocalkey)
 
 # BookmarkHooks.js
 Add, remove, and get bookmarks from Window.localStorage.
@@ -162,11 +162,11 @@ export myComponent;
 ## useMarketPage
 Functions to help interact and send data to the Market search page
 
-### isMarketPageOpen
+### isMarketPageOpen()
 Checks if the Market search page is open  
 Returns `true` or `false`
 
-### insertSearchTerm
+### insertSearchTerm(term)
 Inserts the the search term into the search input of the market page, then searches and displays results  
 *User must be on the search page for insertSearchTerm to work  
 
@@ -209,7 +209,7 @@ export myComponent;
 ## useMintPage
 Functions to help interact and send data to the Mint page.
 
-### isMintPageOpen
+### isMintPageOpen()
 Checks if the Mint page is open  
 Returns `true` or `false`
 
