@@ -119,10 +119,27 @@ export myComponent;
 ```
 
 # MarketPageHooks.js
+## useMarketPage
+### isMarketPageOpen
+### insertSearchTerm
 
 # MintPageHooks.js
+## useMintPage
+### isMintPageOpen
+### insertAssetName
+### insertURL
+### insertAuthorName
+### insertDescription
+### insertMetaData
 
 # WebStorageHooks.js
+## useWebStorage
+### storageAvailable
+### storeToLocal
+### getFromLocal 
+### removeFromLocal
+### storeArrayToLocal
+### getArrayFromLocal
 
 # Additional Functionality
 # PanelManager.js
