@@ -11,7 +11,7 @@ If you find that a hook works improperly or inefficiently, please feel free to o
 
 [Custom Ocean Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#customoceanhooksjs)
 - [useWalletReady](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usewalletready)  
-    -[walletConnected](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#walletconnected)
+    - [walletConnected](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#walletconnected)
 - [useAquariusFetch](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useaquariusfetch)
     - [fetchDataBySearchterm(searchterm, page)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabysearchtermsearchterm-page)
     - [fetchDataByWallet(walletid)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#fetchdatabywalletwalletid)
