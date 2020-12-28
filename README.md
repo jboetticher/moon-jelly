@@ -27,3 +27,4 @@ Feel free to make a new branch, and communicate with us about potential pull req
 
 ## Documentation
 - [React Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality)
+- [Modules Quickstart](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/modules)
