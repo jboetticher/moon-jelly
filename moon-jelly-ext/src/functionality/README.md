@@ -5,26 +5,26 @@ If you find that a hook works improperly or inefficiently, please feel free to o
 
 - Bookmark Hooks
     - [useBookmarks](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usebookmarks)  
-        - [addBookmark](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#addbookmarks)  
-        - [removeBookmark]
-        - [getBookmarks]
+        - [addBookmark](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#addbookmarkdidtoadd)  
+        - [removeBookmark](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#removebookmarkdidtoremove)  
+        - [getBookmarks](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#getbookmarks)  
     
 - Custom Ocean Hooks
-    - [useWalletReady]  
+    - [useWalletReady](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#usewalletready)    
     
-    - [useAquariusFetch]  
+    - [useAquariusFetch](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useaquariusfetch)    
         - [fetchDataBySearchterm]
         - [fetchDataByWallet]
         - [fetchDataBySort]
         - [fetchDDO]
     
 - Market Page Hooks
-    - [useMarketPage]  
+    - [useMarketPage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useMarketPage)  
         - [isMarketPageOpen]
         - [insertSearchTerm]
     
 - Mint Page Hooks
-    - [useMintPage]  
+    - [useMintPage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useMintPage)  
         - [isMintPageOpen]
         - [insertAssetName]
         - [insertURL]
@@ -33,7 +33,7 @@ If you find that a hook works improperly or inefficiently, please feel free to o
         - [insertMetaData]
     
 - Web Storage Hooks
-    - [useWebStorage]  
+    - [useWebStorage](https://github.com/jboetticher/moon-jelly/blob/main/moon-jelly-ext/src/functionality/README.md#useWebStorage)  
         - [storageAvailable]
         - [storeToLocal]
         - [getFromLocal] 
