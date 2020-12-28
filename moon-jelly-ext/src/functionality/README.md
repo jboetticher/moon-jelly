@@ -1,5 +1,8 @@
 # React Hooks
-Moon Jelly comes with a variety of React Hooks for developers to use when adding on to the main extension or your own module.
+Moon Jelly comes with a variety of React Hooks for developers to use when adding on to the main extension or your own module.  
+
+If you find that a hook works improperly or inefficiently, please feel free to open an issue or contribute a fix.
+
 - Bookmark Hooks
     - useBookmarks  
         - addBookmark
@@ -171,6 +174,36 @@ The implementation of this function uses a setTimeout() currently as a workaroun
 - term - `string` text what the search bar should have
 
 ## useMarketPage Example Implementation
+```JSX
+// Import the hook
+import { useMarketPage } from '.../functionality/MarketPageHooks.js';
+
+let myComponent = props => {
+
+    // Declare whatever functions you want to use from the hook
+    const { insertSearchTerm } = useMarketPage();
+    
+    // Now you can use insertSearchTerm() within the component
+    // Keep in mind for insertSearchTerm, the market page MUST be open for it to work
+    // See useMintPage implementation example on how to swap pages
+    // If you have an idea for a better implementation of the hook, we encourage you to open an issue or contribute
+    
+    // Puts "cool data" in the search box and searches
+    function insertTest(){
+        insertSearchTerm("cool data");
+    }
+    
+    // Button triggers the search for "cool data"
+    return(
+        <Button
+            onClick={insertTest()}
+        >
+        </Button>
+    );
+}
+
+export myComponent;
+```
 
 # MintPageHooks.js
 ## useMintPage
@@ -201,6 +234,52 @@ Inserts metadata into the mint page to be published (instead of parsing the url)
 - metadata - json of metadata (as `string`) to be sent to the ocean market
 
 ## useMintPage Example Implementation
+See `src/module/slate_module/SlateFetch.js` for a working usage of the useMintPage hook.
+```JSX
+// Import the hook
+import { useMintPage } from '.../functionality/MintPageHooks.js';
+
+// For swapping pages
+import { PanelContext } from '../../App.js';
+
+let myComponent = props => {
+
+    // Declare whatever functions you want to use from the hook
+    const { insertAssetName, insertURL, insertAuthorName, insertDescription, insertMetaData } = useMintPage();
+    
+    // Use this to swap pages
+    const goToPage = useContext(PanelContext);
+    
+    // Now you can use insertAssetName(), insertURL(), insertAuthorName(), insertDescription(), insertMetaData() within the component
+    // If you have an idea for a better implementation of the hook, we encourage you to open an issue or contribute
+    
+    function exportToMintPage(type, url, title, author, body) {
+        goToPage("mint", () => {
+            insertMetaData(JSON.stringify({
+                checksum: "",
+                contentLength: undefined,//x.size, 
+                contentType: type,
+                encoding: "",
+                compression: ""
+            }));
+            insertURL(url);
+            insertAssetName(title);
+            insertAuthorName(author);
+            insertDescription(body);
+        });
+    }
+    
+    // Button triggers a change to the mint page and auto-fills the input boxes
+    return(
+        <Button
+            onClick={exportToMintPage("csv", "https://data_url", "test data", "author guy", "my description")}
+        >
+        </Button>
+    );
+}
+
+export myComponent;
+```
 
 # WebStorageHooks.js
 The storage of the extension is completely in Window.localStorage. This could be changed to utilize the chrome extension API's storage system, which may work better than our current implementation.  
@@ -243,6 +322,29 @@ Returns value as an `array`, after an internal JSON.parse()
 - key - `string` key for array you want to store
 
 ## useWebStorage Example Implementation
+See `src/functionality/BookmarkHooks.js` or `src/components/complete/Alerts.js` for a working usage of the useWebStorage hook
+```JSX
+// Import the hook
+import { useWebStorage } from '.../functionality/WebStorageHooks.js';
+
+let myComponent = props => {
+
+    // Declare whatever functions you want to use from the hook
+    const { storeToLocal, storeArrayToLocal, getArrayFromLocal, getFromLocal } = useWebStorage();
+    
+    // Now you can use storeToLocal(), storeArrayToLocal(), getArrayFromLocal(), getFromLocal() within the component
+
+    // Button stores the key/value pair "test_store", "myValue" to localStorage when clicked
+    return(
+        <Button
+            onClick={storeToLocal("test_store", "myValue")}
+        >
+        </Button>
+    );
+}
+
+export myComponent;
+```
 
 # Additional Functionality
 # PanelManager.js
