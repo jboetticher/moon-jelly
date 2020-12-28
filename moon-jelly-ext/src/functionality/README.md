@@ -81,12 +81,42 @@ Fetches from aquarius and returns a `Promise` to evaluate with the results.
 - `"sort": { "created": 1 }` is ascending sort of assets (earliest date first)
 - `"sort": { "created": -1 }` is descending sort of assets (most recent date first)
 
-
-
 ### fetchDDO(did)
+Fetches the metadata of a DID from aquarius and returns a `Promise` to evaluate with the results
+- did - `string` DID of the datatoken to get the metadata of
 
 ## useAquariusFetch Example Implementation
+See `src/components/complete/Market.js` for a working usage of the useAquariusFetch hook
+```JSX
+// Import the hook
+import { useAquariusFetch } from '.../functionality/CustomOceanHooks.js';
 
+let myComponent = props => {
+
+    // Declare whatever functions you want to use from the hook
+    const { fetchDataBySearchterm, fetchDataByWallet, fetchDataBySort, fetchDDO } = useAquariusFetch();
+    
+    // Now you can use fetchDataBySearchterm() fetchDataByWallet() fetchDataBySort() fetchDDO() within the component
+    
+    function searchTest(){
+        // Searches "test" on the Ocean Market
+        fetchDataBySearchterm("test", "1").then(jsonData => {
+
+            // Logs the data to console when Promise has evaluated
+            console.log(jsonData);
+        });
+    }
+    
+    return(
+        <Button
+            onClick={searchTest()}
+        >
+        </Button>
+    );
+}
+
+export myComponent;
+```
 
 # MarketPageHooks.js
 
