@@ -24,3 +24,6 @@ Go to the [modules folder](https://github.com/jboetticher/moon-jelly/tree/main/m
 ## Helping Out
 There are many ideas that are thrown out simply because there isn't enough time or because some contributors may not have the technical know-how to do it effectively. If you want to help tackle any issues or even add your own ideas, the Projects tab of github is a nice place to start.
 Feel free to make a new branch, and communicate with us about potential pull requests on the Ocean Discord Channel.
+
+## Documentation
+- [React Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality)
