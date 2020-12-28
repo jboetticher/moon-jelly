@@ -1,5 +1,5 @@
 # Modules
-The modules feature of Moon Jelly allows for the development of additonal features and integrations. The Slate module, for instance, streamlines the process of publishing a Slate-hosted file directly onto the Ocean Market. Users can utilize the module from within the extension itself, as well as within their Slate account. Slate a Filecoin-based decentralized file hosting service (see https://slate.host/ for details on Slate and Filecoin).
+The modules feature of Moon Jelly allows for the development of additonal features and integrations. The Slate module, for instance, streamlines the process of publishing a Slate-hosted file directly onto the Ocean Market. Users can utilize the module from within the extension itself, as well as within their Slate account. Slate is a Filecoin-based decentralized file hosting service (see https://slate.host/ for details on Slate and Filecoin).
 
 ## Quick Start
 For a working example of a module, see the slate module.  
@@ -38,7 +38,7 @@ export default {
 ```
 We recommend that you create and import other components into your module's index.js file, rather than putting everything in just the index.js of your module. The folder/file system of your module can be structured however you prefer, as Moon Jelly only requires that the index.js be formatted similarly to the code above.     
 
-Currently, modules need to be listed within "src/modules/index.js" in order to be imported into the extension. While this system works, a better and more independent system can be created in the future.
+Currently, modules need to be listed within "src/modules/index.js" in order to be imported into the extension. While this system works, a more autopated system can be created in the future.
 
 ### src/modules/index.js
 ```JSX
@@ -46,7 +46,7 @@ Currently, modules need to be listed within "src/modules/index.js" in order to b
 import slate_module from './slate_module';
 import my_module from './my_module'
 
-// Module are listed within the export 
+// Module are listed within the export. Add yours to the array 
 export default [
     slate_module,
     my_module,
