@@ -3,7 +3,7 @@
 
   "name": "Moon Jelly Extension",
   "description": "An expansion on the jellyfish cross-browser extension to help with publishing and accessing the ocean protocol.",
-  "version": "0.1.1",
+  "version": "0.1.2",
 
   "background": {
     "scripts": ["eventPage.js", "alertsPage.js"],
