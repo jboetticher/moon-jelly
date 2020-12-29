@@ -13,7 +13,7 @@ To start up the developer instance, run:
 
 To create your own build, run:
 `npm run build`  
-This builds the extension into the `moon-jelly-ext/build` folder
+This builds the extension into the `moon-jelly-ext/build` folder  
 From here, the build folder can be loaded as an unpacked extension into a Chromium-based browser  
 
 ## Features
