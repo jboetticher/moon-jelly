@@ -1,6 +1,6 @@
 // CONTROLS THE NETWORK THE ALERT SYSTEM IS ON
-//const network = 'mainnet';
-const network = 'rinkeby';
+const network = 'mainnet';
+//const network = 'rinkeby';
 
 chrome.runtime.onInstalled.addListener(function () {
     //alert("sick im installed");

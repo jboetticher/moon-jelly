@@ -56,7 +56,13 @@ function useMintPage() {
      * @param {the description of the data to be displayed on the ocean market} description 
      */
     function insertDescription(description) {
-        insert("dataDescription", description);
+        if (!isMintPageOpen()) console.error("The user is not currently on the mint panel. Use PanelContext to switch.");
+        var descriptionElement = document.getElementById("dataDescription");
+        descriptionElement.innerHTML = description;
+
+        // send an event
+        var ev2 = new Event('input', { bubbles: true });
+        descriptionElement.dispatchEvent(ev2);
     }
 
     /**

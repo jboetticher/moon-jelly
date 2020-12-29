@@ -276,6 +276,7 @@ let Mint = props => {
                         <div class="inputWrap">
                             <textarea
                                 name="dataDescription"
+                                id="dataDescription"
                                 placeholder={description ? description : "Data Description"}
                                 style={{height: "150px"}}
                                 value={description}
