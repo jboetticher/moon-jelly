@@ -87,7 +87,8 @@ class App extends Component {
 ...
 ```
 Most importantly, other React components within the extension can tell `App.js` to switch to a certain Panel via the `Context`  
-Example implementation
+
+Example implementation:
 ```JSX
 import { PanelContext } from '../../App.js';
 
@@ -108,7 +109,7 @@ let myComponent = props => {
 
 export myComponent;
 ```
-Further usage of `Context` to swap Panels can be seen in:
-`src/module/slate_module/SlateFetch.js`
+Further usage of `Context` to swap Panels can be seen in:  
+`src/module/slate_module/SlateFetch.js`  
 `src/components/complete/App.js`, more specifically, the `HomePanel` component within it
 

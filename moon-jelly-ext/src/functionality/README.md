@@ -41,6 +41,8 @@ If you find that a hook works improperly or inefficiently, please feel free to o
     - [storeArrayToLocal(key, array)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#storearraytolocalkey-array)
     - [getArrayFromLocal(key)](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#getarrayfromlocalkey)
 
+[Additional Functionality](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality#additional-functionality)
+
 # BookmarkHooks.js
 Add, remove, and get bookmarks from Window.localStorage.
 
