@@ -34,8 +34,8 @@ import './styles/App.css';
 
 //#region Provider Setups
 
-//let [network, infuraId] = ['mainnet', "92722306e5f042e6af0e80e253125972"];
-let [network, infuraId] = ['rinkeby', "92722306e5f042e6af0e80e253125972"];
+let [network, infuraId] = ['mainnet', "92722306e5f042e6af0e80e253125972"];
+//let [network, infuraId] = ['rinkeby', "92722306e5f042e6af0e80e253125972"];
 
 
 // Creates the wallet connect provider (necessary for ocean)
