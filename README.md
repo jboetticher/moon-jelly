@@ -5,10 +5,16 @@ Expands off of the Jellyfish extension by Dhaval Kalavadiya.
 
 ## Installation
 Installation is quite easy. Once you clone the repository, simply run:
-`npm install`
-This will install all of the required node packages for you to continue.
+`npm install`  
+This will install all of the required node packages for you to continue.  
+
 To start up the developer instance, run:
-`npm run start`
+`npm run start`  
+
+To create your own build, run:
+`npm run build`  
+This builds the extension into the `moon-jelly-ext/build` folder  
+From here, the build folder can be loaded as an unpacked extension into a Chromium-based browser  
 
 ## Features
 - Mint Page: publish assets to the ocean market on this page.
@@ -24,3 +30,11 @@ Go to the [modules folder](https://github.com/jboetticher/moon-jelly/tree/main/m
 ## Helping Out
 There are many ideas that are thrown out simply because there isn't enough time or because some contributors may not have the technical know-how to do it effectively. If you want to help tackle any issues or even add your own ideas, the Projects tab of github is a nice place to start.
 Feel free to make a new branch, and communicate with us about potential pull requests on the Ocean Discord Channel.
+
+## Documentation
+- [Modules Quickstart](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/modules)
+- [React Hooks](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src/functionality)
+- [Network Control](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src#network-control)
+- [Panel System](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src#appjs)
+- [Panel Swapping](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src#panel-swapping-breakdown)
+
