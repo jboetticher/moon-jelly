@@ -53,6 +53,7 @@ class App extends Component {
             return PanelManager.GetPanel(nextToDisplay);
         }
         else {
+            // switches based on the panelID
             switch (nextToDisplay) {
                 case 'mint':
                     return <Mint />;
@@ -113,3 +114,8 @@ Further usage of `Context` to swap Panels can be seen in:
 `src/module/slate_module/SlateFetch.js`  
 `src/components/complete/App.js`, more specifically, the `HomePanel` component within it
 
+## Panel Swapping From Storage
+
+Upon opening the panel, the extension will check for a localStorage key, directing it to a panel of your choice. Simply set `switch_panel` to your chosen panelID (or module name, if it's a module panel) in localStorage, either through hook or through the chrome API.
+
+See the `HomePanel` component within `App.js` to see how it handles this swap, and see `SlateFetch.js` within the slate module to see an example of the system being used.
