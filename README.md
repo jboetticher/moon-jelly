@@ -13,9 +13,17 @@ To start up the developer instance, run:
 
 To create your own build, run:
 `npm run build`  
+
 This builds the extension into the `moon-jelly-ext/build` folder  
+
 From here, the build folder can be loaded as an unpacked extension into a Chromium-based browser.  
 Short video for installing on [Google Chrome](https://www.youtube.com/watch?v=oswjtLwCUqg).
+
+### Quicker Installation and Testing :whale:
+1. Download either `moon-jelly-v0.1.1.zip` or `moonjelly-rinkbey-v0.1.1.zip` (configured for mainnet or rinkeby, respectively)  
+2. Extract the .zip file
+3. From here, the extracted folder can be loaded as an unpacked extension into a Chromium-based browser.  
+    Short video for installing on [Google Chrome](https://www.youtube.com/watch?v=oswjtLwCUqg).
 
 ## Features :fishing_pole_and_fish:
 - Mint Page: publish assets to the ocean market on this page.
