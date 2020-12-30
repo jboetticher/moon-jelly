@@ -9,9 +9,9 @@ let AlertAsset = props => {
             <div className="assetLabelPricing">
                 <div className="tokenSymbol"> {props.datatokenSymbol} </div>
                 <div className="assetPrice tokenSymbol">
-                    {props.price != 0 ?
+                    {props.datatokenPrice != 0 ?
                         <div>
-                            <span className="priceNumber">{props.price}</span>
+                            <span className="priceNumber">{props.datatokenPrice}</span>
                             <span>OCEAN</span>
                             {props.pool.length > 0 ? <span className="poolSymbol">POOL</span> : null}
                         </div>
