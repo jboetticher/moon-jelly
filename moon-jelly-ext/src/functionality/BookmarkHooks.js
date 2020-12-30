@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useWebStorage } from './WebStorageHooks.js';
+import { useAquariusFetch } from './CustomOceanHooks.js'
 import { useOcean } from '@oceanprotocol/react';
 
 function useBookmarks() {
@@ -7,6 +8,8 @@ function useBookmarks() {
     const network = useOcean()['config']['network'];
 
     const { storeToLocal, getFromLocal } = useWebStorage();
+
+    const { fetchDDO } = useAquariusFetch();
 
     // Stringify'd array that is stored in localStorage
     let bookmarksName = "bookmarks_" + (network); 
@@ -37,7 +40,24 @@ function useBookmarks() {
         return storedBookmarks;
     }
 
-    return { addBookmark, removeBookmark, getBookmarks };
+    /**
+     * Returns bookmark DDOs as a promise to evaluate for the array of DDOs
+     * Returns null if storedBookmarks is empty
+     */
+    function getBookmarkDDOs() {
+        if (storedBookmarks.length == 0) return null;
+
+        // Create an array of promises from the bookmarks to evaluate
+        let promiseArray = [];
+        storedBookmarks.forEach((did) => {
+            promiseArray.push(fetchDDO(did));
+        });
+
+        // Return the promise
+        return Promise.all(promiseArray);
+    }
+
+    return { addBookmark, removeBookmark, getBookmarks, getBookmarkDDOs };
 }
 
 export { useBookmarks };
