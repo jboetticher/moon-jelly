@@ -82,13 +82,14 @@ const modulesObject = modules;
 
 // Loop through all the modules to fire their onAppStart functions
 for (var i = 0; i < modulesObject.length; i++) {
-    if(modulesObject[i].onAppStart != null)
-    {
+    if (modulesObject[i].onAppStart != null) {
         modulesObject[i].onAppStart();
     }
 }
 
 //#endregion
+
+
 
 class App extends Component {
     constructor(props) {
@@ -178,7 +179,7 @@ const HomePanel = (props) => {
         oceanSearchCheckSet("");
     }
     else if (nextPanel !== "" && nextPanel !== null && nextPanel != undefined) {
-        goToPage(nextPanel, () => { 
+        goToPage(nextPanel, () => {
             console.log("MoonJelly was instructed to immediately go to panel '" + nextPanel + "'.");
             storeToLocal("switch_panel", "");
         });
