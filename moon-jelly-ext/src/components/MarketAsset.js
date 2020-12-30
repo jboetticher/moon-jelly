@@ -32,7 +32,6 @@ let MarketAsset = props => {
         >
             <div><a href={"https://market.oceanprotocol.com/asset/" + props.did} target="_blank">View on Ocean Market</a></div>
 
-            <div>lol test</div>
             <BookmarkButton did={props.did}></BookmarkButton>
 
         </div>
