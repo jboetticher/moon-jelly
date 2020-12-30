@@ -1,7 +1,11 @@
-import { render } from '@testing-library/react';
 import React from 'react';
+import { Ocean } from '@oceanprotocol/lib';
+import { OceanPool } from '@oceanprotocol/lib/dist/node/balancer/OceanPool';
 
 let BalancerPool = props => {
+
+    let pool = new OceanPool();
+    console.log(pool);
 
     return(
         <div>
