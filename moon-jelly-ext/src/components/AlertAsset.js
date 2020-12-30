@@ -30,6 +30,7 @@ let AlertAsset = props => {
             label={props.assetName}
             labelExtra={createLabelExtra()}
             className="assetBody"
+            key={props.key}
         >
             <div><a href={"https://market.oceanprotocol.com/asset/" + props.did} target="_blank">View on Ocean Market</a></div>
 
