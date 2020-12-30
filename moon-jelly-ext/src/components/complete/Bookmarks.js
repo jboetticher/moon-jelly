@@ -21,7 +21,8 @@ let Bookmarks = props => {
     let bookmarks = getBookmarks(); //array of dids
 
     function getBookmarkDDOs() {
-    
+        if (bookmarks.length == 0) return;
+
         // Create an array of promises from the bookmarks to evaluate
         let promiseArray = [];
         bookmarks.forEach((did) => {
@@ -30,7 +31,7 @@ let Bookmarks = props => {
 
         // Once all promises are done, update assetResults with the data
         Promise.all(promiseArray).then((values) => {
-            //console.log(values);
+            console.log(values);
             setAssetResults(values);
         });
     }
