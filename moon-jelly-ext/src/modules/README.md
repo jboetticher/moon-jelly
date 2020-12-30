@@ -53,3 +53,7 @@ export default [
 ];
 ```
 Once `src/modules/index.js` is updated and `src/modules/my_module/index.js` is created, your module will be availiable to be used in the Modules menu of the Moon Jelly extension.
+
+### Modules in the public folder
+There may also be a time where you have to add scripts to the background or the content scripts. To do so, you will have to edit the manifest. While we would like an automated system that generates a manifest automatically in the future, this is the current system.
+When adding scripts to the manifest, you should store them in a new folder in the `public/modules/` folder.
