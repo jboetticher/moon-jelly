@@ -1,3 +1,6 @@
+/* REPLACED BY MORE MODULAR ASSET + ASSETLIST SYSTEM, DO NOT USE */
+/* THIS COMPONENT WILL BE DELETED */
+
 import React, { useState, useEffect } from 'react';
 
 import Input from './Form/Input.js';

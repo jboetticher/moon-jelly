@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import Panel from '../Panel.js';
 import MarketNavbar from '../MarketNavbar.js';
 
-import MarketAssetList from '../MarketAssetList';
-import '../../styles/Market.css';
+import AssetList from '../AssetList.js';
+import MarketAsset from '../MarketAsset.js';
 
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 import { useBookmarks } from '../../functionality/BookmarkHooks.js';
@@ -31,7 +31,7 @@ let Bookmarks = props => {
         // Once all promises are done, update assetResults with the data
         Promise.all(promiseArray).then((values) => {
             //console.log(values);
-            setAssetResults({results: values});
+            setAssetResults(values);
         });
     }
 
@@ -42,7 +42,7 @@ let Bookmarks = props => {
             console.log("rendering bookmarks");
         }
         return (
-            assetResults != "" ? <MarketAssetList results={assetResults}> </MarketAssetList> : null
+            assetResults != "" ? <AssetList results={assetResults} assetEntry={MarketAsset}> </AssetList> : null
         );
     }
     

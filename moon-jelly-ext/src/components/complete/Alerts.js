@@ -5,8 +5,10 @@ import Button from '../Button.js';
 import Panel from '../Panel.js';
 import Switch from 'react-switch';
 
-import MarketAssetList from '../MarketAssetList';
 import '../../styles/Market.css';
+
+import AssetList from '../AssetList.js';
+import AlertAsset from '../AlertAsset.js';
 
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 import { useWebStorage } from '../../functionality/WebStorageHooks.js'
@@ -48,7 +50,7 @@ let Alerts = props => {
         let assetDids = getArrayFromLocal("keywordAssets_" + network);
 
         // If it does not exist in storage, return
-        if (assetDids == null) return;
+        if (assetDids == null || assetDids.length == 0) return;
 
         // Create an array of promises to evaluate
         let promiseArray = [];
@@ -59,7 +61,7 @@ let Alerts = props => {
         // Once all promises are done, update assetResults with the data
         Promise.all(promiseArray).then((values) => {
             console.log(values);
-            setAssetResults({ results: values });
+            setAssetResults(values);
         });
     }
 
@@ -70,7 +72,7 @@ let Alerts = props => {
             console.log("rendering keyword assets");
         }
         return (
-            assetResults != "" ? <MarketAssetList results={assetResults} showDismiss={true}> </MarketAssetList> : null
+            assetResults != "" ? <AssetList results={assetResults} assetEntry={AlertAsset}> </AssetList> : null
         );
     }
 

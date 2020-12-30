@@ -4,12 +4,16 @@ import Input from '../Form/Input.js';
 import Button from '../Button.js';
 import Panel from '../Panel.js';
 
-import MarketAssetList from '../MarketAssetList';
+import MarketNavbar from '../MarketNavbar.js';
+import AssetList from '../AssetList.js';
+import MarketAsset from '../MarketAsset.js';
+
+//import MarketAssetList from '../MarketAssetList';
 import '../../styles/Market.css';
 
 import { useAquariusFetch } from '../../functionality/CustomOceanHooks.js'
 import { PanelContext } from '../../App.js';
-import MarketNavbar from '../MarketNavbar.js';
+
 
 //import { useMarketPage } from '../../functionality/MarketPageHooks.js'
 
@@ -106,7 +110,9 @@ let Market = props => {
                 </div>
 
 
-                <MarketAssetList results={searchResults}> </MarketAssetList>
+                {/*<MarketAssetList results={searchResults}> </MarketAssetList>*/}
+
+                <AssetList results={searchResults['results']} assetEntry={MarketAsset}> </AssetList>
 
                 <div className="navButtons">
                     {renderPrevButton()}
