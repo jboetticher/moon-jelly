@@ -1,0 +1,5 @@
+@import '../../styles/variables.css';
+
+.pool-info {
+    font-size: var(--font-size-small);
+}

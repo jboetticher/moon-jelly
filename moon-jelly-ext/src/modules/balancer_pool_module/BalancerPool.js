@@ -4,6 +4,7 @@ import { useOcean } from '@oceanprotocol/react';
 import { useBookmarks } from '../../functionality/BookmarkHooks.js';
 import AssetList from '../../components/AssetList.js';
 import PoolAsset from './PoolAsset.js';
+import './Pool.css';
 
 let BalancerPool = props => {
 
@@ -32,7 +33,10 @@ let BalancerPool = props => {
 
     return (
         <>
-            <div className="mb-2">Ocean Pools</div>
+            <div>Ocean Pools</div>
+            <p className="pool-info mb-2">
+                All of your bookmarked pools will appear here. Easily view details on each pool.
+            </p>
             <AssetList results={ddos} assetEntry={PoolAsset} examinePool={examinePool} />
         </>
     );
