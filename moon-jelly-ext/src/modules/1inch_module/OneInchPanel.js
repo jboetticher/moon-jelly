@@ -11,10 +11,12 @@ import SelectSearch from 'react-select-search';
 import './SelectSearch.css';
 
 import { useBookmarks } from '../../functionality/BookmarkHooks.js';
+import { useWebStorage } from '../../functionality/WebStorageHooks.js';
 
 let OneInchPanel = props => {
 
     const { getBookmarkDDOs } = useBookmarks();
+    const { storeArrayToLocal, getArrayFromLocal } = useWebStorage(); 
 
     // Array of all swapabble tokens
     const availiableTokens = getTokenArray();
@@ -34,30 +36,34 @@ let OneInchPanel = props => {
     // Runs once
     useEffect(() => {
         console.log("running once");
-        
+
         // First, check if there are bookmarks to analyze
         if (getBookmarkDDOs() != null) {
-            getBookmarkDDOs() 
-            .then((values) => {
-                // Save the Bookmark DDOs 
-                console.log("got the bookmark data", values);
-                return setAssetResults(values);
-            })
-            .then(() => {
-                // Then start fetching 1inch data
-                console.log("fetching 1inch data...")
-                return quoteFetch(1);
-            })
-            .then(res => {
-                // Save 1inch data when it is fetched
-                console.log("got the 1inch data", res);
-                return setConvRate(res['toTokenAmount'] / 10 ** 18);
-            })
-            .then(() => {
-                // Finally, turn off the loader icon
-                console.log("disable loader");
-                setShowLoader(false);
-            });
+            getBookmarkDDOs()
+                .then((values) => {
+                    // Save the Bookmark DDOs 
+                    console.log("got the bookmark data", values);
+                    return setAssetResults(values);
+                })
+                .then(() => {
+                    // Then start fetching 1inch data
+                    console.log("fetching 1inch data...")
+                    return quoteFetch(1);
+                })
+                .then(res => {
+                    // Save 1inch data when it is fetched
+                    console.log("got the 1inch data", res);
+                    return setConvRate(res['toTokenAmount'] / 10 ** 18);
+                })
+                .then(() => {
+                     // creates an empty array in storage for alerts if it was null
+                    if (getArrayFromLocal("oneInchAlertList") == null) storeArrayToLocal("oneInchAlertList", []);
+                })
+                .then(() => {
+                    // Finally, turn off the loader icon
+                    console.log("disable loader");
+                    setShowLoader(false);
+                });
         }
 
 
@@ -73,9 +79,9 @@ let OneInchPanel = props => {
             console.log("got the new 1inch data for new token", res);
             setConvRate(res['toTokenAmount'] / 10 ** 18);
         })
-        .then(()=> {
-            setShowLoader(false);
-        });
+            .then(() => {
+                setShowLoader(false);
+            });
 
     }, [fromToken]);
 
@@ -125,7 +131,7 @@ let OneInchPanel = props => {
             <button {...props} className={className} type="button">
                 <img alt="" style={imgStyle} width="32" height="32" src={option.logo} />
                 <span>{option.symbol}</span>
-                <span>{option.name}</span>       
+                <span>{option.name}</span>
             </button>
         );
     }
@@ -161,7 +167,7 @@ let OneInchPanel = props => {
                     <div> Bookmark Analysis</div>
                     <div> Best Swap on 1inch Exchange:</div>
                     <div> 1 {Tokens['tokens'][fromToken]['symbol']} = {convRate.toPrecision(6)} OCEAN </div>
-                    <AssetList results={assetResults} token={Tokens['tokens'][fromToken]['symbol']} convRate={convRate}
+                    <AssetList results={assetResults} token={Tokens['tokens'][fromToken]['symbol']} convRate={convRate} tokenAddress={fromToken}
                         assetEntry={OneInchAsset}> </AssetList>
                 </div>
             );
@@ -170,25 +176,17 @@ let OneInchPanel = props => {
 
     return (
         <div className="oneInchPanel">
-            <Button
-                onClick={() => {
-                    //setFromToken("0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a");
-                    //quoteFetch(3).then(data => console.log(data));
-                }}
-            >
-                token data
-            </Button>
             <SelectSearch
-                        options={selectOptions()}
-                        search
-                        //printOptions="always"
-                        renderOption={renderToken}
-                        onChange={(value) => {
-                            console.log("selected", value);
-                            setFromToken(value);
-                            setShowLoader(true);
-                        }}
-                    />
+                options={selectOptions()}
+                search
+                //printOptions="always"
+                renderOption={renderToken}
+                onChange={(value) => {
+                    console.log("selected", value);
+                    setFromToken(value);
+                    setShowLoader(true);
+                }}
+            />
             {renderBody()}
 
         </div>

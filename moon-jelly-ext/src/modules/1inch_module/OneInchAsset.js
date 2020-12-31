@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BookmarkButton from '../../components/BookmarkButton.js';
+import OneInchAlertButton from './OneInchAlertButton.js';
 
 import './OneInchAsset.css';
 
@@ -43,6 +44,7 @@ let OneInchAsset = props => {
         >
             <div><a href={"https://market.oceanprotocol.com/asset/" + props.did} target="_blank">View on Ocean Market</a></div>
             <BookmarkButton did={props.did}></BookmarkButton>
+            <OneInchAlertButton enabled={false} {...props}></OneInchAlertButton>
 
         </div>
     );
