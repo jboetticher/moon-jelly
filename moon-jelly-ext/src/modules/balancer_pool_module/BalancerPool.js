@@ -14,11 +14,11 @@ let BalancerPool = props => {
         getBookmarkDDOs().then(res => {
             let sortedDDOList = [];
             res.map((x, i) => {
-                if(x.price.type == "pool") sortedDDOList.push(x);
+                if (x.price.type == "pool") sortedDDOList.push(x);
             });
             setDDOs(sortedDDOList);
         });
-    } 
+    }
     console.log(ddos);
 
     let ocean = useOcean();
@@ -26,10 +26,14 @@ let BalancerPool = props => {
     //let pool = new OceanPool(ocean.web3, null, null, null, null, '0xB602b33f5b207984B2ac9cCb378ddEe78B4D29da');
     //console.log(pool);
 
+    function examinePool(data) {
+        console.log(data);
+    }
+
     return (
         <>
-            <div>uwu balancer pools uwu</div>
-            <AssetList results={ddos} assetEntry={PoolAsset} />
+            <div className="mb-2">Ocean Pools</div>
+            <AssetList results={ddos} assetEntry={PoolAsset} examinePool={examinePool} />
         </>
     );
 }
