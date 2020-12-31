@@ -12,7 +12,8 @@ let AssetList = props => {
     function renderAssetEntries() {
 
         // No DDOS in the array
-        if(props.results.length == 0) return;
+        if(props.results == null) return;
+        else if(props.results.length == 0) return;
 
         let resultEntries = [];
 
