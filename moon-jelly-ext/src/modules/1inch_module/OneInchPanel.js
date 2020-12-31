@@ -33,7 +33,7 @@ let OneInchPanel = props => {
         quoteFetch(1).then(res => {
             // Amount of ocean you'll get for 1 fromToken
             console.log("got the 1inch data", res);
-            setConvRate(res['toTokenAmount'] / 10 ** 18);
+            setConvRate(res['toTokenAmount'] / 10 ** 18);     
         });
 
         // sets the bookmarks to render
@@ -116,7 +116,9 @@ let OneInchPanel = props => {
         else {
             return (
                 <div>
-                    <div> Current Rate: 1 {Tokens['tokens'][fromToken]['symbol']} = {convRate} OCEAN </div>
+                    <div> Bookmark Analysis</div>
+                    <div> Best Swap on 1inch Exchange:</div>
+                    <div> 1 {Tokens['tokens'][fromToken]['symbol']} = {convRate.toPrecision(6)} OCEAN </div>
                     <AssetList results={assetResults} token={Tokens['tokens'][fromToken]['symbol']} convRate={convRate}
                         assetEntry={OneInchAsset}> </AssetList>
                 </div>
@@ -128,17 +130,12 @@ let OneInchPanel = props => {
         <div className="oneInchPanel">
             <Button
                 onClick={() => {
-                    /*fetch(reqURL).then(res => res.json())
-                    .then(data => console.log(data));*/
-                    //console.log(availiableTokens);
-                    //console.log(quoteFetch("0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a", 25.03));
                     setFromToken("0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a");
                     quoteFetch(3).then(data => console.log(data));
                 }}
             >
                 token data
             </Button>
-            <div> Bookmark Analysis</div>
             {renderBookmarks()}
 
         </div>

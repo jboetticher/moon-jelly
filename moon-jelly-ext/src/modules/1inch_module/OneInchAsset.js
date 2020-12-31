@@ -5,20 +5,11 @@ import './OneInchAsset.css';
 
 let OneInchAsset = props => {
 
-    /*function calcConversion() {
-        // change to full untruncated price later for accuracy
-        let fullOceanPrice = props.datatokenPrice;
-
-        let convertedPrice;
-        props.tokenRate.then(res => {
-            convertedPrice = fullOceanPrice / (res['toTokenAmount'] / 10**18);
-            console.log("in asset", res);
-            console.log("it is worth about", convertedPrice);
-        });
-        return convertedPrice;
-    }*/
-
     function createLabelExtra() {
+
+        let exactOceanPrice = props.results[props.key]['price']['value'];
+        let convPrice = (exactOceanPrice / props.convRate).toPrecision(6);
+
         return (
             <div className="assetLabelPricing">
                 <div className="tokenSymbol"> {props.datatokenSymbol} </div>
@@ -35,7 +26,7 @@ let OneInchAsset = props => {
                         </div>
                     }
                     <div>
-                        <span className="priceNumber">{props.datatokenPrice / props.convRate}</span>
+                        <span className="priceNumber">{parseFloat(convPrice).toFixed(5)}</span>
                         <span>{props.token}</span>
                     </div>
                 </div>
