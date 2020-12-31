@@ -25,39 +25,56 @@ let OneInchPanel = props => {
     // Keeps track of 1inch fetched conversion rate between fromToken and OCEAN 
     let [convRate, setConvRate] = useState(null);
 
+    // Keeps track of whether to show loader or not
+    let [showLoader, setShowLoader] = useState("true");
+
     // Keeps track of fetched asset data 
     let [assetResults, setAssetResults] = useState("");
 
     // Runs once
     useEffect(() => {
         console.log("running once");
-
-        // sets the conversion rate between ocean and specified token
-        quoteFetch(1).then(res => {
-            // Amount of ocean you'll get for 1 fromToken
-            console.log("got the 1inch data", res);
-            setConvRate(res['toTokenAmount'] / 10 ** 18);
-        });
-
-        // sets the bookmarks to render
+        
+        // First, check if there are bookmarks to analyze
         if (getBookmarkDDOs() != null) {
-            getBookmarkDDOs().then((values) => {
+            getBookmarkDDOs() 
+            .then((values) => {
+                // Save the Bookmark DDOs 
                 console.log("got the bookmark data", values);
-                setAssetResults(values);
+                return setAssetResults(values);
+            })
+            .then(() => {
+                // Then start fetching 1inch data
+                console.log("fetching 1inch data...")
+                return quoteFetch(1);
+            })
+            .then(res => {
+                // Save 1inch data when it is fetched
+                console.log("got the 1inch data", res);
+                return setConvRate(res['toTokenAmount'] / 10 ** 18);
+            })
+            .then(() => {
+                // Finally, turn off the loader icon
+                console.log("disable loader");
+                setShowLoader(false);
             });
         }
+
+
 
     }, []);
 
     // When the selected token changes
     useEffect(() => {
-        console.log("token change");
-
+        console.log("token selection changed");
         // sets the conversion rate between ocean and specified token
         quoteFetch(1).then(res => {
             // Amount of ocean you'll get for 1 fromToken
-            console.log("got the 1inch data", res);
+            console.log("got the new 1inch data for new token", res);
             setConvRate(res['toTokenAmount'] / 10 ** 18);
+        })
+        .then(()=> {
+            setShowLoader(false);
         });
 
     }, [fromToken]);
@@ -134,7 +151,7 @@ let OneInchPanel = props => {
     }
 
     function renderBody() {
-        if (convRate == null) {
+        if (convRate == null || showLoader == true) {
             return <Correct />
         }
         else {
@@ -155,8 +172,8 @@ let OneInchPanel = props => {
         <div className="oneInchPanel">
             <Button
                 onClick={() => {
-                    setFromToken("0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a");
-                    quoteFetch(3).then(data => console.log(data));
+                    //setFromToken("0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a");
+                    //quoteFetch(3).then(data => console.log(data));
                 }}
             >
                 token data
@@ -169,6 +186,7 @@ let OneInchPanel = props => {
                         onChange={(value) => {
                             console.log("selected", value);
                             setFromToken(value);
+                            setShowLoader(true);
                         }}
                     />
             {renderBody()}
