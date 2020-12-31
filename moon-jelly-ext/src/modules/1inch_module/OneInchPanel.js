@@ -7,6 +7,9 @@ import Correct from '../../components/Correct.js';
 import Tokens from './assets/tokens.json';
 import OneInchAsset from './OneInchAsset.js';
 
+import SelectSearch from 'react-select-search';
+import './SelectSearch.css';
+
 import { useBookmarks } from '../../functionality/BookmarkHooks.js';
 
 let OneInchPanel = props => {
@@ -27,13 +30,13 @@ let OneInchPanel = props => {
 
     // Runs once
     useEffect(() => {
-        console.log("helo")
+        console.log("running once");
 
         // sets the conversion rate between ocean and specified token
         quoteFetch(1).then(res => {
             // Amount of ocean you'll get for 1 fromToken
             console.log("got the 1inch data", res);
-            setConvRate(res['toTokenAmount'] / 10 ** 18);     
+            setConvRate(res['toTokenAmount'] / 10 ** 18);
         });
 
         // sets the bookmarks to render
@@ -45,6 +48,19 @@ let OneInchPanel = props => {
         }
 
     }, []);
+
+    // When the selected token changes
+    useEffect(() => {
+        console.log("token change");
+
+        // sets the conversion rate between ocean and specified token
+        quoteFetch(1).then(res => {
+            // Amount of ocean you'll get for 1 fromToken
+            console.log("got the 1inch data", res);
+            setConvRate(res['toTokenAmount'] / 10 ** 18);
+        });
+
+    }, [fromToken]);
 
     /*useEffect(() => {
         console.log("it has changed", convRate);
@@ -59,6 +75,42 @@ let OneInchPanel = props => {
             tokenArray.push(Tokens['tokens'][i]);
         }
         return tokenArray;
+    }
+
+    // Creates a set of options for the SelectSearch box
+    function selectOptions() {
+        let options = [];
+        availiableTokens.forEach((token, i) => {
+            let symbol = token['symbol'];
+            let address = token['address'];
+            let name = token['name'];
+            let logo = token['logoURI'];
+            options.push({
+                "value": address,
+                "name": name,
+                "key": i,
+                "logo": logo,
+                "symbol": symbol
+            });
+        });
+        return options;
+    }
+
+    // Custom render for each option in SelectSearch
+    function renderToken(props, option, snapshot, className) {
+        const imgStyle = {
+            //borderRadius: '50%',
+            //verticalAlign: 'middle',
+            //marginRight: 10,
+        };
+
+        return (
+            <button {...props} className={className} type="button">
+                <img alt="" style={imgStyle} width="32" height="32" src={option.logo} />
+                <span>{option.symbol}</span>
+                <span>{option.name}</span>       
+            </button>
+        );
     }
 
     // Fetches a quote from 1inch using OCEAN as the toToken
@@ -81,41 +133,14 @@ let OneInchPanel = props => {
         return fetch(reqURL).then(res => res.json());
     }
 
-
-
-    //#region Rendering
-
-
-    /*function evalBookmarkDDOs() {
-        // if it's empty, return
-        if (getBookmarkDDOs() == null) return;
-
-        getBookmarkDDOs().then((values) => {
-            console.log(values);
-            setAssetResults(values);
-        });
-    }*/
-
-    /*function renderBookmarks() {
-        // if asset results is empty, fetch it
-        if (assetResults == "") {
-            evalBookmarkDDOs();
-            console.log("rendering bookmarks in 1inch");
-        }
-        return (
-            assetResults != "" ? <AssetList results={assetResults} token={Tokens['tokens'][fromToken]['symbol']} convRate={convRate}
-                assetEntry={OneInchAsset}> </AssetList> : null
-        );
-    }*/
-    //#endregion
-
-    function renderBookmarks() {
+    function renderBody() {
         if (convRate == null) {
             return <Correct />
         }
         else {
             return (
                 <div>
+
                     <div> Bookmark Analysis</div>
                     <div> Best Swap on 1inch Exchange:</div>
                     <div> 1 {Tokens['tokens'][fromToken]['symbol']} = {convRate.toPrecision(6)} OCEAN </div>
@@ -136,7 +161,17 @@ let OneInchPanel = props => {
             >
                 token data
             </Button>
-            {renderBookmarks()}
+            <SelectSearch
+                        options={selectOptions()}
+                        search
+                        //printOptions="always"
+                        renderOption={renderToken}
+                        onChange={(value) => {
+                            console.log("selected", value);
+                            setFromToken(value);
+                        }}
+                    />
+            {renderBody()}
 
         </div>
     );
