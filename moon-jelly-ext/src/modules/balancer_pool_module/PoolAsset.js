@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BookmarkButton from '../../components/BookmarkButton.js';
 import { PieChart } from 'react-minimal-pie-chart';
+import { useOcean } from '@oceanprotocol/react';
 
 let PoolAsset = props => {
     let [detailed, setDetailed] = useState(false);
@@ -8,9 +9,18 @@ let PoolAsset = props => {
     // configures data for display
     const price = props.results[props.key].price;
     const tokenValue = price.value * price.datatoken;
-    const totalLiquidityInOcean = price?.ocean + price?.datatoken * price?.value
+    const totalLiquidityInOcean = price?.ocean + price?.datatoken * price?.value;
     console.log(price);
     console.log(props.results);
+
+    const { ocean } = useOcean();
+    console.log(ocean.pool);
+    const totalPoolSharesInSupply = 
+        ocean.pool.getPoolSharesTotalSupply(price.address)
+        .then(res => console.log("total pool shares", res));
+    const userPoolShares = 
+        ocean.pool.sharesBalance(ocean.accounts.id, price.address)
+        .then(res => console.log("user pool shares", res));
 
     function toggleDetailed() {
         setDetailed(!detailed);
@@ -24,9 +34,9 @@ let PoolAsset = props => {
                         { title: "Datatoken", value: tokenValue, color: '#7b1173' },
                         { title: "Ocean", value: price.ocean, color: '#8b98a9' }]}
                         style={{ width: "65px", margin: "inherit" }}
-                    //viewBoxSize={[36, 36]}
-                    //radius={18}
-                    //center={[18, 18]}
+                        //viewBoxSize={[36, 36]}
+                        //radius={18}
+                        //center={[18, 18]}
                     />
                     <span>
                         <div className="tokenSymbol" style={{ textAlign: "right" }}> {props.datatokenSymbol} </div>
