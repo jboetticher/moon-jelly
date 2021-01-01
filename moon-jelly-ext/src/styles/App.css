@@ -110,6 +110,10 @@
     font-size: var(--font-size-small);
 }
 
+.text-center {
+    text-align: center;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;

@@ -2,36 +2,41 @@ import React, { useState, useEffect } from 'react';
 import BookmarkButton from '../../components/BookmarkButton.js';
 import { PieChart } from 'react-minimal-pie-chart';
 import { useOcean } from '@oceanprotocol/react';
+import Button from '../../components/Button.js';
 
 let PoolAsset = props => {
-    let [detailed, setDetailed] = useState(false);
 
-    // configures data for display
+    const { ocean, accountId } = useOcean();
+    let [detailed, setDetailed] = useState(false);
+    let [poolPanel, setPoolPanel] = useState("stats");
+
+
+
+    // Price Data
     const price = props.results[props.key].price;
-    const pAddress = price.address;
+    const address = price.address;
     const tokenValue = price.value * price.datatoken;
     const totalLiquidityInOcean = price?.ocean + price?.datatoken * price?.value;
 
-    // pool.getPoolDetails doesn't return anything apparently
-    // ocean.pool.getPoolDetails("0xAa7D8BB70cfb03454e0684B87182a241E2aB01B8").then(res => console.log("pool details", res));
+    // Pool Data
+    const [swapFee, setSwapFee] = useState();
+    const [totalPoolShares, setTotalPoolShares] = useState();
+    const [userPoolShares, setUserPoolShares] = useState();
+    const [oceanValue, setOceanValue] = useState();
 
-    const { ocean, accountId } = useOcean();
-    console.log(ocean.pool);
-    console.log(price);
-
-    // yep i sure have 0 shares
-    ocean.pool.sharesBalance(accountId, pAddress)
-        .then(res => console.log("pool details", res));
-
-    /*
-    const totalPoolSharesInSupply = 
-        ocean.pool.getPoolSharesTotalSupply(price.address)
-        .then(res => console.log("total pool shares", res));    
-    */
-
-    const userPoolShares =
-        ocean.pool.sharesBalance(ocean.accounts.id, price.address)
-            .then(res => console.log("user pool shares", res));
+    // Updates all of the pool data
+    useEffect(() => {
+        async function init() {
+            setSwapFee(await ocean.pool.getSwapFee(address));
+            setUserPoolShares(await ocean.pool.sharesBalance(ocean.accounts.id, address));
+            setTotalPoolShares(await ocean.pool.getPoolSharesTotalSupply(address));
+            const oceanPriceJSON = (await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=USD")
+                .then(res => res.json()));
+            console.log(oceanPriceJSON);
+            setOceanValue(oceanPriceJSON["ocean-protocol"]["usd"]);
+        }
+        init();
+    }, [ocean]);
 
 
 
@@ -62,7 +67,7 @@ let PoolAsset = props => {
                     <PieChart data={[
                         { title: props.datatokenSymbol, value: tokenValue, color: '#7b1173' },
                         { title: "Ocean", value: price.ocean, color: '#8b98a9' }]}
-                        style={{ width: "65px", margin: "inherit", position: "relative", right: "-75px", bottom: "10px" }}
+                        style={{ width: "55px", margin: "inherit", position: "relative", right: "-80px", bottom: "10px" }}
                     //viewBoxSize={[36, 36]}
                     //radius={18}
                     //center={[18, 18]}
@@ -71,22 +76,52 @@ let PoolAsset = props => {
                 {
                     !detailed ? <></> :
                         <>
-                            <div>Pool Statistics</div>
-                            <div className="assetLabelPricing mt-1" style={{ textAlign: 'center' }}>
-                                <div className="tokenSymbol">
-                                    <div>Pooled OCEAN</div>
-                                    <div>{price.ocean.toFixed(3)}</div>
-                                </div>
-                                <div className="tokenSymbol">
-                                    <div>Pooled {props.datatokenSymbol}</div>
-                                    <div>{price.datatoken.toFixed(3)}</div>
-                                </div>
-                            </div>
+                            <div className="gray-line mb-1" />
+                            <PoolNavbar setPoolPanel={setPoolPanel} selected={poolPanel} />
+                            {createPoolPanel()}
                         </>
                 }
                 <div style={{ margin: "4px" }} />
             </>
         );
+    }
+
+    function createPoolPanel() {
+        let panel = <></>;
+
+        switch (poolPanel) {
+            case "stats":
+                panel =
+                    <div className="assetLabelPricing mt-1" style={{ textAlign: 'center' }}>
+                        <div className="grid-asset">
+                            <div>Pooled OCEAN</div>
+                            <div>{price.ocean.toFixed(3)}</div>
+                        </div>
+                        <div className="grid-asset">
+                            <div>Swap Fee</div>
+                            <div>{swapFee * 100}%</div>
+                        </div>
+                        <div className="grid-asset">
+                            <div>Pooled {props.datatokenSymbol}</div>
+                            <div>{price.datatoken.toFixed(3)}</div>
+                        </div>
+                        <div className="grid-asset">
+                            <div>Pool Shares</div>
+                            <div>{parseFloat(totalPoolShares).toFixed(3)}</div>
+                        </div>
+                        <div className="grid-asset">
+                            <div>Total Pool Value</div>
+                            <div>≈ ${(totalLiquidityInOcean * oceanValue).toFixed(2)}</div>
+                        </div>
+                    </div>;
+                break;
+            case "graph":
+                break;
+            case "liquidity":
+                break;
+        }
+
+        return panel;
     }
 
     return (
@@ -103,5 +138,31 @@ let PoolAsset = props => {
         </div>
     );
 }
+
+let PoolNavbar = props => {
+    return (
+        <div className="subNav">
+            <Button
+                primary={props.selected == "stats"} noRound
+                onClick={() => props.setPoolPanel('stats')}
+            >
+                Stats
+            </Button>
+            <Button
+                primary={props.selected == "graph"} noRound
+                onClick={() => props.setPoolPanel('graph')}
+            >
+                Graph
+            </Button>
+            <Button
+                primary={props.selected == "liquidity"} noRound
+                onClick={() => props.setPoolPanel('liquidity')}
+            >
+                Liquidity
+            </Button>
+        </div>
+    );
+}
+
 export default PoolAsset;
 export { PoolAsset };

@@ -3,3 +3,17 @@
 .pool-info {
     font-size: var(--font-size-small);
 }
+
+.gray-line {
+    border-top: 2px solid var(--brand-grey-lighter);
+}
+
+.background-container-white {
+    background: var(--brand-white);
+    border-radius: var(--border-radius);
+}
+
+.grid-asset {
+    font-size: var(--font-size-base);
+    color: var(--color-secondary);
+}
