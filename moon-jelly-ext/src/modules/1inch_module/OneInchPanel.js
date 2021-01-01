@@ -7,8 +7,10 @@ import Correct from '../../components/Correct.js';
 import Tokens from './assets/tokens.json';
 import OneInchAsset from './OneInchAsset.js';
 
-import SelectSearch from 'react-select-search';
+//import SelectSearch from 'react-select-search';
+import TokenSelectSearch from './TokenSelectSearch.js';
 import './SelectSearch.css';
+
 
 import { useBookmarks } from '../../functionality/BookmarkHooks.js';
 import { useWebStorage } from '../../functionality/WebStorageHooks.js';
@@ -19,7 +21,7 @@ let OneInchPanel = props => {
     const { storeArrayToLocal, getArrayFromLocal } = useWebStorage(); 
 
     // Array of all swapabble tokens
-    const availiableTokens = getTokenArray();
+    //const availiableTokens = getTokenArray();
 
     // Default set to ETH
     let [fromToken, setFromToken] = useState("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
@@ -85,56 +87,6 @@ let OneInchPanel = props => {
 
     }, [fromToken]);
 
-    /*useEffect(() => {
-        console.log("it has changed", convRate);
-    }, [convRate]);*/
-
-
-    // Parses JSON file into an Javascript array of JSON objects
-    function getTokenArray() {
-        let tokenArray = [];
-
-        for (var i in Tokens['tokens']) {
-            tokenArray.push(Tokens['tokens'][i]);
-        }
-        return tokenArray;
-    }
-
-    // Creates a set of options for the SelectSearch box
-    function selectOptions() {
-        let options = [];
-        availiableTokens.forEach((token, i) => {
-            let symbol = token['symbol'];
-            let address = token['address'];
-            let name = token['name'];
-            let logo = token['logoURI'];
-            options.push({
-                "value": address,
-                "name": name,
-                "key": i,
-                "logo": logo,
-                "symbol": symbol
-            });
-        });
-        return options;
-    }
-
-    // Custom render for each option in SelectSearch
-    function renderToken(props, option, snapshot, className) {
-        const imgStyle = {
-            //borderRadius: '50%',
-            //verticalAlign: 'middle',
-            //marginRight: 10,
-        };
-
-        return (
-            <button {...props} className={className} type="button">
-                <img alt="" style={imgStyle} width="32" height="32" src={option.logo} />
-                <span>{option.symbol}</span>
-                <span>{option.name}</span>
-            </button>
-        );
-    }
 
     // Fetches a quote from 1inch using OCEAN as the toToken
     // fromTokenAmount is the true number of tokens you want to check (decimals are added in the function)
@@ -176,11 +128,7 @@ let OneInchPanel = props => {
 
     return (
         <div className="oneInchPanel">
-            <SelectSearch
-                options={selectOptions()}
-                search
-                //printOptions="always"
-                renderOption={renderToken}
+            <TokenSelectSearch
                 onChange={(value) => {
                     console.log("selected", value);
                     setFromToken(value);
