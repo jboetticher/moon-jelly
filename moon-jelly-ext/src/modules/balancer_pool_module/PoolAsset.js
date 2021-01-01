@@ -6,9 +6,10 @@ import Button from '../../components/Button.js';
 
 let PoolAsset = props => {
 
-    const { ocean, accountId } = useOcean();
+    const { ocean, accountId, config } = useOcean();
     let [detailed, setDetailed] = useState(false);
     let [poolPanel, setPoolPanel] = useState("stats");
+    const network = config.network;
 
 
 
@@ -23,6 +24,7 @@ let PoolAsset = props => {
     const [totalPoolShares, setTotalPoolShares] = useState();
     const [userPoolShares, setUserPoolShares] = useState();
     const [oceanValue, setOceanValue] = useState();
+    const [graphData, setGraphData] = useState();
 
     // Updates all of the pool data
     useEffect(() => {
@@ -32,13 +34,15 @@ let PoolAsset = props => {
             setTotalPoolShares(await ocean.pool.getPoolSharesTotalSupply(address));
             const oceanPriceJSON = (await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=USD")
                 .then(res => res.json()));
-            console.log(oceanPriceJSON);
             setOceanValue(oceanPriceJSON["ocean-protocol"]["usd"]);
+            const graphDataJSON = (await fetch(`https://aquarius.${network}.oceanprotocol.com/api/v1/aquarius/pools/history/${price.address}`)
+                .then(res => res.json()));
+            setGraphData(graphDataJSON);
         }
         init();
     }, [ocean]);
 
-
+    console.log("GRAPH DATA", graphData);
 
     function toggleDetailed() {
         setDetailed(!detailed);
@@ -116,6 +120,7 @@ let PoolAsset = props => {
                     </div>;
                 break;
             case "graph":
+                
                 break;
             case "liquidity":
                 break;
