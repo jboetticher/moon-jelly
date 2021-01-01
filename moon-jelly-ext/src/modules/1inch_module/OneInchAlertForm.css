@@ -1,0 +1,13 @@
+.alertRow {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr 1fr;
+    grid-template-rows: 25px;
+}
+
+.alertSettingBox {
+    /*transform: rotate(45deg);
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    pointer-events: none;*/
+    
+}
