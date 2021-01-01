@@ -10,14 +10,27 @@ import './OneInchAlertForm.css';
 
 let OneInchAlertForm = props => {
 
+    const { storeArrayToLocal, getArrayFromLocal } = useWebStorage();
+
     // State holds a JSON representation of all the alert rows
-    let [entries, setEntries] = useState([]);
+    let [entries, setEntries] = useState(getEntriesArrayFromStorage());
+
+    useEffect(() => {
+        // store alert JSON to storage
+        handleStorage();
+        props.setNumAlerts(getEntriesArrayFromStorage().length);
+    }, [entries]);
 
     // Converts the state JSON into renderable JSX
     function renderAlertList() {
         let toRender = [];
         for (var i = 0; i < entries.length; i++) {
-            let row = <AlertRow key={i} index={i} data={entries[i]} handleRemoveRow={handleRemoveRow} handleAmountChange={handleAmountChange}/>;
+            let row = <AlertRow key={i} index={i} data={entries[i]}
+                handleRemoveRow={handleRemoveRow}
+                handleAmountChange={handleAmountChange}
+                handleSelectChange={handleSelectChange}
+                handleTokenChange={handleTokenChange}
+            />;
             toRender.push(row);
         }
 
@@ -25,9 +38,9 @@ let OneInchAlertForm = props => {
     }
 
     // Add New Trigger is pressed
-    function handleAddRow(){
+    function handleAddRow() {
         const newAlertList = entries.concat({
-            "setting": "above",
+            "selection": "above",
             "amount": 0,
             "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         });
@@ -42,21 +55,21 @@ let OneInchAlertForm = props => {
 
         // filter out the index we want to remove
         const newAlertList = entries.filter((item, i) => i !== index);
-        
+
         console.log("removed row", newAlertList);
         setEntries(newAlertList);
     }
 
     // value changes in the amount box for a row
-    function handleAmountChange(index, amount){
+    function handleAmountChange(index, amount) {
         console.log("this index: " + index + " has amount of " + amount);
 
         // filter out the index we want to remove
         const newAlertList = entries.map((item, i) => {
-            if(i == index) {
+            if (i == index) {
                 const updatedItem = {
                     ...item,
-                    "amount" : amount,
+                    "amount": amount,
                 };
                 return updatedItem;
             }
@@ -68,13 +81,112 @@ let OneInchAlertForm = props => {
     }
 
     // token is changed in the token dropdown for a row
-    function handleTokenChange(index, token){
+    function handleTokenChange(index, token) {
+        console.log("this index: " + index + " has token " + token);
+
+        // filter out the index we want to remove
+        const newAlertList = entries.map((item, i) => {
+            if (i == index) {
+                const updatedItem = {
+                    ...item,
+                    "token": token,
+                };
+                return updatedItem;
+            }
+            return item;
+        });
+
+        console.log("updated token ", newAlertList);
+        setEntries(newAlertList);
 
     }
 
     // is above/below change for a row
-    function handleSettingChange(index, setting){
+    function handleSelectChange(index, selection) {
+        console.log("this index: " + index + " has selected " + selection);
 
+        // filter out the index we want to remove
+        const newAlertList = entries.map((item, i) => {
+            if (i == index) {
+                const updatedItem = {
+                    ...item,
+                    "selection": selection,
+                };
+                return updatedItem;
+            }
+            return item;
+        });
+
+        console.log("updated selection values", newAlertList);
+        setEntries(newAlertList);
+    }
+
+    // Stores JSON representation of alert/trigger list
+    // This could probably be more efficient, but it works
+    function handleStorage() {
+
+        // Get the array from local storage
+        let storedList = getArrayFromLocal("oneInchAlertList");
+
+        // Find the associated entry in the array
+        let storedEntry = storedList.find(item => {
+            return item.did == props.did;
+        });
+
+        // Entry does not exist
+        if (storedEntry == null) {
+
+            // Add entry to array
+            storedList.push(
+                {
+                    "did": props.did,
+                    "entries": entries
+                }
+            );
+
+            // Store the modified array
+            storeArrayToLocal("oneInchAlertList", storedList);
+        }
+
+        // Entry exists
+        else {
+            // Remove the old entry from the array
+            storedList.splice(storedList.indexOf(storedEntry), 1);
+
+            // Insert the updated entry
+            storedList.push(
+                {
+                    "did": props.did,
+                    "entries": entries
+                }
+            );
+
+            // Store the modified array
+            storeArrayToLocal("oneInchAlertList", storedList);
+        }
+
+
+    }
+
+    // Gets the associated entries array from storage
+    // Returns empty array if it is not in storage
+    // Returns the array if in storage
+    function getEntriesArrayFromStorage() {
+        // Get the array from local storage
+        let storedList = getArrayFromLocal("oneInchAlertList");
+
+        // Find the associated entry in the array
+        let storedEntry = storedList.find(item => {
+            return item.did == props.did;
+        });
+
+        if (storedEntry == null) {
+            return [];
+        }
+        else {
+            // Have to parse before returning to make it an array object
+            return storedEntry.entries;
+        }
     }
 
     return (
@@ -96,23 +208,34 @@ let AlertRow = props => {
 
     return (
         <div className="alertRow">
-            <select id="setting" name="setting" className="alertSettingBox">
+            <select
+                id="setting"
+                name="setting"
+                className="alertSettingBox"
+                value={props.data['selection']}
+                onChange={(e) => {
+                    const { name, value } = e.target;
+                    props.handleSelectChange(props.index, value);
+                }}
+            >
                 <option value="above">above</option>
                 <option value="below">below</option>
             </select>
-            <input 
+            <input
                 className="alertAmountBox"
                 value={props.data['amount']}
                 onChange={(e) => {
                     const { name, value } = e.target;
                     props.handleAmountChange(props.index, value);
-                }} 
+                }}
             />
             <TokenSelectSearch
                 className="select-search small-search"
                 smallSearch={true}
+                value={props.data['token']}
                 onChange={(value) => {
                     console.log("selected ", value);
+                    props.handleTokenChange(props.index, value);
                 }}
             />
             <a

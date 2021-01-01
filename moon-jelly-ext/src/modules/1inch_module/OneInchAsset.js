@@ -1,10 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import BookmarkButton from '../../components/BookmarkButton.js';
 import OneInchAlertForm from './OneInchAlertForm.js';
+import { useWebStorage } from '../../functionality/WebStorageHooks.js';
 
 import './OneInchAsset.css';
 
 let OneInchAsset = props => {
+
+    const { getArrayFromLocal } = useWebStorage();
+
+    // Keeps track of the number of alerts attached to asset
+    // Updated by OneInchAlertForm child component
+    let [numAlerts, setNumAlerts] = useState(getEntriesArrayFromStorage().length);
+
+    // Probably a better way to do this, but for now, it is a little hacky
+    //#region Unfortunate copy-paste here from OneInchAlertForm to get the initial number of alerts
+
+    // Gets the associated entries array from storage
+    // Returns empty array if it is not in storage
+    // Returns the array if in storage
+    function getEntriesArrayFromStorage() {
+        // Get the array from local storage
+        let storedList = getArrayFromLocal("oneInchAlertList");
+
+        // Find the associated entry in the array
+        let storedEntry = storedList.find(item => {
+            return item.did == props.did;
+        });
+
+        if (storedEntry == null) {
+            return [];
+        }
+        else {
+            // Have to parse before returning to make it an array object
+            return storedEntry.entries;
+        }
+    }
+    //#endregion
 
     function createLabelExtra() {
 
@@ -30,6 +62,9 @@ let OneInchAsset = props => {
                         <span className="priceNumber">{parseFloat(convPrice).toFixed(5)}</span>
                         <span>{props.token}</span>
                     </div>
+                    <div>
+                        {numAlerts} alerts set
+                    </div>
                 </div>
             </div>
         );
@@ -44,7 +79,7 @@ let OneInchAsset = props => {
         >
             <div><a href={"https://market.oceanprotocol.com/asset/" + props.did} target="_blank">View on Ocean Market</a></div>
             <BookmarkButton did={props.did}></BookmarkButton>
-            <OneInchAlertForm {...props}></OneInchAlertForm>
+            <OneInchAlertForm setNumAlerts={setNumAlerts} {...props}></OneInchAlertForm>
 
         </div>
     );
