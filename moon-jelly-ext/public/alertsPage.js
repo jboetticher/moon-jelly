@@ -37,12 +37,12 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 function startAlarm() {
     // kills all alarms so a fresh one can be made each time function is called
     // should prevent duplicate alarms and allow for quick changes to alarm period
-    chrome.alarms.getAll((alarms) => {
+    /*chrome.alarms.getAll((alarms) => {
         console.log("clearing alarms ", alarms);
         alarms.forEach(alarm => {
             chrome.alarms.clear(alarm.name);
         });
-    });
+    });*/
 
     chrome.alarms.get("refetch", alarm => {
         if (alarm) {
