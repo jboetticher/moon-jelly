@@ -48,6 +48,10 @@ let OneInchPanel = props => {
                     return setAssetResults(values);
                 })
                 .then(() => {
+                    // creates an empty array in storage for alerts if it was null
+                   if (getArrayFromLocal("oneInchAlertList") == null) storeArrayToLocal("oneInchAlertList", []);
+                })
+                .then(() => {
                     // Then start fetching 1inch data
                     console.log("fetching 1inch data...")
                     return quoteFetch(1);
@@ -56,10 +60,6 @@ let OneInchPanel = props => {
                     // Save 1inch data when it is fetched
                     console.log("got the 1inch data", res);
                     return setConvRate(res['toTokenAmount'] / 10 ** 18);
-                })
-                .then(() => {
-                     // creates an empty array in storage for alerts if it was null
-                    if (getArrayFromLocal("oneInchAlertList") == null) storeArrayToLocal("oneInchAlertList", []);
                 })
                 .then(() => {
                     // Finally, turn off the loader icon
@@ -115,7 +115,6 @@ let OneInchPanel = props => {
         else {
             return (
                 <div>
-
                     <div> Bookmark Analysis</div>
                     <div> Best Swap on 1inch Exchange:</div>
                     <div> 1 {Tokens['tokens'][fromToken]['symbol']} = {convRate.toPrecision(6)} OCEAN </div>
