@@ -6,19 +6,19 @@ const network = 'rinkeby';
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.name === "storageUpdate")
-      //sendResponse({message: "hi to you"});
-      console.log("storage update received in 1inch script");
-      startAlarm();
+
+        console.log("storage update received in 1inch script");
+        //startAlarm(); temp disabled for testing
 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name === "1inch_alarm") {
         console.log("1inch alarm triggered");
-    } 
+    }
 });
 
 // Starts the alarm if it doesn't exist
-function startAlarm(){
+function startAlarm() {
     chrome.alarms.get("1inch_alarm", alarm => {
         if (alarm) {
             // alarm exists, do nothing
@@ -33,25 +33,30 @@ function startAlarm(){
 }
 
 // Compares fetched ocean and oneinch data to local
-function checkTriggers(){
+function checkTriggers() {
 
 }
 
 // Gets and returns an array of all the triggers from localStorage
-function getTriggersFromLocal(){
+function getTriggersFromLocal() {
 
 }
 
 // Fetches quote from 1inch Exchange given param fromToken (toToken is always OCEAN)
 // Returns promise to evaluate
-function fetchOneInchQuote(fromToken){
+function fetchOneInchQuote(fromToken) {
+    // toTokenAddress is OCEAN
+    let reqURL = "https://api.1inch.exchange/v2.0/quote?fromTokenAddress="
+        + fromToken +
+        "&toTokenAddress=0x967da4048cd07ab37855c090aaf366e4ce1b9f48&amount="
+        + 10 ** 18;
 
+    return fetch(reqURL).then(res => res.json());
 }
 
 // Fetches price of specific ocean asset given did (pool or fixed)
-// Returns promise to evaluate
-function fetchOceanPrice(did){
-
-
-    
+// Returns promise to evaluate for JSON results
+function fetchOceanPrice(did) {
+    return fetch('https://aquarius.' + network + '.oceanprotocol.com/api/v1/aquarius/assets/ddo/' + did)
+        .then(data => data.json());
 }
