@@ -1,3 +1,4 @@
+    /*global chrome*/
 import React, { useState, useEffect } from 'react'
 import Button from '../../components/Button.js';
 import SelectSearch from 'react-select-search';
@@ -5,6 +6,7 @@ import './SelectSearch.css';
 
 import { useWebStorage } from '../../functionality/WebStorageHooks.js';
 import TokenSelectSearch from './TokenSelectSearch.js';
+import Tokens from './assets/tokens.json';
 
 import './OneInchAlertForm.css';
 
@@ -18,7 +20,14 @@ let OneInchAlertForm = props => {
     useEffect(() => {
         // store alert JSON to storage
         handleStorage();
+
+        // Update OneInchAsset counter
         props.setNumAlerts(getEntriesArrayFromStorage().length);
+
+        // Send message to background script
+        // Only works when running as extension (npm run build)
+        //chrome.runtime.sendMessage({name: "storageUpdate"});
+
     }, [entries]);
 
     // Converts the state JSON into renderable JSX
@@ -43,6 +52,7 @@ let OneInchAlertForm = props => {
             "selection": "above",
             "amount": 0,
             "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "tokenSymbol": "ETH"
         });
         console.log("added row to ", newAlertList);
 
@@ -81,15 +91,16 @@ let OneInchAlertForm = props => {
     }
 
     // token is changed in the token dropdown for a row
-    function handleTokenChange(index, token) {
-        console.log("this index: " + index + " has token " + token);
+    function handleTokenChange(index, tokenAddress) {
+        console.log("this index: " + index + " has token " + tokenAddress);
 
         // filter out the index we want to remove
         const newAlertList = entries.map((item, i) => {
             if (i == index) {
                 const updatedItem = {
                     ...item,
-                    "token": token,
+                    "token": tokenAddress,
+                    "tokenSymbol": Tokens['tokens'][tokenAddress]['symbol']
                 };
                 return updatedItem;
             }
@@ -140,6 +151,8 @@ let OneInchAlertForm = props => {
             storedList.push(
                 {
                     "did": props.did,
+                    "assetName": props.assetName,
+                    "datatokenSymbol": props.datatokenSymbol,
                     "entries": entries
                 }
             );
@@ -157,6 +170,8 @@ let OneInchAlertForm = props => {
             storedList.push(
                 {
                     "did": props.did,
+                    "assetName": props.assetName,
+                    "datatokenSymbol": props.datatokenSymbol,
                     "entries": entries
                 }
             );
