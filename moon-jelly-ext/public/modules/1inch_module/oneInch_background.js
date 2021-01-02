@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.name === "storageUpdate")
 
         console.log("storage update received in 1inch script");
-        //startAlarm(); temp disabled for testing
+    //startAlarm(); temp disabled for testing
 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
@@ -34,13 +34,53 @@ function startAlarm() {
 
 // Compares fetched ocean and oneinch data to local
 function checkTriggers() {
+    let alertList = window.localStorage.getItem("oneInchAlertList");
+
+    /* alertList looks like this
+    [
+        {
+            "did": didhere,
+            "assetName": assetnamehere,
+            "datatokenSymbol": datatokensymbolhere,
+            "entries": [{
+                "selection": "above",
+                "amount": 0,
+                "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenSymbol": "ETH"
+            },
+            {
+                "selection": "above",
+                "amount": 0,
+                "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "tokenSymbol": "ETH"
+            }]
+        },
+        {
+            "did": etc,
+            "assetName": etc,
+            "datatokenSymbol": etc,
+            "entries": array of jsons
+        },
+    ]
+    */
+
+    alertList.forEach((item, i) => {
+        let currDid = item.did;
+    });
 
 }
 
-// Gets and returns an array of all the triggers from localStorage
-function getTriggersFromLocal() {
+// Returns a Promises.all() promise containing all the DDOs of oneInchAlertList
+function getAllDDOs(){
 
 }
+
+// Returns a Promises.all() promise containing 1inch quotes for every type of tokens in oneInchAlertList
+// Should prevent/reduce over-fetching of a token
+function getAllQuotes(){
+
+}
+
 
 // Fetches quote from 1inch Exchange given param fromToken (toToken is always OCEAN)
 // Returns promise to evaluate
@@ -54,9 +94,9 @@ function fetchOneInchQuote(fromToken) {
     return fetch(reqURL).then(res => res.json());
 }
 
-// Fetches price of specific ocean asset given did (pool or fixed)
+// Fetches DDO of specific ocean asset given DID
 // Returns promise to evaluate for JSON results
-function fetchOceanPrice(did) {
+function fetchOceanDDO(did) {
     return fetch('https://aquarius.' + network + '.oceanprotocol.com/api/v1/aquarius/assets/ddo/' + did)
         .then(data => data.json());
 }

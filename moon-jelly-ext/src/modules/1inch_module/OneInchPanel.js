@@ -26,7 +26,8 @@ let OneInchPanel = props => {
     // Default set to ETH
     let [fromToken, setFromToken] = useState("0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
-    // Keeps track of 1inch fetched conversion rate between fromToken and OCEAN 
+    // Keeps track of 1inch fetched conversion rate between fromToken and OCEAN
+    // Ex. 1 ETH = 2223 OCEAN, 2223 is the convRate 
     let [convRate, setConvRate] = useState(null);
 
     // Keeps track of whether to show loader or not
