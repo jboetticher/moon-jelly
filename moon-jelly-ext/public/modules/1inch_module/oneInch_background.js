@@ -4,6 +4,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("storage update received in 1inch script");
     //startAlarm(); temp disabled for testing
     //getAllQuotes().then(data => console.log(data));
+    checkTriggers();
 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
@@ -29,8 +30,8 @@ function startAlarm() {
 
 // Compares fetched ocean and oneinch data to local
 function checkTriggers() {
-    let alertList = window.localStorage.getItem("oneInchAlertList");
 
+    let alertList = JSON.parse(window.localStorage.getItem("oneInchAlertList"));
     /* the stored alertList looks like this, as reference
     [
         {
@@ -59,9 +60,41 @@ function checkTriggers() {
     ]
     */
 
-    alertList.forEach((item, i) => {
+    let priceArray = [];
+
+    let quotesArray = [];
+
+    getAllDDOs()
+    .then(ddoList => {
+        ddoList.forEach((ddo) => {
+            priceArray.push({
+                "did": ddo.id,
+                "oceanPrice": ddo['price']['value']
+            });
+        });
+        return getAllQuotes();
+    })
+    .then(quotesList => {
+        quotesList.forEach((quote) => {
+            // divide the amount output by the decimals to find how much OCEAN that 1 token is worth
+            quotesArray.push({
+                "tokenAddress": quote['fromToken']['address'],
+                "swapRate": (quote['toTokenAmount'] / 10 ** parseFloat(quote['fromToken']['decimals']))
+            });
+        })
+    })
+    .then(() => {
+        console.log("pricees", priceArray);
+        console.log("swaps", quotesArray);
+        // compare/check the triggers
+    })
+
+    /*alertList.forEach((item, i) => {
         let currDid = item.did;
-    });
+
+
+
+    });*/
 
 }
 
