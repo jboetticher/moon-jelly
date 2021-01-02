@@ -138,17 +138,22 @@ function checkTriggers() {
             // if the asset has any triggered, send single notif with info
             if(triggeredEntries.length > 0){
                 console.log("sending notifs for " + asset.assetName);
-                console.log("the stuff", triggeredEntries);
+                console.log("current triggered entries", triggeredEntries);
+
+                let message = "";
+                triggeredEntries.forEach((entry) => {
+                    message += entry + "\n";
+                });
+
                 chrome.notifications.create('', {
                     title: asset.assetName + " (" + asset.datatokenSymbol + ") " + "is now",
-                    message: triggeredEntries.toString(),
-                    iconUrl: '/moonyjell.png',
+                    message: message,
+                    iconUrl: '/moon_jelly_1inch.png',
                     type: 'basic'
                 });
             }
             else {
                 console.log("no notifs for " + asset.assetName);
-                console.log("the stuff2", triggeredEntries);
             }
         });
 
