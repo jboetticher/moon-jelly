@@ -31,7 +31,7 @@ function startAlarm() {
 function checkTriggers() {
     let alertList = window.localStorage.getItem("oneInchAlertList");
 
-    /* alertList looks like this
+    /* the stored alertList looks like this, as reference
     [
         {
             "did": didhere,
@@ -67,7 +67,21 @@ function checkTriggers() {
 
 // Returns a Promises.all() promise containing all the DDOs of oneInchAlertList
 function getAllDDOs() {
+    // Get the stored array by parsing
+    let alertList = JSON.parse(window.localStorage.getItem("oneInchAlertList"));
 
+    // To hold all the DDO promises
+    let DDOPromises = [];
+
+    // Loop through assets
+    alertList.forEach((asset, i) => {
+
+        // Add DDO fetch promises to array
+        DDOPromises.push(fetchOceanDDO(asset['did']));
+    });
+
+    // Return one big promise
+    return Promise.all(DDOPromises);
 }
 
 // Returns a Promises.all() promise containing 1inch quotes for every type of tokens in oneInchAlertList
@@ -95,6 +109,7 @@ function getAllQuotes() {
 
     });
 
+    // To hold all the promises
     let quotePromises = [];
 
     // Loop through each token address and create a promise
