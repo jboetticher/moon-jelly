@@ -1,4 +1,3 @@
-    /*global chrome*/
 import React, { useState, useEffect } from 'react'
 import Button from '../../components/Button.js';
 import SelectSearch from 'react-select-search';
