@@ -45,7 +45,7 @@ function checkTriggers() {
                 "tokenSymbol": "ETH"
             },
             {
-                "selection": "above",
+                "selection": "below",
                 "amount": 0,
                 "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 "tokenSymbol": "ETH"
@@ -60,41 +60,100 @@ function checkTriggers() {
     ]
     */
 
-    let priceArray = [];
+    let priceJSON = {};
 
-    let quotesArray = [];
+    let quotesJSON = {};
 
     getAllDDOs()
     .then(ddoList => {
         ddoList.forEach((ddo) => {
-            priceArray.push({
+
+            // Add (did: price) pair into json
+            Object.assign(priceJSON, {[ddo.id]: ddo['price']['value']});
+
+            /*priceArray.push({
                 "did": ddo.id,
                 "oceanPrice": ddo['price']['value']
-            });
+            });*/
         });
         return getAllQuotes();
     })
     .then(quotesList => {
         quotesList.forEach((quote) => {
-            // divide the amount output by the decimals to find how much OCEAN that 1 token is worth
-            quotesArray.push({
+            
+            // Add (tokenAddress: swapRate) pair into json
+            // swapRate = divide the amount output by the decimals to find how much OCEAN that 1 token is worth
+            Object.assign(quotesJSON, {
+                [ quote['fromToken']['address']]: (quote['toTokenAmount'] / 10 ** parseFloat(quote['fromToken']['decimals']))
+            });
+
+            /*quotesArray.push({
                 "tokenAddress": quote['fromToken']['address'],
                 "swapRate": (quote['toTokenAmount'] / 10 ** parseFloat(quote['fromToken']['decimals']))
-            });
+            });*/
         })
     })
     .then(() => {
-        console.log("pricees", priceArray);
-        console.log("swaps", quotesArray);
+        console.log("ocean prices", priceJSON);
+        console.log("1inch swaps", quotesJSON);
+
+        alertList.forEach((asset) => {
+
+            // Price of the current asset on Ocean Market
+            let assetPrice = priceJSON[asset.did];
+
+            // Store the triggered triggers
+            let triggeredEntries = [];
+
+            // Loop through each trigger in the array
+            asset['entries'].forEach((entry) => {
+
+                // Skip if the amount is 0
+                //if(trigger['amount'] == 0)  return;
+
+                // Trigger token's swap rate
+                let swapRate = quotesJSON[entry.token];
+
+                // How much the asset is worth in terms of the trigger token
+                let currentSwappedPrice = (assetPrice / swapRate);
+
+                // above
+                if(entry['selection'] == "above") {
+                    if( currentSwappedPrice > parseFloat(entry['amount']) ){
+                        // the trigger has passed
+                        triggeredEntries.push("above " + entry['amount'] + " " + entry['tokenSymbol']);
+                    }
+                }
+
+                // below
+                else {
+                    if( currentSwappedPrice < parseFloat(entry['amount']) ){
+                        // the trigger has passed
+                        triggeredEntries.push("below " + entry['amount'] + " " + entry['tokenSymbol']);
+                    }
+                }
+
+            });
+
+            // if the asset has any triggered, send single notif with info
+            if(triggeredEntries.length > 0){
+                console.log("sending notifs for " + asset.assetName);
+                console.log("the stuff", triggeredEntries);
+                chrome.notifications.create('', {
+                    title: asset.assetName + " (" + asset.datatokenSymbol + ") " + "is now",
+                    message: triggeredEntries.toString(),
+                    iconUrl: '/moonyjell.png',
+                    type: 'basic'
+                });
+            }
+            else {
+                console.log("no notifs for " + asset.assetName);
+                console.log("the stuff2", triggeredEntries);
+            }
+        });
+
         // compare/check the triggers
     })
-
-    /*alertList.forEach((item, i) => {
-        let currDid = item.did;
-
-
-
-    });*/
 
 }
 
