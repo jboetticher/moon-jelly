@@ -207,13 +207,14 @@ let OneInchAlertForm = props => {
         <div>
             <div> Notify me when {props.datatokenSymbol} is </div>
             {renderAlertList()}
-            <button
+            <a
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                     handleAddRow();
                 }}
             >
                 Add New Trigger
-            </button>
+            </a>
         </div>
     );
 }
@@ -253,7 +254,7 @@ let AlertRow = props => {
                 }}
             />
             <a
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", textAlign: "center", lineHeight: "25px"}}
                 onClick={() => {
                     console.log("my index is:", props.index);
                     props.handleRemoveRow(props.index);
