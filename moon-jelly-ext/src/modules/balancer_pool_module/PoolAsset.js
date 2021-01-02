@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import BookmarkButton from '../../components/BookmarkButton.js';
 import { PieChart } from 'react-minimal-pie-chart';
+import { LineChart } from 'react-chartkick';
+import 'chart.js';
 import { useOcean } from '@oceanprotocol/react';
 import Button from '../../components/Button.js';
 
@@ -41,8 +43,9 @@ let PoolAsset = props => {
         }
         init();
     }, [ocean]);
+    
+    console.log(graphData);
 
-    console.log("GRAPH DATA", graphData);
 
     function toggleDetailed() {
         setDetailed(!detailed);
@@ -120,7 +123,27 @@ let PoolAsset = props => {
                     </div>;
                 break;
             case "graph":
-                
+                let graphFormatted = [];
+                graphData?.datatokenPriceHistory.forEach(element => {
+                    graphFormatted.push([
+                        (new Date(element[1] * 1000)).toDateString(),
+                        element[0]
+                    ]);
+                });
+                console.log(graphFormatted);
+
+                panel =
+                    <div>
+                        <div className="text-center grid-asset mt-2 mb-1">
+                            {props.datatokenSymbol} Price (OCEAN)
+                        </div>
+                        <LineChart 
+                            data={graphFormatted}
+                            colors={["#7b1173"]}
+                            messages={{empty: "Loading..."}}
+                            curve={false}
+                            height="160px" />
+                    </div>;
                 break;
             case "liquidity":
                 break;
