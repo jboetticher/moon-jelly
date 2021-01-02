@@ -1,3 +1,4 @@
+    /*global chrome*/
 import React, { useState, useEffect } from 'react';
 import Input from '../../components/Form/Input.js';
 import Button from '../../components/Button.js';
@@ -128,6 +129,13 @@ let OneInchPanel = props => {
 
     return (
         <div className="oneInchPanel">
+            <Button
+                onClick={() => {
+                    chrome.runtime.sendMessage({name: "storageUpdate"});
+                }}
+            >
+                refresh for notifications
+            </Button>
             <TokenSelectSearch
                 onChange={(value) => {
                     console.log("selected", value);
