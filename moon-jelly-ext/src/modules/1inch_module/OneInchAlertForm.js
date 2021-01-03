@@ -240,8 +240,11 @@ let AlertRow = props => {
                 className="alertAmountBox"
                 value={props.data['amount']}
                 onChange={(e) => {
-                    const { name, value } = e.target;
-                    props.handleAmountChange(props.index, value);
+                    // only allows numbers and decimals
+                    var reg = new RegExp(/^\d*\.?\d*$/); 
+                    if(reg.test(e.target.value)){
+                        props.handleAmountChange(props.index, e.target.value);
+                    }
                 }}
             />
             <TokenSelectSearch
@@ -254,7 +257,7 @@ let AlertRow = props => {
                 }}
             />
             <a
-                style={{ cursor: "pointer", textAlign: "center", lineHeight: "25px"}}
+                style={{ cursor: "pointer", textAlign: "center", lineHeight: "25px" }}
                 onClick={() => {
                     console.log("my index is:", props.index);
                     props.handleRemoveRow(props.index);
