@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import BookmarkButton from '../../components/BookmarkButton.js';
+import Input from '../../components/Form/Input.js';
 import { PieChart } from 'react-minimal-pie-chart';
-import { LineChart } from 'react-chartkick';
-import 'chart.js';
 import { useOcean } from '@oceanprotocol/react';
 import Button from '../../components/Button.js';
+import { LineChart } from 'react-chartkick';
+import 'chart.js';
 
 let PoolAsset = props => {
 
@@ -18,33 +19,35 @@ let PoolAsset = props => {
     // Price Data
     const price = props.results[props.key].price;
     const address = price.address;
+    const ownerAddress = props.results[props.key].dataTokenInfo.minter;
     const tokenValue = price.value * price.datatoken;
     const totalLiquidityInOcean = price?.ocean + price?.datatoken * price?.value;
 
     // Pool Data
     const [swapFee, setSwapFee] = useState();
     const [totalPoolShares, setTotalPoolShares] = useState();
+    const [ownerPoolShares, setOwnerPoolShares] = useState();
     const [userPoolShares, setUserPoolShares] = useState();
     const [oceanValue, setOceanValue] = useState();
     const [graphData, setGraphData] = useState();
 
     // Updates all of the pool data
-    useEffect(() => {
-        async function init() {
-            setSwapFee(await ocean.pool.getSwapFee(address));
-            setUserPoolShares(await ocean.pool.sharesBalance(ocean.accounts.id, address));
-            setTotalPoolShares(await ocean.pool.getPoolSharesTotalSupply(address));
-            const oceanPriceJSON = (await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=USD")
-                .then(res => res.json()));
-            setOceanValue(oceanPriceJSON["ocean-protocol"]["usd"]);
-            const graphDataJSON = (await fetch(`https://aquarius.${network}.oceanprotocol.com/api/v1/aquarius/pools/history/${price.address}`)
-                .then(res => res.json()));
-            setGraphData(graphDataJSON);
-        }
-        init();
-    }, [ocean]);
-    
-    console.log(graphData);
+    async function init() {
+        setSwapFee(await ocean.pool.getSwapFee(address));
+        const userPoolSharesPromised = await ocean.pool.sharesBalance(accountId, address);
+        setUserPoolShares(parseFloat(userPoolSharesPromised));
+        const ownerPoolSharesPromised = await ocean.pool.sharesBalance(ownerAddress, address);
+        setOwnerPoolShares(parseFloat(ownerPoolSharesPromised));
+        setTotalPoolShares(await ocean.pool.getPoolSharesTotalSupply(address));
+        const oceanPriceJSON = (await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=USD")
+            .then(res => res.json()));
+        setOceanValue(oceanPriceJSON["ocean-protocol"]["usd"]);
+        const graphDataJSON = (await fetch(`https://aquarius.${network}.oceanprotocol.com/api/v1/aquarius/pools/history/${price.address}`)
+            .then(res => res.json()));
+        setGraphData(graphDataJSON);
+    }
+    useEffect(() => { init(); }, [ocean]);
+
 
 
     function toggleDetailed() {
@@ -74,7 +77,7 @@ let PoolAsset = props => {
                     <PieChart data={[
                         { title: props.datatokenSymbol, value: tokenValue, color: '#7b1173' },
                         { title: "Ocean", value: price.ocean, color: '#8b98a9' }]}
-                        style={{ width: "55px", margin: "inherit", position: "relative", right: "-80px", bottom: "10px" }}
+                        style={{ width: "55px", margin: "inherit", position: "relative", right: "-80px", bottom: "4px" }}
                     //viewBoxSize={[36, 36]}
                     //radius={18}
                     //center={[18, 18]}
@@ -93,34 +96,45 @@ let PoolAsset = props => {
         );
     }
 
+    const [liquidityScreen, setLiquidityScreen] = useState(false);
+    function switchToAddLiquidityScreen() {
+        setLiquidityScreen(!liquidityScreen);
+    }
+
+    const [liquidityInput, setLiquidityInput] = useState();
     function createPoolPanel() {
         let panel = <></>;
 
         switch (poolPanel) {
             case "stats":
                 panel =
-                    <div className="assetLabelPricing mt-1" style={{ textAlign: 'center' }}>
-                        <div className="grid-asset">
-                            <div>Pooled OCEAN</div>
-                            <div>{price.ocean.toFixed(3)}</div>
+                    <>
+                        <div className="text-center grid-asset mt-2 mb-1">
+                            {props.datatokenSymbol} Pool Info
                         </div>
-                        <div className="grid-asset">
-                            <div>Swap Fee</div>
-                            <div>{swapFee * 100}%</div>
+                        <div className="assetLabelPricing mt-1" style={{ textAlign: 'center' }}>
+                            <div className="grid-asset">
+                                <div>Pooled OCEAN</div>
+                                <div>{price.ocean.toFixed(3)}</div>
+                            </div>
+                            <div className="grid-asset">
+                                <div>Swap Fee</div>
+                                <div>{swapFee * 100}%</div>
+                            </div>
+                            <div className="grid-asset">
+                                <div>Pooled {props.datatokenSymbol}</div>
+                                <div>{price.datatoken.toFixed(3)}</div>
+                            </div>
+                            <div className="grid-asset">
+                                <div>Pool Shares</div>
+                                <div>{parseFloat(totalPoolShares).toFixed(3)}</div>
+                            </div>
+                            <div className="grid-asset">
+                                <div>Total Pool Value</div>
+                                <div>≈ ${(totalLiquidityInOcean * oceanValue).toFixed(2)}</div>
+                            </div>
                         </div>
-                        <div className="grid-asset">
-                            <div>Pooled {props.datatokenSymbol}</div>
-                            <div>{price.datatoken.toFixed(3)}</div>
-                        </div>
-                        <div className="grid-asset">
-                            <div>Pool Shares</div>
-                            <div>{parseFloat(totalPoolShares).toFixed(3)}</div>
-                        </div>
-                        <div className="grid-asset">
-                            <div>Total Pool Value</div>
-                            <div>≈ ${(totalLiquidityInOcean * oceanValue).toFixed(2)}</div>
-                        </div>
-                    </div>;
+                    </>;
                 break;
             case "graph":
                 let graphFormatted = [];
@@ -130,22 +144,99 @@ let PoolAsset = props => {
                         element[0]
                     ]);
                 });
-                console.log(graphFormatted);
 
                 panel =
                     <div>
                         <div className="text-center grid-asset mt-2 mb-1">
                             {props.datatokenSymbol} Price (OCEAN)
                         </div>
-                        <LineChart 
+                        <LineChart
                             data={graphFormatted}
                             colors={["#7b1173"]}
-                            messages={{empty: "Loading..."}}
+                            messages={{ empty: "Loading..." }}
                             curve={false}
                             height="160px" />
                     </div>;
                 break;
             case "liquidity":
+                panel = liquidityScreen ?
+                    <>
+                        <div className="text-center grid-asset mt-2 mb-1">
+                            Add Liquidity to the {props.datatokenSymbol} Pool
+                        </div>
+                        <div className="assetLabelPricing grid-asset mt-1" style={{ textAlign: 'center' }}>
+                            <div>You Recieve:</div>
+                            <div>Pool Conversion:</div>
+                            <div>10 Shares</div>
+                            <div>1000 OCEAN</div>
+                            <div>80% of Pool</div>
+                            <div>100 {props.datatokenSymbol}</div>
+                        </div>
+                                                <div className="text-center disclaimer-text">
+                            Providing liquidity will earn you {swapFee * 100}% on every transaction in this pool,
+                            proportionally to your share of the pool.Please understand the
+                            <a href="https://blog.oceanprotocol.com/on-staking-on-data-in-ocean-market-3d8e09eb0a13" target="_blank"> Risks </a>
+                            and
+                            <a href="https://market.oceanprotocol.com/terms" target="_blank"> Terms of Service</a>.
+                        </div>
+                        <Input
+                            type="text"
+                            name="liquidityAddition"
+                            placeholder={"Add OCEAN to Pool"}
+                            value={liquidityInput}
+                            onChange={(e) => {
+                                const { name, value } = e.target;
+                                setLiquidityInput(value);
+                            }}
+                        />
+                        <div className="center-flex-box mt-1 mb-1">
+                            <Button paddingx onClick={switchToAddLiquidityScreen}>View Liquidity</Button>
+                            <div className="mx-1" />
+                            <Button paddingx primary>Confirm</Button>
+                        </div>
+                        <div className="center-flex-box mt-1 mb-1">
+                        </div>
+                    </>
+                    :
+                    <>
+                        <div className="text-center grid-asset mt-2 mb-1">
+                            {props.datatokenSymbol} Liquidity Info
+                        </div>
+                        <table className="liquidity-table" style={{ textAlign: 'center' }}>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th className="grid-header">Yours</th>
+                                    <th className="grid-header">Creator's</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className="text-left">Pooled OCEAN</td>
+                                    <td>{((userPoolShares / totalPoolShares) * price.ocean).toFixed(2)}</td>
+                                    <td>{((ownerPoolShares / totalPoolShares) * price.ocean).toFixed(2)}</td>
+                                </tr>
+                                <tr>
+                                    <td className="text-left">Pooled {props.datatokenSymbol}</td>
+                                    <td>{((userPoolShares / totalPoolShares) * price.datatoken).toFixed(2)}</td>
+                                    <td>{((ownerPoolShares / totalPoolShares) * price.datatoken).toFixed(2)}</td>
+                                </tr>
+                                <tr>
+                                    <td className="text-left">Pool Share</td>
+                                    <td>{(userPoolShares != null && totalPoolShares != null) ? (userPoolShares / totalPoolShares * 100).toFixed(2) : "0"}%</td>
+                                    <td>{(ownerPoolShares != null && totalPoolShares != null) ? (ownerPoolShares / totalPoolShares * 100).toFixed(2) : "0"}%</td>
+                                </tr>
+                                <tr>
+                                    <td className="text-left">Shares</td>
+                                    <td>{userPoolShares?.toFixed(2)}</td>
+                                    <td>{ownerPoolShares?.toFixed(2)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div className="center-flex-box mt-1 mb-1">
+                            <Button paddingx onClick={switchToAddLiquidityScreen}>Add Liquidity</Button>
+                        </div>
+                    </>;
                 break;
         }
 

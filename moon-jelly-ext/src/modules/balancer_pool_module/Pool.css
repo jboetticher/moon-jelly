@@ -17,3 +17,25 @@
     font-size: var(--font-size-base);
     color: var(--color-secondary);
 }
+
+.grid-header {
+    font-size: var(--font-size-base);
+    border-bottom: 2px solid var(--brand-grey-lighter);
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.disclaimer-text {
+    font-size: var(--font-size-mini);
+}
+
+.liquidity-table {
+    border-color: transparent;
+    font-size: var(--font-size-base);
+    width: 100%;
+}
+
+.center-flex-box {
+    display: flex;
+    justify-content: center;
+}
