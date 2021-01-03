@@ -38,6 +38,7 @@ function checkTriggers() {
             "did": didhere,
             "assetName": assetnamehere,
             "datatokenSymbol": datatokensymbolhere,
+            "notifications": true,
             "entries": [{
                 "selection": "above",
                 "amount": 0,
@@ -55,6 +56,7 @@ function checkTriggers() {
             "did": etc,
             "assetName": etc,
             "datatokenSymbol": etc,
+            "notifications": false,
             "entries": array of jsons
         },
     ]
@@ -98,6 +100,9 @@ function checkTriggers() {
         console.log("1inch swaps", quotesJSON);
 
         alertList.forEach((asset) => {
+
+            // Asset has notifications disabled(false), don't check
+            if(!asset['notifications']) return;
 
             // Price of the current asset on Ocean Market
             let assetPrice = priceJSON[asset.did];

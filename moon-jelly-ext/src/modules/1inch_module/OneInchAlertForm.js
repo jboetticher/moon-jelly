@@ -16,18 +16,23 @@ let OneInchAlertForm = props => {
     // State holds a JSON representation of all the alert rows
     let [entries, setEntries] = useState(getEntriesArrayFromStorage());
 
+    // Boolean state tracks whether notifs are enabled/disabled for an asset
+    let [notifEnabled, setNotifEnabled] = useState(getNotificationState());
+    
+
+    // When entries or setNotifs changed
     useEffect(() => {
         // store alert JSON to storage
         handleStorage();
 
         // Update OneInchAsset counter
-        props.setNumAlerts(getEntriesArrayFromStorage().length);
+        props.setNumAlerts(entries.length);
 
         // Send message to background script
         // Only works when running as extension (npm run build)
         //chrome.runtime.sendMessage({name: "storageUpdate"});
 
-    }, [entries]);
+    }, [entries, notifEnabled]);
 
     // Converts the state JSON into renderable JSX
     function renderAlertList() {
@@ -152,7 +157,8 @@ let OneInchAlertForm = props => {
                     "did": props.did,
                     "assetName": props.assetName,
                     "datatokenSymbol": props.datatokenSymbol,
-                    "entries": entries
+                    "notifications": notifEnabled,
+                    "entries": entries,
                 }
             );
 
@@ -171,7 +177,8 @@ let OneInchAlertForm = props => {
                     "did": props.did,
                     "assetName": props.assetName,
                     "datatokenSymbol": props.datatokenSymbol,
-                    "entries": entries
+                    "notifications": notifEnabled,
+                    "entries": entries,
                 }
             );
 
@@ -198,8 +205,27 @@ let OneInchAlertForm = props => {
             return [];
         }
         else {
-            // Have to parse before returning to make it an array object
+
             return storedEntry.entries;
+        }
+    }
+
+    // Goes into localstorage and check if an asset has notifs true/false
+    // returns boolean true or false
+    function getNotificationState(){
+        // Get the array from local storage
+        let storedList = getArrayFromLocal("oneInchAlertList");
+
+        // Find the associated entry in the array
+        let storedEntry = storedList.find(item => {
+            return item.did == props.did;
+        });
+
+        if(storedEntry == null){
+            return true; //default
+        }
+        else {
+            return storedEntry['notifications'];
         }
     }
 
@@ -207,14 +233,34 @@ let OneInchAlertForm = props => {
         <div>
             <div> Notify me when {props.datatokenSymbol} is </div>
             {renderAlertList()}
-            <a
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                    handleAddRow();
-                }}
-            >
-                Add New Trigger
-            </a>
+            <div>
+                <a
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                        handleAddRow();
+                    }}
+                >
+                    Add New Trigger
+                </a>
+            </div>
+            {entries.length == 0 ? null :
+                <div>
+                    <a
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                            //handleAddRow();
+                            if (notifEnabled) {
+                                setNotifEnabled(false);
+                            }
+                            else {
+                                setNotifEnabled(true);
+                            }
+
+                        }}
+                    >
+                        {notifEnabled ? "Disable Notifications" : "Enable Notifications"}
+                    </a>
+                </div>}
         </div>
     );
 }
@@ -241,8 +287,8 @@ let AlertRow = props => {
                 value={props.data['amount']}
                 onChange={(e) => {
                     // only allows numbers and decimals
-                    var reg = new RegExp(/^\d*\.?\d*$/); 
-                    if(reg.test(e.target.value)){
+                    var reg = new RegExp(/^\d*\.?\d*$/);
+                    if (reg.test(e.target.value)) {
                         props.handleAmountChange(props.index, e.target.value);
                     }
                 }}
