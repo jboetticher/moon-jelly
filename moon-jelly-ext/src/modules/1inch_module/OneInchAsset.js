@@ -63,7 +63,7 @@ let OneInchAsset = props => {
                         <span>{props.token}</span>
                     </div>
                     <div>
-                        {numAlerts} alerts set
+                        {numAlerts} triggers set
                     </div>
                 </div>
             </div>
