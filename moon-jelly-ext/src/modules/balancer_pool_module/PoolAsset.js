@@ -19,7 +19,7 @@ let PoolAsset = props => {
     // Price Data
     const price = props.results[props.key].price;
     const address = price.address;
-    const ownerAddress = props.results[props.key].dataTokenInfo.minter;
+    const ownerId = props.results[props.key].dataTokenInfo.minter;
     const tokenValue = price.value * price.datatoken;
     const totalLiquidityInOcean = price?.ocean + price?.datatoken * price?.value;
 
@@ -36,9 +36,10 @@ let PoolAsset = props => {
         setSwapFee(await ocean.pool.getSwapFee(address));
         const userPoolSharesPromised = await ocean.pool.sharesBalance(accountId, address);
         setUserPoolShares(parseFloat(userPoolSharesPromised));
-        const ownerPoolSharesPromised = await ocean.pool.sharesBalance(ownerAddress, address);
+        const ownerPoolSharesPromised = await ocean.pool.sharesBalance(ownerId, address);
         setOwnerPoolShares(parseFloat(ownerPoolSharesPromised));
-        setTotalPoolShares(await ocean.pool.getPoolSharesTotalSupply(address));
+        const totalPoolSharesPromised = await ocean.pool.getPoolSharesTotalSupply(address);
+        setTotalPoolShares(parseFloat(totalPoolSharesPromised));
         const oceanPriceJSON = (await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=USD")
             .then(res => res.json()));
         setOceanValue(oceanPriceJSON["ocean-protocol"]["usd"]);
@@ -48,8 +49,26 @@ let PoolAsset = props => {
     }
     useEffect(() => { init(); }, [ocean]);
 
+    // Liquidity Data
+    const [liquidityScreen, setLiquidityScreen] = useState(false);
+    const [liquidityInput, setLiquidityInput] = useState();
+    const [calculatedShares, setCalculatedShares] = useState();
+    const [calculatedPoolPercentage, setCalculatedPoolPercentage] = useState();
+
+    useEffect(() => {
+        async function liquidityCalculations() {
+            let sharesOutAmount = await ocean.pool.calcPoolOutGivenSingleIn(
+                address, // poolAddress
+                "0x967da4048cD07aB37855c090aAF366e4ce1b9F48", // tokenInAddress
+                liquidityInput // tokenInAmount
+            );
+            setCalculatedShares(parseFloat(sharesOutAmount));
+        }
+        liquidityCalculations();
+    }, [liquidityInput]);
 
 
+    
     function toggleDetailed() {
         setDetailed(!detailed);
     }
@@ -96,12 +115,10 @@ let PoolAsset = props => {
         );
     }
 
-    const [liquidityScreen, setLiquidityScreen] = useState(false);
     function switchToAddLiquidityScreen() {
         setLiquidityScreen(!liquidityScreen);
     }
 
-    const [liquidityInput, setLiquidityInput] = useState();
     function createPoolPanel() {
         let panel = <></>;
 
@@ -167,12 +184,12 @@ let PoolAsset = props => {
                         <div className="assetLabelPricing grid-asset mt-1" style={{ textAlign: 'center' }}>
                             <div>You Recieve:</div>
                             <div>Pool Conversion:</div>
-                            <div>10 Shares</div>
+                            <div>{calculatedShares ? calculatedShares?.toFixed(2) : 0} Shares</div>
                             <div>1000 OCEAN</div>
-                            <div>80% of Pool</div>
+                            <div>{calculatedShares && totalPoolShares ? (calculatedShares / (totalPoolShares + calculatedShares)).toFixed(2) : 0}% of Pool</div>
                             <div>100 {props.datatokenSymbol}</div>
                         </div>
-                                                <div className="text-center disclaimer-text">
+                        <div className="text-center disclaimer-text">
                             Providing liquidity will earn you {swapFee * 100}% on every transaction in this pool,
                             proportionally to your share of the pool.Please understand the
                             <a href="https://blog.oceanprotocol.com/on-staking-on-data-in-ocean-market-3d8e09eb0a13" target="_blank"> Risks </a>
@@ -186,7 +203,11 @@ let PoolAsset = props => {
                             value={liquidityInput}
                             onChange={(e) => {
                                 const { name, value } = e.target;
-                                setLiquidityInput(value);
+                                // only allows numbers and decimals
+                                var reg = new RegExp(/^\d*\.?\d*$/);
+                                if (reg.test(value)) {
+                                    setLiquidityInput(value);
+                                }
                             }}
                         />
                         <div className="center-flex-box mt-1 mb-1">
