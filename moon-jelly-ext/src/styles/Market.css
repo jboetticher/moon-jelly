@@ -43,6 +43,7 @@
 
     border-top: 2px solid var(--brand-grey-lighter);
     padding-left: 15px;
+    padding-right: 15px;
 
     font-size: 1.2rem;
     /*font-weight: 600;*/
