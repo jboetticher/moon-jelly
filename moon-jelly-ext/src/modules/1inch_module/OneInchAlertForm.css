@@ -5,6 +5,8 @@
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 2px solid var(--brand-grey-lighter);
+    
+    
 }
 
 .alertAmountBox {
@@ -29,8 +31,7 @@
     /*transform: rotate(45deg);
     border-right: 1px solid #000;
     border-bottom: 1px solid #000;
-    pointer-events: none;*/
-    
+    pointer-events: none;*/   
 }
 
 .alertSettingBox:hover {
