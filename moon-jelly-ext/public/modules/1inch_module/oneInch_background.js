@@ -4,12 +4,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("storage update received in 1inch script");
     //startAlarm(); temp disabled for testing
     //getAllQuotes().then(data => console.log(data));
-    checkTriggers();
+    startAlarm();
 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
     if (alarm.name === "1inch_alarm") {
         console.log("1inch alarm triggered");
+        checkTriggers();
     }
 });
 
@@ -18,12 +19,14 @@ function startAlarm() {
     chrome.alarms.get("1inch_alarm", alarm => {
         if (alarm) {
             // alarm exists, do nothing
+            console.log("1inch alarm already exists");
         } else {
             // start the alarm since it doesn't exist
             chrome.alarms.create("1inch_alarm", {
                 delayInMinutes: 30,
                 periodInMinutes: 30
             });
+            console.log("1inch alarm created");
         }
     })
 }

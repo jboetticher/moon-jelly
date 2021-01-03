@@ -1,3 +1,4 @@
+    /*global chrome*/
 import React, { useState, useEffect } from 'react'
 import Button from '../../components/Button.js';
 import SelectSearch from 'react-select-search';
@@ -30,7 +31,7 @@ let OneInchAlertForm = props => {
 
         // Send message to background script
         // Only works when running as extension (npm run build)
-        //chrome.runtime.sendMessage({name: "storageUpdate"});
+        chrome.runtime.sendMessage({name: "storageUpdate"});
 
     }, [entries, notifEnabled]);
 
