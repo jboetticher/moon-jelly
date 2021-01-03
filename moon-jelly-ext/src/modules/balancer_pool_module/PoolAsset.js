@@ -39,6 +39,7 @@ let PoolAsset = props => {
         const ownerPoolSharesPromised = await ocean.pool.sharesBalance(ownerId, address);
         setOwnerPoolShares(parseFloat(ownerPoolSharesPromised));
         const totalPoolSharesPromised = await ocean.pool.getPoolSharesTotalSupply(address);
+        console.log("total pool shares", totalPoolSharesPromised);
         setTotalPoolShares(parseFloat(totalPoolSharesPromised));
         const oceanPriceJSON = (await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=USD")
             .then(res => res.json()));
@@ -59,7 +60,7 @@ let PoolAsset = props => {
         async function liquidityCalculations() {
             let sharesOutAmount = await ocean.pool.calcPoolOutGivenSingleIn(
                 address, // poolAddress
-                "0x967da4048cD07aB37855c090aAF366e4ce1b9F48", // tokenInAddress
+                "0x967da4048cD07aB37855c090aAF366e4ce1b9F48", // tokenInAddress (OCEAN)
                 liquidityInput // tokenInAmount
             );
             setCalculatedShares(parseFloat(sharesOutAmount));
@@ -68,7 +69,7 @@ let PoolAsset = props => {
     }, [liquidityInput]);
 
 
-    
+
     function toggleDetailed() {
         setDetailed(!detailed);
     }
@@ -144,7 +145,7 @@ let PoolAsset = props => {
                             </div>
                             <div className="grid-asset">
                                 <div>Pool Shares</div>
-                                <div>{parseFloat(totalPoolShares).toFixed(3)}</div>
+                                <div>{totalPoolShares.toFixed(3)}</div>
                             </div>
                             <div className="grid-asset">
                                 <div>Total Pool Value</div>
@@ -186,7 +187,7 @@ let PoolAsset = props => {
                             <div>Pool Conversion:</div>
                             <div>{calculatedShares ? calculatedShares?.toFixed(2) : 0} Shares</div>
                             <div>1000 OCEAN</div>
-                            <div>{calculatedShares && totalPoolShares ? (calculatedShares / (totalPoolShares + calculatedShares)).toFixed(2) : 0}% of Pool</div>
+                            <div>{calculatedShares && totalPoolShares ? (calculatedShares / (totalPoolShares + calculatedShares) * 100).toFixed(2) : 0}% of Pool</div>
                             <div>100 {props.datatokenSymbol}</div>
                         </div>
                         <div className="text-center disclaimer-text">
