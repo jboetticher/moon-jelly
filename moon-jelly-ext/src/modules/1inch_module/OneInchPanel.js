@@ -8,10 +8,12 @@ import Correct from '../../components/Correct.js';
 import Tokens from './assets/tokens.json';
 import OneInchAsset from './OneInchAsset.js';
 
-//import SelectSearch from 'react-select-search';
 import TokenSelectSearch from './TokenSelectSearch.js';
 import './SelectSearch.css';
 
+import InchIcon from './assets/1inch_icon.png';
+import InchBanner from './assets/1inch_banner.png';
+import './OneInchPanel.css';
 
 import { useBookmarks } from '../../functionality/BookmarkHooks.js';
 import { useWebStorage } from '../../functionality/WebStorageHooks.js';
@@ -117,9 +119,8 @@ let OneInchPanel = props => {
         else {
             return (
                 <div>
-                    <div> Bookmark Analysis</div>
-                    <div> Best Swap on 1inch Exchange:</div>
-                    <div> 1 {Tokens['tokens'][fromToken]['symbol']} = {convRate.toPrecision(6)} OCEAN </div>
+                    <div className="mt-2"> Best Swap on 1inch Exchange:</div>
+                    <div> (1 {Tokens['tokens'][fromToken]['symbol']} = {convRate.toPrecision(6)} OCEAN)</div>
                     <AssetList results={assetResults} token={Tokens['tokens'][fromToken]['symbol']} convRate={convRate} tokenAddress={fromToken}
                         assetEntry={OneInchAsset}> </AssetList>
                 </div>
@@ -129,13 +130,19 @@ let OneInchPanel = props => {
 
     return (
         <div className="oneInchPanel">
-            <Button
+            {/*<Button
                 onClick={() => {
                     chrome.runtime.sendMessage({name: "storageUpdate"});
                 }}
             >
                 refresh for notifications
-            </Button>
+            </Button>*/}
+            <div className="gradient-banner-wrap">
+                <img src={InchBanner} style={{borderRadius: "0.2rem"}}/>
+            </div>
+
+            <div className="mt-2"> Compare bookmarks to: </div>
+            <div className="gradient-banner-wrap">
             <TokenSelectSearch
                 onChange={(value) => {
                     console.log("selected", value);
@@ -143,6 +150,7 @@ let OneInchPanel = props => {
                     setShowLoader(true);
                 }}
             />
+            </div>
             {renderBody()}
 
         </div>

@@ -1,0 +1,6 @@
+.gradient-banner-wrap {
+    background: var(--brand-gradient);
+    border-radius: var(--border-radius);
+    padding: 5px;
+    box-shadow: 0 6px 17px 0 rgba(0, 0, 0, 0.2);
+}
