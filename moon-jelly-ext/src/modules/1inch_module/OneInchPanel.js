@@ -138,7 +138,9 @@ let OneInchPanel = props => {
                 refresh for notifications
             </Button>*/}
             <div className="gradient-banner-wrap">
-                <img src={InchBanner} style={{borderRadius: "0.2rem"}}/>
+                <a href="https://1inch.exchange/#/" target="_blank">
+                    <img src={InchBanner} style={{borderRadius: "0.2rem"}}/>
+                </a>
             </div>
 
             <div className="mt-2"> Compare bookmarks to: </div>
