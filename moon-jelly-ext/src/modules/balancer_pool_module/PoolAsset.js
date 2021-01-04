@@ -54,7 +54,9 @@ let PoolAsset = props => {
     const [liquidityScreen, setLiquidityScreen] = useState(false);
     const [liquidityInput, setLiquidityInput] = useState();
     const [calculatedShares, setCalculatedShares] = useState();
-    const [calculatedPoolPercentage, setCalculatedPoolPercentage] = useState();
+    const [poolConversionOcean, setPoolConversionOcean] = useState();
+    const [poolConversionDToken, setPoolConversionDToken] = useState();
+    const [maxAddLiquidity, setMaxAddLiquidity] = useState();
 
     useEffect(() => {
         async function liquidityCalculations() {
@@ -64,6 +66,30 @@ let PoolAsset = props => {
                 liquidityInput // tokenInAmount
             );
             setCalculatedShares(parseFloat(sharesOutAmount));
+            let maxAddLiquidityPromise = await ocean.pool.getOceanMaxAddLiquidity(address);
+            setMaxAddLiquidity(maxAddLiquidityPromise);
+
+            const newPoolSupply =  totalPoolShares + parseFloat(sharesOutAmount);
+            const ratio = sharesOutAmount / newPoolSupply;
+
+            console.log("new Pool Supply & ratio", newPoolSupply, ratio);
+            console.log(liquidityInput);
+
+            const coin = "OCEAN";
+            const newOceanReserve =
+              coin === 'OCEAN'
+                ? price.ocean + parseFloat(liquidityInput)
+                : price.ocean;
+            const newDtReserve =
+              coin === 'OCEAN'
+                ? price.datatoken
+                : price.datatoken + parseFloat(liquidityInput)
+
+            const poolOcean = (newOceanReserve * (ratio)).toFixed(3);
+            const poolDatatoken = (newDtReserve * (ratio)).toFixed(3);
+            
+            setPoolConversionOcean(poolOcean);
+            setPoolConversionDToken(poolDatatoken);
         }
         liquidityCalculations();
     }, [liquidityInput]);
@@ -186,9 +212,9 @@ let PoolAsset = props => {
                             <div>You Recieve:</div>
                             <div>Pool Conversion:</div>
                             <div>{calculatedShares ? calculatedShares?.toFixed(2) : 0} Shares</div>
-                            <div>1000 OCEAN</div>
+                            <div>{poolConversionOcean} OCEAN</div>
                             <div>{calculatedShares && totalPoolShares ? (calculatedShares / (totalPoolShares + calculatedShares) * 100).toFixed(2) : 0}% of Pool</div>
-                            <div>100 {props.datatokenSymbol}</div>
+                            <div>{poolConversionDToken} {props.datatokenSymbol}</div>
                         </div>
                         <div className="text-center disclaimer-text">
                             Providing liquidity will earn you {swapFee * 100}% on every transaction in this pool,
@@ -197,20 +223,22 @@ let PoolAsset = props => {
                             and
                             <a href="https://market.oceanprotocol.com/terms" target="_blank"> Terms of Service</a>.
                         </div>
-                        <Input
-                            type="text"
-                            name="liquidityAddition"
-                            placeholder={"Add OCEAN to Pool"}
-                            value={liquidityInput}
-                            onChange={(e) => {
-                                const { name, value } = e.target;
-                                // only allows numbers and decimals
-                                var reg = new RegExp(/^\d*\.?\d*$/);
-                                if (reg.test(value)) {
-                                    setLiquidityInput(value);
-                                }
-                            }}
-                        />
+                        <span className="center-flex-box">
+                            <Input
+                                type="text"
+                                name="liquidityAddition"
+                                placeholder={"Add OCEAN to Pool"}
+                                value={liquidityInput}
+                                onChange={(e) => {
+                                    const { name, value } = e.target;
+                                    // only allows numbers and decimals
+                                    var reg = new RegExp(/^\d*\.?\d*$/);
+                                    if (reg.test(value)) {
+                                        setLiquidityInput(value);
+                                    }
+                                }}
+                            />
+                        </span>
                         <div className="center-flex-box mt-1 mb-1">
                             <Button paddingx onClick={switchToAddLiquidityScreen}>View Liquidity</Button>
                             <div className="mx-1" />
