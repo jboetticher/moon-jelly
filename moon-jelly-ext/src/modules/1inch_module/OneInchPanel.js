@@ -118,8 +118,9 @@ let OneInchPanel = props => {
         }
         else {
             return (
-                <div>
-                    <div className="mt-2"> Best Swap on 1inch Exchange:</div>
+                <div className="mt-2" >
+                    {/*<div className="mt-2">Current Rate on 1inch Exchange:</div>*/}
+                    <a href={"https://1inch.exchange/#/" + Tokens['tokens'][fromToken]['symbol'] + "/OCEAN"} target="_blank"> Current Rate on 1inch Exchange: </a>
                     <div> (1 {Tokens['tokens'][fromToken]['symbol']} = {convRate.toPrecision(6)} OCEAN)</div>
                     <AssetList results={assetResults} token={Tokens['tokens'][fromToken]['symbol']} convRate={convRate} tokenAddress={fromToken}
                         assetEntry={OneInchAsset}> </AssetList>
