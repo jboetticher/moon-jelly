@@ -1,16 +1,26 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.name === "storageUpdate")
 
-    console.log("storage update received in 1inch script");
+        console.log("storage update received in 1inch script");
     //startAlarm(); temp disabled for testing
     //getAllQuotes().then(data => console.log(data));
     startAlarm();
 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
-    if (alarm.name === "1inch_alarm") {
-        console.log("1inch alarm triggered");
-        checkTriggers();
+    // kill alarm if module is disabled in settings
+    if (window.localStorage.getItem("oneInch_module") === 'false') {
+        if (alarm.name === "1inch_alarm") {
+            console.log("1inch alarm killed");
+            chrome.alarms.clear("1inch_alarm");
+        }
+    }
+    else {
+        // check for triggers if 1inch moudle enabled
+        if (alarm.name === "1inch_alarm") {
+            console.log("1inch alarm triggered");
+            checkTriggers();
+        }
     }
 });
 
@@ -70,103 +80,103 @@ function checkTriggers() {
     let quotesJSON = {};
 
     getAllDDOs()
-    .then(ddoList => {
-        ddoList.forEach((ddo) => {
+        .then(ddoList => {
+            ddoList.forEach((ddo) => {
 
-            // Add (did: price) pair into json
-            Object.assign(priceJSON, {[ddo.id]: ddo['price']['value']});
+                // Add (did: price) pair into json
+                Object.assign(priceJSON, { [ddo.id]: ddo['price']['value'] });
 
-            /*priceArray.push({
-                "did": ddo.id,
-                "oceanPrice": ddo['price']['value']
-            });*/
-        });
-        return getAllQuotes();
-    })
-    .then(quotesList => {
-        quotesList.forEach((quote) => {
-            
-            // Add (tokenAddress: swapRate) pair into json
-            // swapRate = divide the amount output by the decimals to find how much OCEAN that 1 token is worth
-            Object.assign(quotesJSON, {
-                [ quote['fromToken']['address']]: (quote['toTokenAmount'] / 10 ** parseFloat(quote['fromToken']['decimals']))
+                /*priceArray.push({
+                    "did": ddo.id,
+                    "oceanPrice": ddo['price']['value']
+                });*/
             });
-
-            /*quotesArray.push({
-                "tokenAddress": quote['fromToken']['address'],
-                "swapRate": (quote['toTokenAmount'] / 10 ** parseFloat(quote['fromToken']['decimals']))
-            });*/
+            return getAllQuotes();
         })
-    })
-    .then(() => {
-        console.log("ocean prices", priceJSON);
-        console.log("1inch swaps", quotesJSON);
+        .then(quotesList => {
+            quotesList.forEach((quote) => {
 
-        alertList.forEach((asset) => {
+                // Add (tokenAddress: swapRate) pair into json
+                // swapRate = divide the amount output by the decimals to find how much OCEAN that 1 token is worth
+                Object.assign(quotesJSON, {
+                    [quote['fromToken']['address']]: (quote['toTokenAmount'] / 10 ** parseFloat(quote['fromToken']['decimals']))
+                });
 
-            // Asset has notifications disabled(false), don't check
-            if(!asset['notifications']) return;
+                /*quotesArray.push({
+                    "tokenAddress": quote['fromToken']['address'],
+                    "swapRate": (quote['toTokenAmount'] / 10 ** parseFloat(quote['fromToken']['decimals']))
+                });*/
+            })
+        })
+        .then(() => {
+            console.log("ocean prices", priceJSON);
+            console.log("1inch swaps", quotesJSON);
 
-            // Price of the current asset on Ocean Market
-            let assetPrice = priceJSON[asset.did];
+            alertList.forEach((asset) => {
 
-            // Store the triggered triggers
-            let triggeredEntries = [];
+                // Asset has notifications disabled(false), don't check
+                if (!asset['notifications']) return;
 
-            // Loop through each trigger in the array
-            asset['entries'].forEach((entry) => {
+                // Price of the current asset on Ocean Market
+                let assetPrice = priceJSON[asset.did];
 
-                // Skip if the amount is 0
-                //if(trigger['amount'] == 0)  return;
+                // Store the triggered triggers
+                let triggeredEntries = [];
 
-                // Trigger token's swap rate
-                let swapRate = quotesJSON[entry.token];
+                // Loop through each trigger in the array
+                asset['entries'].forEach((entry) => {
 
-                // How much the asset is worth in terms of the trigger token
-                let currentSwappedPrice = (assetPrice / swapRate);
+                    // Skip if the amount is 0
+                    //if(trigger['amount'] == 0)  return;
 
-                // above
-                if(entry['selection'] == "above") {
-                    if( currentSwappedPrice > parseFloat(entry['amount']) ){
-                        // the trigger has passed
-                        triggeredEntries.push("above " + entry['amount'] + " " + entry['tokenSymbol']);
+                    // Trigger token's swap rate
+                    let swapRate = quotesJSON[entry.token];
+
+                    // How much the asset is worth in terms of the trigger token
+                    let currentSwappedPrice = (assetPrice / swapRate);
+
+                    // above
+                    if (entry['selection'] == "above") {
+                        if (currentSwappedPrice > parseFloat(entry['amount'])) {
+                            // the trigger has passed
+                            triggeredEntries.push("above " + entry['amount'] + " " + entry['tokenSymbol']);
+                        }
                     }
-                }
 
-                // below
+                    // below
+                    else {
+                        if (currentSwappedPrice < parseFloat(entry['amount'])) {
+                            // the trigger has passed
+                            triggeredEntries.push("below " + entry['amount'] + " " + entry['tokenSymbol']);
+                        }
+                    }
+
+                });
+
+                // if the asset has any triggered, send single notif with info
+                if (triggeredEntries.length > 0) {
+                    console.log("sending notifs for " + asset.assetName);
+                    console.log("current triggered entries", triggeredEntries);
+
+                    let message = "";
+                    triggeredEntries.forEach((entry) => {
+                        message += entry + "\n";
+                    });
+
+                    chrome.notifications.create('', {
+                        title: asset.assetName + " (" + asset.datatokenSymbol + ") " + "is now",
+                        message: message,
+                        iconUrl: '/moon_jelly_1inch.png',
+                        type: 'basic'
+                    });
+                }
                 else {
-                    if( currentSwappedPrice < parseFloat(entry['amount']) ){
-                        // the trigger has passed
-                        triggeredEntries.push("below " + entry['amount'] + " " + entry['tokenSymbol']);
-                    }
+                    console.log("no notifs for " + asset.assetName);
                 }
-
             });
 
-            // if the asset has any triggered, send single notif with info
-            if(triggeredEntries.length > 0){
-                console.log("sending notifs for " + asset.assetName);
-                console.log("current triggered entries", triggeredEntries);
-
-                let message = "";
-                triggeredEntries.forEach((entry) => {
-                    message += entry + "\n";
-                });
-
-                chrome.notifications.create('', {
-                    title: asset.assetName + " (" + asset.datatokenSymbol + ") " + "is now",
-                    message: message,
-                    iconUrl: '/moon_jelly_1inch.png',
-                    type: 'basic'
-                });
-            }
-            else {
-                console.log("no notifs for " + asset.assetName);
-            }
-        });
-
-        // compare/check the triggers
-    })
+            // compare/check the triggers
+        })
 
 }
 
