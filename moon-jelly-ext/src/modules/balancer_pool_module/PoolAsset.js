@@ -9,7 +9,7 @@ import 'chart.js';
 
 let PoolAsset = props => {
 
-    const { ocean, accountId, config } = useOcean();
+    const { ocean, accountId, config, balance } = useOcean();
     let [detailed, setDetailed] = useState(false);
     let [poolPanel, setPoolPanel] = useState("stats");
     const network = config.network;
@@ -18,7 +18,7 @@ let PoolAsset = props => {
 
     // Price Data
     const price = props.results[props.key].price;
-    const address = price.address;
+    const poolAddress = price.address;
     const ownerId = props.results[props.key].dataTokenInfo.minter;
     const tokenValue = price.value * price.datatoken;
     const totalLiquidityInOcean = price?.ocean + price?.datatoken * price?.value;
@@ -33,12 +33,12 @@ let PoolAsset = props => {
 
     // Updates all of the pool data
     async function init() {
-        setSwapFee(await ocean.pool.getSwapFee(address));
-        const userPoolSharesPromised = await ocean.pool.sharesBalance(accountId, address);
+        setSwapFee(await ocean.pool.getSwapFee(poolAddress));
+        const userPoolSharesPromised = await ocean.pool.sharesBalance(accountId, poolAddress);
         setUserPoolShares(parseFloat(userPoolSharesPromised));
-        const ownerPoolSharesPromised = await ocean.pool.sharesBalance(ownerId, address);
+        const ownerPoolSharesPromised = await ocean.pool.sharesBalance(ownerId, poolAddress);
         setOwnerPoolShares(parseFloat(ownerPoolSharesPromised));
-        const totalPoolSharesPromised = await ocean.pool.getPoolSharesTotalSupply(address);
+        const totalPoolSharesPromised = await ocean.pool.getPoolSharesTotalSupply(poolAddress);
         console.log("total pool shares", totalPoolSharesPromised);
         setTotalPoolShares(parseFloat(totalPoolSharesPromised));
         const oceanPriceJSON = (await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=USD")
@@ -52,7 +52,8 @@ let PoolAsset = props => {
 
     // Liquidity Data
     const [liquidityScreen, setLiquidityScreen] = useState(false);
-    const [liquidityInput, setLiquidityInput] = useState();
+    const [liquidityInput, setLiquidityInput] = useState(0);
+    const [coin, setCoin] = useState("OCEAN");
     const [calculatedShares, setCalculatedShares] = useState();
     const [poolConversionOcean, setPoolConversionOcean] = useState();
     const [poolConversionDToken, setPoolConversionDToken] = useState();
@@ -61,12 +62,12 @@ let PoolAsset = props => {
     useEffect(() => {
         async function liquidityCalculations() {
             let sharesOutAmount = await ocean.pool.calcPoolOutGivenSingleIn(
-                address, // poolAddress
+                poolAddress, // poolAddress
                 "0x967da4048cD07aB37855c090aAF366e4ce1b9F48", // tokenInAddress (OCEAN)
                 liquidityInput // tokenInAmount
             );
             setCalculatedShares(parseFloat(sharesOutAmount));
-            let maxAddLiquidityPromise = await ocean.pool.getOceanMaxAddLiquidity(address);
+            let maxAddLiquidityPromise = await ocean.pool.getOceanMaxAddLiquidity(poolAddress);
             setMaxAddLiquidity(maxAddLiquidityPromise);
 
             const newPoolSupply =  totalPoolShares + parseFloat(sharesOutAmount);
@@ -75,7 +76,6 @@ let PoolAsset = props => {
             console.log("new Pool Supply & ratio", newPoolSupply, ratio);
             console.log(liquidityInput);
 
-            const coin = "OCEAN";
             const newOceanReserve =
               coin === 'OCEAN'
                 ? price.ocean + parseFloat(liquidityInput)
@@ -146,6 +146,28 @@ let PoolAsset = props => {
         setLiquidityScreen(!liquidityScreen);
     }
 
+    async function submitAddLiquidity() {
+        try {
+            const result =
+              coin === 'OCEAN'
+                ? await ocean.pool.addOceanLiquidity(
+                    accountId,
+                    poolAddress,
+                    `${liquidityInput}`
+                  )
+                : await ocean.pool.addDTLiquidity(accountId, poolAddress, `${liquidityInput}`);
+      
+            console.log("SUBMIT RESULTS", result);
+
+            //setTxId(result?.transactionHash)
+            //resetForm()
+            //refreshInfo()
+          } catch (error) {
+            console.error(error.message)
+            //toast.error(error.message)
+          }
+    }
+
     function createPoolPanel() {
         let panel = <></>;
 
@@ -212,9 +234,9 @@ let PoolAsset = props => {
                             <div>You Recieve:</div>
                             <div>Pool Conversion:</div>
                             <div>{calculatedShares ? calculatedShares?.toFixed(2) : 0} Shares</div>
-                            <div>{poolConversionOcean} OCEAN</div>
+                            <div>{liquidityInput == 0 ? "0" : poolConversionOcean} OCEAN</div>
                             <div>{calculatedShares && totalPoolShares ? (calculatedShares / (totalPoolShares + calculatedShares) * 100).toFixed(2) : 0}% of Pool</div>
-                            <div>{poolConversionDToken} {props.datatokenSymbol}</div>
+                            <div>{liquidityInput == 0 ? "0" : poolConversionDToken} {props.datatokenSymbol}</div>
                         </div>
                         <div className="text-center disclaimer-text">
                             Providing liquidity will earn you {swapFee * 100}% on every transaction in this pool,
@@ -242,7 +264,9 @@ let PoolAsset = props => {
                         <div className="center-flex-box mt-1 mb-1">
                             <Button paddingx onClick={switchToAddLiquidityScreen}>View Liquidity</Button>
                             <div className="mx-1" />
-                            <Button paddingx primary>Confirm</Button>
+                            <Button paddingx primary onClick={() => submitAddLiquidity()}>
+                                Confirm
+                            </Button>
                         </div>
                         <div className="center-flex-box mt-1 mb-1">
                         </div>
