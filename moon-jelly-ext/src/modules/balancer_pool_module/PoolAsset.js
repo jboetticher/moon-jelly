@@ -70,24 +70,24 @@ let PoolAsset = props => {
             let maxAddLiquidityPromise = await ocean.pool.getOceanMaxAddLiquidity(poolAddress);
             setMaxAddLiquidity(maxAddLiquidityPromise);
 
-            const newPoolSupply =  totalPoolShares + parseFloat(sharesOutAmount);
+            const newPoolSupply = totalPoolShares + parseFloat(sharesOutAmount);
             const ratio = sharesOutAmount / newPoolSupply;
 
             console.log("new Pool Supply & ratio", newPoolSupply, ratio);
             console.log(liquidityInput);
 
             const newOceanReserve =
-              coin === 'OCEAN'
-                ? price.ocean + parseFloat(liquidityInput)
-                : price.ocean;
+                coin === 'OCEAN'
+                    ? price.ocean + parseFloat(liquidityInput)
+                    : price.ocean;
             const newDtReserve =
-              coin === 'OCEAN'
-                ? price.datatoken
-                : price.datatoken + parseFloat(liquidityInput)
+                coin === 'OCEAN'
+                    ? price.datatoken
+                    : price.datatoken + parseFloat(liquidityInput)
 
             const poolOcean = (newOceanReserve * (ratio)).toFixed(3);
             const poolDatatoken = (newDtReserve * (ratio)).toFixed(3);
-            
+
             setPoolConversionOcean(poolOcean);
             setPoolConversionDToken(poolDatatoken);
         }
@@ -124,19 +124,8 @@ let PoolAsset = props => {
                         { title: props.datatokenSymbol, value: tokenValue, color: '#7b1173' },
                         { title: "Ocean", value: price.ocean, color: '#8b98a9' }]}
                         style={{ width: "55px", margin: "inherit", position: "relative", right: "-80px", bottom: "4px" }}
-                    //viewBoxSize={[36, 36]}
-                    //radius={18}
-                    //center={[18, 18]}
                     />
                 </div>
-                {
-                    !detailed ? <></> :
-                        <>
-                            <div className="gray-line mb-1" />
-                            <PoolNavbar setPoolPanel={setPoolPanel} selected={poolPanel} />
-                            {createPoolPanel()}
-                        </>
-                }
                 <div style={{ margin: "4px" }} />
             </>
         );
@@ -149,23 +138,23 @@ let PoolAsset = props => {
     async function submitAddLiquidity() {
         try {
             const result =
-              coin === 'OCEAN'
-                ? await ocean.pool.addOceanLiquidity(
-                    accountId,
-                    poolAddress,
-                    `${liquidityInput}`
-                  )
-                : await ocean.pool.addDTLiquidity(accountId, poolAddress, `${liquidityInput}`);
-      
+                coin === 'OCEAN'
+                    ? await ocean.pool.addOceanLiquidity(
+                        accountId,
+                        poolAddress,
+                        `${liquidityInput}`
+                    )
+                    : await ocean.pool.addDTLiquidity(accountId, poolAddress, `${liquidityInput}`);
+
             console.log("SUBMIT RESULTS", result);
 
             //setTxId(result?.transactionHash)
             //resetForm()
             //refreshInfo()
-          } catch (error) {
+        } catch (error) {
             console.error(error.message)
             //toast.error(error.message)
-          }
+        }
     }
 
     function createPoolPanel() {
@@ -181,7 +170,7 @@ let PoolAsset = props => {
                         <div className="assetLabelPricing mt-1" style={{ textAlign: 'center' }}>
                             <div className="grid-asset">
                                 <div>Pooled OCEAN</div>
-                                <div>{price.ocean.toFixed(3)}</div>
+                                <div>{price.ocean?.toFixed(3)}</div>
                             </div>
                             <div className="grid-asset">
                                 <div>Swap Fee</div>
@@ -189,15 +178,15 @@ let PoolAsset = props => {
                             </div>
                             <div className="grid-asset">
                                 <div>Pooled {props.datatokenSymbol}</div>
-                                <div>{price.datatoken.toFixed(3)}</div>
+                                <div>{price.datatoken?.toFixed(3)}</div>
                             </div>
                             <div className="grid-asset">
                                 <div>Pool Shares</div>
-                                <div>{totalPoolShares.toFixed(3)}</div>
+                                <div>{totalPoolShares?.toFixed(3)}</div>
                             </div>
                             <div className="grid-asset">
                                 <div>Total Pool Value</div>
-                                <div>≈ ${(totalLiquidityInOcean * oceanValue).toFixed(2)}</div>
+                                <div>≈ ${(totalLiquidityInOcean * oceanValue)?.toFixed(2)}</div>
                             </div>
                         </div>
                     </>;
@@ -268,8 +257,6 @@ let PoolAsset = props => {
                                 Confirm
                             </Button>
                         </div>
-                        <div className="center-flex-box mt-1 mb-1">
-                        </div>
                     </>
                     :
                     <>
@@ -287,18 +274,18 @@ let PoolAsset = props => {
                             <tbody>
                                 <tr>
                                     <td className="text-left">Pooled OCEAN</td>
-                                    <td>{((userPoolShares / totalPoolShares) * price.ocean).toFixed(2)}</td>
-                                    <td>{((ownerPoolShares / totalPoolShares) * price.ocean).toFixed(2)}</td>
+                                    <td>{((userPoolShares / totalPoolShares) * price.ocean)?.toFixed(2)}</td>
+                                    <td>{((ownerPoolShares / totalPoolShares) * price.ocean)?.toFixed(2)}</td>
                                 </tr>
                                 <tr>
                                     <td className="text-left">Pooled {props.datatokenSymbol}</td>
-                                    <td>{((userPoolShares / totalPoolShares) * price.datatoken).toFixed(2)}</td>
-                                    <td>{((ownerPoolShares / totalPoolShares) * price.datatoken).toFixed(2)}</td>
+                                    <td>{((userPoolShares / totalPoolShares) * price.datatoken)?.toFixed(2)}</td>
+                                    <td>{((ownerPoolShares / totalPoolShares) * price.datatoken)?.toFixed(2)}</td>
                                 </tr>
                                 <tr>
                                     <td className="text-left">Pool Share</td>
-                                    <td>{(userPoolShares != null && totalPoolShares != null) ? (userPoolShares / totalPoolShares * 100).toFixed(2) : "0"}%</td>
-                                    <td>{(ownerPoolShares != null && totalPoolShares != null) ? (ownerPoolShares / totalPoolShares * 100).toFixed(2) : "0"}%</td>
+                                    <td>{(userPoolShares != null && totalPoolShares != null) ? (userPoolShares / totalPoolShares * 100)?.toFixed(2) : "0"}%</td>
+                                    <td>{(ownerPoolShares != null && totalPoolShares != null) ? (ownerPoolShares / totalPoolShares * 100)?.toFixed(2) : "0"}%</td>
                                 </tr>
                                 <tr>
                                     <td className="text-left">Shares</td>
@@ -307,9 +294,6 @@ let PoolAsset = props => {
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="center-flex-box mt-1 mb-1">
-                            <Button paddingx onClick={switchToAddLiquidityScreen}>Add Liquidity</Button>
-                        </div>
                     </>;
                 break;
         }
@@ -325,6 +309,14 @@ let PoolAsset = props => {
             key={props.key}
             id={"pool_asset_" + props.key}
         >
+            {
+                !detailed ? <></> :
+                    <div className="mt-1" style={{position: "relative", left: "-8px"}}>
+                        <PoolNavbar setPoolPanel={setPoolPanel} selected={poolPanel} />
+                        {createPoolPanel()}
+                        <div className="gray-line mb-1" />
+                    </div>
+            }
             <div><a href={"#pool_asset_" + props.key} onClick={toggleDetailed}>{detailed ? "Hide Details" : "Examine in Detail"}</a></div>
             <div><a href={"https://market.oceanprotocol.com/asset/" + props.did} target="_blank">View on Ocean Market</a></div>
             <BookmarkButton did={props.did} />
