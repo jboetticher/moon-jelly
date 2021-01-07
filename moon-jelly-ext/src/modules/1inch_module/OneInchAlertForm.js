@@ -34,7 +34,7 @@ let OneInchAlertForm = props => {
 
         // Send message to background script
         // Only works when running as extension (npm run build)
-        //chrome.runtime.sendMessage({name: "storageUpdate"});
+        chrome.runtime.sendMessage({name: "storageUpdate"});
 
     }, [entries, notifEnabled]);
 
