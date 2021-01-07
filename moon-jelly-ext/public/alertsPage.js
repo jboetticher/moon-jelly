@@ -1,4 +1,5 @@
-// CONTROLS THE NETWORK THE ALERT SYSTEM IS ON
+// CONTROLS THE NETWORK BACKGROUND SCRIPTS DRAW FROM
+// it's a global variable
 const network = 'mainnet';
 //const network = 'rinkeby';
 
