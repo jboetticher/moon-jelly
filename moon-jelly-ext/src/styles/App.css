@@ -106,6 +106,18 @@
     padding-right: 1rem;
 }
 
+.small-text {
+    font-size: var(--font-size-small);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;

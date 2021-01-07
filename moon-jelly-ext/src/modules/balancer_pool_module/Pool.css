@@ -1,0 +1,41 @@
+@import '../../styles/variables.css';
+
+.pool-info {
+    font-size: var(--font-size-small);
+}
+
+.gray-line {
+    border-top: 2px solid var(--brand-grey-lighter);
+}
+
+.background-container-white {
+    background: var(--brand-white);
+    border-radius: var(--border-radius);
+}
+
+.grid-asset {
+    font-size: var(--font-size-base);
+    color: var(--color-secondary);
+}
+
+.grid-header {
+    font-size: var(--font-size-base);
+    border-bottom: 2px solid var(--brand-grey-lighter);
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.disclaimer-text {
+    font-size: var(--font-size-mini);
+}
+
+.liquidity-table {
+    border-color: transparent;
+    font-size: var(--font-size-base);
+    width: 100%;
+}
+
+.center-flex-box {
+    display: flex;
+    justify-content: center;
+}
