@@ -16,8 +16,10 @@ To create your own build, run:
 
 This builds the extension into the `moon-jelly-ext/build` folder  
 
-From here, the build folder can be loaded as an unpacked extension into a Chromium-based browser.  
-Short video for installing on [Google Chrome](https://www.youtube.com/watch?v=oswjtLwCUqg).
+From here, the build folder can be loaded as an unpacked extension into a Chromium-based browser*.  
+Short video for installing on [Google Chrome](https://www.youtube.com/watch?v=oswjtLwCUqg).  
+
+*Please note that the extension was developed and tested mainly on Google Chrome. If a you run into a browser-specific problem, we encourage you to open an issue or propose a fix. 
 
 ### Quicker Installation and Testing :whale:
 1. Download either `moon-jelly-v0.1.1.zip` or `moonjelly-rinkbey-v0.1.1.zip` (configured for mainnet or rinkeby, respectively)  
