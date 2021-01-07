@@ -26,6 +26,7 @@ Short video for installing on [Google Chrome](https://www.youtube.com/watch?v=os
 2. Extract the .zip file
 3. From here, the extracted folder can be loaded as an unpacked extension into a Chromium-based browser.  
     Short video for installing on [Google Chrome](https://www.youtube.com/watch?v=oswjtLwCUqg).  
+4. If you are frequently testing on different networks, Dev Console > Application > Local Storage > Clear All (button next to Filter) will clear all saved data, which includes wallet id, bookmarks, and alerts.
 
 Notes for testing the extension:
 - `moon-jelly-v0.1.1.zip` queries and publishes on the Etherium Mainnet
