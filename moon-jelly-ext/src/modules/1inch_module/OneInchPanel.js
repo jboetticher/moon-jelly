@@ -17,9 +17,11 @@ import './OneInchPanel.css';
 
 import { useBookmarks } from '../../functionality/BookmarkHooks.js';
 import { useWebStorage } from '../../functionality/WebStorageHooks.js';
+import { useOcean } from '@oceanprotocol/react';
 
 let OneInchPanel = props => {
 
+    const network = useOcean()['config']['network'];
     const { getBookmarkDDOs } = useBookmarks();
     const { storeArrayToLocal, getArrayFromLocal } = useWebStorage(); 
 
@@ -53,7 +55,7 @@ let OneInchPanel = props => {
                 })
                 .then(() => {
                     // creates an empty array in storage for alerts if it was null
-                   if (getArrayFromLocal("oneInchAlertList") == null) storeArrayToLocal("oneInchAlertList", []);
+                   if (getArrayFromLocal("oneInchAlertList_" + network) == null) storeArrayToLocal("oneInchAlertList_" + network, []);
                 })
                 .then(() => {
                     // Then start fetching 1inch data

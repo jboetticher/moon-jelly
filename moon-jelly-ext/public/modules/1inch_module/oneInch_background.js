@@ -44,7 +44,7 @@ function startAlarm() {
 // Compares fetched ocean and oneinch data to local
 function checkTriggers() {
 
-    let alertList = JSON.parse(window.localStorage.getItem("oneInchAlertList"));
+    let alertList = JSON.parse(window.localStorage.getItem("oneInchAlertList_" + network));
     /* the stored alertList looks like this, as reference
     [
         {
@@ -183,7 +183,7 @@ function checkTriggers() {
 // Returns a Promises.all() promise containing all the DDOs of oneInchAlertList
 function getAllDDOs() {
     // Get the stored array by parsing
-    let alertList = JSON.parse(window.localStorage.getItem("oneInchAlertList"));
+    let alertList = JSON.parse(window.localStorage.getItem("oneInchAlertList_" + network));
 
     // To hold all the DDO promises
     let DDOPromises = [];
@@ -203,7 +203,7 @@ function getAllDDOs() {
 // Should prevent/reduce over-fetching of a token
 function getAllQuotes() {
     // Get the stored array by parsing
-    let alertList = JSON.parse(window.localStorage.getItem("oneInchAlertList"));
+    let alertList = JSON.parse(window.localStorage.getItem("oneInchAlertList_" + network));
 
     // Store token addresses as a set to prevent duplicates
     let tokenSet = new Set();

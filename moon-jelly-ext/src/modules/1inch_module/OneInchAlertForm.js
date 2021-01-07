@@ -5,12 +5,15 @@ import SelectSearch from 'react-select-search';
 import './SelectSearch.css';
 
 import { useWebStorage } from '../../functionality/WebStorageHooks.js';
+import { useOcean } from '@oceanprotocol/react';
 import TokenSelectSearch from './TokenSelectSearch.js';
 import Tokens from './assets/tokens.json';
 
 import './OneInchAlertForm.css';
 
 let OneInchAlertForm = props => {
+
+    const network = useOcean()['config']['network'];
 
     const { storeArrayToLocal, getArrayFromLocal } = useWebStorage();
 
@@ -31,7 +34,7 @@ let OneInchAlertForm = props => {
 
         // Send message to background script
         // Only works when running as extension (npm run build)
-        chrome.runtime.sendMessage({name: "storageUpdate"});
+        //chrome.runtime.sendMessage({name: "storageUpdate"});
 
     }, [entries, notifEnabled]);
 
@@ -142,7 +145,7 @@ let OneInchAlertForm = props => {
     function handleStorage() {
 
         // Get the array from local storage
-        let storedList = getArrayFromLocal("oneInchAlertList");
+        let storedList = getArrayFromLocal("oneInchAlertList_" + network);
 
         // Find the associated entry in the array
         let storedEntry = storedList.find(item => {
@@ -164,7 +167,7 @@ let OneInchAlertForm = props => {
             );
 
             // Store the modified array
-            storeArrayToLocal("oneInchAlertList", storedList);
+            storeArrayToLocal("oneInchAlertList_" + network, storedList);
         }
 
         // Entry exists
@@ -184,7 +187,7 @@ let OneInchAlertForm = props => {
             );
 
             // Store the modified array
-            storeArrayToLocal("oneInchAlertList", storedList);
+            storeArrayToLocal("oneInchAlertList_" + network, storedList);
         }
 
 
@@ -195,7 +198,7 @@ let OneInchAlertForm = props => {
     // Returns the array if in storage
     function getEntriesArrayFromStorage() {
         // Get the array from local storage
-        let storedList = getArrayFromLocal("oneInchAlertList");
+        let storedList = getArrayFromLocal("oneInchAlertList_" + network);
 
         // Find the associated entry in the array
         let storedEntry = storedList.find(item => {
@@ -215,7 +218,7 @@ let OneInchAlertForm = props => {
     // returns boolean true or false
     function getNotificationState(){
         // Get the array from local storage
-        let storedList = getArrayFromLocal("oneInchAlertList");
+        let storedList = getArrayFromLocal("oneInchAlertList_" + network);
 
         // Find the associated entry in the array
         let storedEntry = storedList.find(item => {
