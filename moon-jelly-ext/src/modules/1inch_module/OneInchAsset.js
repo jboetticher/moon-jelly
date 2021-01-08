@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import BookmarkButton from '../../components/BookmarkButton.js';
 import OneInchAlertForm from './OneInchAlertForm.js';
+import { useOcean } from '@oceanprotocol/react';
 import { useWebStorage } from '../../functionality/WebStorageHooks.js';
 
 import './OneInchAsset.css';
 
 let OneInchAsset = props => {
+
+    const network = useOcean()['config']['network'];
 
     const { getArrayFromLocal } = useWebStorage();
 
@@ -21,7 +24,7 @@ let OneInchAsset = props => {
     // Returns the array if in storage
     function getEntriesArrayFromStorage() {
         // Get the array from local storage
-        let storedList = getArrayFromLocal("oneInchAlertList");
+        let storedList = getArrayFromLocal("oneInchAlertList_" + network);
 
         // Find the associated entry in the array
         let storedEntry = storedList.find(item => {
