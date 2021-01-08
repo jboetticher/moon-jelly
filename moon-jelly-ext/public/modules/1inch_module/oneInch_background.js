@@ -1,3 +1,6 @@
+// NETWORK GLOBAL VARIABLE IS IN alertsPage.js
+// WILL LIKELY BE CHANGED IN THE FUTURE TO A MORE CENTRALIZED SYSTEM
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.name === "storageUpdate")
 
@@ -187,6 +190,10 @@ function checkTriggers() {
         })
 
 }
+
+chrome.notifications.onClicked.addListener(() => {
+    window.open('https://1inch.exchange/#/ETH/OCEAN', '_blank');
+});
 
 // Returns a Promises.all() promise containing all the DDOs of oneInchAlertList
 function getAllDDOs() {
