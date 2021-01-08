@@ -5,6 +5,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     //startAlarm(); temp disabled for testing
     //getAllQuotes().then(data => console.log(data));
     startAlarm();
+    //checkTriggers();
 });
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
@@ -130,10 +131,17 @@ function checkTriggers() {
                     //if(trigger['amount'] == 0)  return;
 
                     // Trigger token's swap rate
-                    let swapRate = quotesJSON[entry.token];
+                    //let swapRate = quotesJSON[entry.token];
 
                     // How much the asset is worth in terms of the trigger token
-                    let currentSwappedPrice = (assetPrice / swapRate);
+                    // If the entry token is OCEAN, the "swap" rate is just price
+                    let currentSwappedPrice;
+                    if (entry.token == "0x967da4048cd07ab37855c090aaf366e4ce1b9f48") {
+                        currentSwappedPrice = assetPrice;
+                    }
+                    else {
+                        currentSwappedPrice = (assetPrice / quotesJSON[entry.token]);
+                    }
 
                     // above
                     if (entry['selection'] == "above") {
@@ -230,6 +238,9 @@ function getAllQuotes() {
     // Loop through each token address and create a promise
     tokenSet.forEach((tokenAddress) => {
 
+        // if the tokenAddress is ocean, no need to fetch
+        if (tokenAddress == "0x967da4048cd07ab37855c090aaf366e4ce1b9f48") return;
+
         // Add fetch promise into array
         quotePromises.push(fetchOneInchQuote(tokenAddress));
     });
@@ -242,6 +253,7 @@ function getAllQuotes() {
 // Fetches quote from 1inch Exchange given param fromToken (toToken is always OCEAN)
 // Returns promise to evaluate
 function fetchOneInchQuote(fromToken) {
+
     // toTokenAddress is OCEAN
     let reqURL = "https://api.1inch.exchange/v2.0/quote?fromTokenAddress="
         + fromToken +
