@@ -38,7 +38,7 @@ let BalancerPool = props => {
             <div>Ocean Pools</div>
             <p className="pool-info mb-2">
                 All of your bookmarked pools will appear here. Easily view details on each pool.
-        </p>
+            </p>
             <AssetList results={ddos} assetEntry={PoolAsset} />
         </>
         :

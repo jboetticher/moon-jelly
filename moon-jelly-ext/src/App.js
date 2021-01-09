@@ -184,13 +184,34 @@ const HomePanel = (props) => {
     }
 
     console.log(useOcean());
-    let { connect, status } = useOcean();
+    let { connect, status, logout } = useOcean();
     let [oceanConnected, setOceanConnected] = useState(status > 0);
     useEffect(() => {
         setOceanConnected(status > 0);
     }, [status]);
 
-    let walletConnectionNotice = oceanConnected ? <div></div> :
+    let walletConnectionNotice = oceanConnected ?
+        <div className={"mt-2"}>
+            <Label className={"defaultLabel"}>
+                Reset your wallet connection here.
+            </Label>
+            <div className="mb-2" />
+            <Button
+                padding
+                type="submit"
+                onClick={() => {
+                    console.log("Showing connect popup.");
+                    storeToLocal("walletconnect", "");
+                    logout().then(res => {
+                        console.log("logout results", res);
+                        return connect();
+                    });
+                }}
+            >
+                Connect to Wallet
+            </Button>
+        </div>
+        :
         <div className={"mt-2"}>
             <Label className={"defaultLabel"}>
                 Connect your wallet to start.
