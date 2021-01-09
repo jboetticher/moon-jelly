@@ -1,7 +1,7 @@
 // CONTROLS THE NETWORK BACKGROUND SCRIPTS DRAW FROM
 // it's a global variable
-const network = 'mainnet';
-//const network = 'rinkeby';
+//const network = 'mainnet';
+const network = 'rinkeby';
 
 chrome.runtime.onInstalled.addListener(function () {
     //alert("sick im installed");
