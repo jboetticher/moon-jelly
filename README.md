@@ -26,7 +26,7 @@ Short video for installing on [Google Chrome](https://www.youtube.com/watch?v=os
 *Please note that the extension was developed and tested mainly on Google Chrome. If a you run into a browser-specific problem, we encourage you to open an issue or propose a fix. 
 
 ### Quicker Installation and Testing :whale:
-1. Download either `moon-jelly-v0.1.1.zip` or `moonjelly-rinkbey-v0.1.1.zip` (configured for mainnet or rinkeby, respectively)  
+1. Download either `moon-jelly-v0.2.0.zip` or `moon-jelly-rinkbey-v0.2.0.zip` (configured for mainnet or rinkeby, respectively)  
 2. Extract the .zip file
 3. From here, the extracted folder can be loaded as an unpacked extension into a Chromium-based browser.  
     Short video for installing on [Google Chrome](https://www.youtube.com/watch?v=oswjtLwCUqg).  
