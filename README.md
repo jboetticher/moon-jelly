@@ -3,6 +3,10 @@ A chromium browser extension to help with publishing and accessing the ocean pro
 This project is meant to be a primary solution to anyone who wants to create an ocean-oriented chrome extension.
 Expands off of the Jellyfish extension by Dhaval Kalavadiya.
 
+Watch the introduction video below.
+[![Watch the video](https://img.youtube.com/vi/b4ihf_u7HJU/maxresdefault.jpg)](https://www.youtube.com/watch?v=b4ihf_u7HJU)
+
+
 ## Installation :fish:
 Installation is quite easy. Once you clone the repository, simply run:
 `npm install`  
@@ -56,4 +60,3 @@ Feel free to make a new fork, and communicate with us about potential pull reque
 - [Network Control](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src#network-control)
 - [Panel System](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src#appjs)
 - [Panel Swapping](https://github.com/jboetticher/moon-jelly/tree/main/moon-jelly-ext/src#panel-swapping-breakdown)
-
