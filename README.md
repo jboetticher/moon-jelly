@@ -3,7 +3,7 @@ A chromium browser extension to help with publishing and accessing the ocean pro
 This project is meant to be a primary solution to anyone who wants to create an ocean-oriented chrome extension.
 Expands off of the Jellyfish extension by Dhaval Kalavadiya.
 
-Watch the introduction video below.
+### Introduction Video:
 [![Watch the video](https://img.youtube.com/vi/b4ihf_u7HJU/maxresdefault.jpg)](https://www.youtube.com/watch?v=b4ihf_u7HJU)
 
 
